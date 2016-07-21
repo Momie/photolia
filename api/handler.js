@@ -4,9 +4,9 @@ const Boom = require('boom')
 
 const util = require('./util')
 // var multer = require('multer')
-const fs = require('fs');
+const fs = require('fs')
 // Include ImageMagick
-const im = require('imagemagick');
+const im = require('imagemagick')
 
 const request = require('request')
 // var upload = multer({
@@ -46,26 +46,27 @@ exports.test = function (req, resp) {
 exports.upload = function (req, resp) {
 	// console.log(req.payload)
 	const img = req.payload["file"]
-    const name = util.uuid()
+    resp(util.upload(img))
+ //    const name = util.uuid()
 
-    console.log('tmp/' + name)
-	// var data = req.payload;
-	// console.log(req)
- //    if (data.file) {
- //        var name = data.file.hapi.filename;
- //        var path = __dirname + "/tmp/" + name;
-        var file = fs.createWriteStream('tmp/' + name) // img.hapi.filename)
-        img.pipe(file)
-        img.on('error', function (err) { 
-            console.error(err) 
-        });
-        img.on('end', function (err) { 
-            // var ret = {
-            //     filename: data.file.hapi.filename,
-            //     headers: data.file.hapi.headers
-            // }
-            resp({"file": name })
-        })
+ //    console.log('tmp/' + name)
+	// // var data = req.payload;
+	// // console.log(req)
+ // //    if (data.file) {
+ // //        var name = data.file.hapi.filename;
+ // //        var path = __dirname + "/tmp/" + name;
+ //        var file = fs.createWriteStream('tmp/' + name) // img.hapi.filename)
+ //        img.pipe(file)
+ //        img.on('error', function (err) { 
+ //            console.error(err) 
+ //        });
+ //        img.on('end', function (err) { 
+ //            // var ret = {
+ //            //     filename: data.file.hapi.filename,
+ //            //     headers: data.file.hapi.headers
+ //            // }
+ //            resp({"file": name })
+ //        })
  //    }else{
  //    	resp('not found');
  //    }
@@ -128,6 +129,29 @@ exports.origin = function (req, resp) {
 	console.log(req.params.id)
 	//resp(encodeURIComponent(req.params.id))
     resp.file('./tmp/' + req.params.id)
+    // file = req.params.file
+    // try {
+    //     stats = fs.lstatSync(__dirname + "/uploads/fullsize/" + file);
+    //     var img = fs.readFileSync(__dirname + "/uploads/fullsize/" + file);
+    //     res.writeHead(200, {
+    //         'Content-Type': 'image/jpg'
+    //     });
+    //     res.end(img, 'binary');
+    // } catch (e) {
+    //     res.send('Not Found');
+    // }
+}
+
+exports.crop = function (req, resp) {
+    console.log(req.params)
+
+    resp.file(util.crop(req.params.id,req.params))
+
+
+    // resp.file('./tmp/' + req.params.id)
+    // resp(encodeURIComponent(req.params))
+
+    //resp.file('./tmp/' + req.params)
     // file = req.params.file
     // try {
     //     stats = fs.lstatSync(__dirname + "/uploads/fullsize/" + file);

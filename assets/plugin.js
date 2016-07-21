@@ -1,16 +1,16 @@
 /*
- * Uploadcare (2.6.0)
+ * photolia (2.6.0)
  * Date: 2016-01-09 17:48:10 +0300
  * Rev: f3718f9f2b
  */
 ;
-(function(uploadcare, SCRIPT_BASE) {
+(function(photolia, SCRIPT_BASE) {
     (function() {
-        window.uploadcare = {};
+        window.photolia = {};
 
-        uploadcare.namespace = function(path, fn) {
+        photolia.namespace = function(path, fn) {
             var part, target, _i, _len, _ref;
-            target = uploadcare;
+            target = photolia;
             if (path) {
                 _ref = path.split('.');
                 for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -22,12 +22,12 @@
             return fn(target);
         };
 
-        uploadcare.expose = function(key, value) {
+        photolia.expose = function(key, value) {
             var last, part, parts, source, target, _i, _len;
             parts = key.split('.');
             last = parts.pop();
-            target = window.uploadcare;
-            source = uploadcare;
+            target = window.photolia;
+            source = photolia;
             for (_i = 0, _len = parts.length; _i < _len; _i++) {
                 part = parts[_i];
                 target[part] || (target[part] = {});
@@ -41,18 +41,18 @@
     (function() {
         var expose;
 
-        uploadcare.version = '2.6.0';
+        photolia.version = '2.6.0';
 
-        uploadcare.jQuery = jQuery;
+        photolia.jQuery = jQuery;
 
-        expose = uploadcare.expose;
+        expose = photolia.expose;
 
         expose('version');
 
         expose('jQuery');
 
         expose('plugin', function(fn) {
-            return fn(uploadcare);
+            return fn(photolia);
         });
 
         expose('whenReady', function(fn) {
@@ -105,7 +105,7 @@
         });
     };
     (function() {
-        uploadcare.namespace('utils.abilities', function(ns) {
+        photolia.namespace('utils.abilities', function(ns) {
             var ios, url, ver, _ref;
             ns.fileAPI = !!(window.File && window.FileList && window.FileReader);
             ns.sendFileAPI = !!(window.FormData && ns.fileAPI);
@@ -167,9 +167,9 @@
             },
             __slice = [].slice;
 
-        $ = uploadcare.jQuery;
+        $ = photolia.jQuery;
 
-        uploadcare.namespace('utils', function(utils) {
+        photolia.namespace('utils', function(utils) {
             var _ref;
             utils.Collection = (function() {
                 function Collection(items) {
@@ -397,7 +397,7 @@
     (function() {
         var __slice = [].slice;
 
-        uploadcare.namespace('utils', function(ns) {
+        photolia.namespace('utils', function(ns) {
             var common, messages;
             ns.log = function() {
                 var _ref;
@@ -427,7 +427,7 @@
                 }
             };
             common = {
-                publicKey: "Global public key not set. Uploads may not work!\nAdd this to the <head> tag to set your key:\n\n<script>\nUPLOADCARE_PUBLIC_KEY = 'your_public_key';\n</script>"
+                publicKey: "Global public key not set. Uploads may not work!\nAdd this to the <head> tag to set your key:\n\n<script>\nphotolia_PUBLIC_KEY = 'your_public_key';\n</script>"
             };
             return ns.commonWarning = function(name) {
                 if (common[name] != null) {
@@ -440,9 +440,9 @@
     (function() {
         var $;
 
-        $ = uploadcare.jQuery;
+        $ = photolia.jQuery;
 
-        uploadcare.namespace('utils', function(ns) {
+        photolia.namespace('utils', function(ns) {
             var callbacks,
                 _this = this;
             callbacks = {};
@@ -494,9 +494,9 @@
             },
             __slice = [].slice;
 
-        $ = uploadcare.jQuery;
+        $ = photolia.jQuery;
 
-        uploadcare.namespace('utils', function(ns) {
+        photolia.namespace('utils', function(ns) {
             var pipeTuples;
             ns.unique = function(arr) {
                 var item, result, _i, _len;
@@ -862,9 +862,9 @@
                 return -1;
             };
 
-        expose = uploadcare.expose, utils = uploadcare.utils, $ = uploadcare.jQuery;
+        expose = photolia.expose, utils = photolia.utils, $ = photolia.jQuery;
 
-        uploadcare.namespace('settings', function(ns) {
+        photolia.namespace('settings', function(ns) {
             var arrayOptions, defaults, flagOptions, intOptions, normalize, parseCrop, parseShrink, presets, str2arr, urlOptions;
             defaults = {
                 live: true,
@@ -900,7 +900,7 @@
                 multipartMaxAttempts: 3,
                 parallelDirectUploads: 10,
                 passWindowOpen: false,
-                scriptBase: typeof SCRIPT_BASE !== "undefined" && SCRIPT_BASE !== null ? SCRIPT_BASE : '',
+                scriptBase: 'http://img.jobi.dev', //typeof SCRIPT_BASE !== "undefined" && SCRIPT_BASE !== null ? SCRIPT_BASE : '',
                 debugUploads: false
             };
             presets = {
@@ -1036,7 +1036,7 @@
                 var key, value, values;
                 values = {};
                 for (key in defaults) {
-                    value = window["UPLOADCARE_" + (utils.upperCase(key))];
+                    value = window["photolia_" + (utils.upperCase(key))];
                     if (value !== void 0) {
                         values[key] = value;
                     }
@@ -1086,13 +1086,13 @@
                 return CssCollector;
 
             })();
-            uploadcare.tabsCss = new ns.CssCollector;
-            return defaults['_emptyKeyText'] = "<div class=\"uploadcare-dialog-message-center\">\n<div class=\"uploadcare-dialog-big-title\">Hello!</div>\n<div class=\"uploadcare-dialog-large-text\">\n  <div>Your <a class=\"uploadcare-link\" href=\"https://uploadcare.com/dashboard/\">public key</a> is not set.</div>\n  <div>Add this to the &lt;head&gt; tag to start uploading files:</div>\n  <div class=\"uploadcare-pre\">&lt;script&gt;\nUPLOADCARE_PUBLIC_KEY = 'your_public_key';\n&lt;/script&gt;</div>\n</div>\n</div>";
+            photolia.tabsCss = new ns.CssCollector;
+            return defaults['_emptyKeyText'] = "<div class=\"photolia-dialog-message-center\">\n<div class=\"photolia-dialog-big-title\">Hello!</div>\n<div class=\"photolia-dialog-large-text\">\n  <div>Your <a class=\"photolia-link\" href=\"https://photolia.com/dashboard/\">public key</a> is not set.</div>\n  <div>Add this to the &lt;head&gt; tag to start uploading files:</div>\n  <div class=\"photolia-pre\">&lt;script&gt;\nphotolia_PUBLIC_KEY = 'your_public_key';\n&lt;/script&gt;</div>\n</div>\n</div>";
         });
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.ar = {
                 uploading: 'الرجاء الإنتظار.... يتم الرفع',
                 loadingInfo: '...تحميل المعلومات',
@@ -1225,7 +1225,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.ar = function(n) {
                 var mod;
                 if (n === 0) {
@@ -1250,7 +1250,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.az = {
                 uploading: 'Yüklənilir... Lütfən, gözləyin.',
                 loadingInfo: 'İnfo yüklənilir...',
@@ -1381,7 +1381,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.az = function(n) {
                 return 'other';
             };
@@ -1389,7 +1389,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.ca = {
                 uploading: 'Carregant... Si us plau esperi.',
                 loadingInfo: 'Carregant informació...',
@@ -1519,7 +1519,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.ca = function(n) {
                 if (n === 1) {
                     return 'one';
@@ -1530,7 +1530,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.cs = {
                 uploading: 'Nahrávám... Malý moment.',
                 loadingInfo: 'Nahrávám informace...',
@@ -1671,7 +1671,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.cs = function(n) {
                 if (n === 1) {
                     return 'one';
@@ -1685,7 +1685,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.da = {
                 uploading: 'Uploader... Vent venligst.',
                 loadingInfo: 'Henter information...',
@@ -1799,7 +1799,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.da = function(n) {
                 if (n === 1) {
                     return 'one';
@@ -1810,7 +1810,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.de = {
                 uploading: 'Hochladen... Bitte warten.',
                 loadingInfo: 'Laden der Informationen...',
@@ -1940,7 +1940,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.de = function(n) {
                 if (n === 1) {
                     return 'one';
@@ -1951,7 +1951,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.en = {
                 uploading: 'Uploading... Please wait.',
                 loadingInfo: 'Loading info...',
@@ -2089,13 +2089,13 @@
                     },
                     footer: {
                         text: 'powered by',
-                        link: 'uploadcare'
+                        link: 'photolia'
                     }
                 }
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.en = function(n) {
                 if (n === 1) {
                     return 'one';
@@ -2106,7 +2106,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.es = {
                 uploading: 'Subiendo... Por favor espere.',
                 loadingInfo: 'Cargando información...',
@@ -2236,7 +2236,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.es = function(n) {
                 if (n === 1) {
                     return 'one';
@@ -2247,7 +2247,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.fr = {
                 uploading: 'Envoi en cours... Merci de patientier.',
                 loadingInfo: 'Chargement des informations...',
@@ -2377,7 +2377,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.fr = function(n) {
                 if (n === 1) {
                     return 'one';
@@ -2388,7 +2388,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.he = {
                 uploading: 'טוען... אנא המתן.',
                 loadingInfo: 'טוען מידע...',
@@ -2503,7 +2503,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.he = function(n) {
                 if (n === 1) {
                     return 'one';
@@ -2514,7 +2514,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.it = {
                 uploading: 'Caricamento in corso... Si prega di attendere.',
                 loadingInfo: 'Caricamento informazioni in corso...',
@@ -2644,7 +2644,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.it = function(n) {
                 if (n === 1) {
                     return 'one';
@@ -2655,7 +2655,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.ja = {
                 uploading: 'アップロードしています… 完了までお待ち下さい。',
                 loadingInfo: '読み込み中…',
@@ -2769,7 +2769,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.ja = function(n) {
                 return 'other';
             };
@@ -2777,7 +2777,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.lv = {
                 uploading: 'Augšupielādē... Lūdzu, gaidiet.',
                 errors: {
@@ -2822,7 +2822,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.lv = function(n) {
                 if (n === 0) {
                     return 'zero';
@@ -2836,7 +2836,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.nb = {
                 uploading: 'Laster opp... Vennligst vent.',
                 loadingInfo: 'Laster inn info...',
@@ -2951,7 +2951,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.nb = function(n) {
                 if (n === 1) {
                     return 'one';
@@ -2962,7 +2962,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.nl = {
                 uploading: 'Uploaden... Even geduld.',
                 loadingInfo: 'Laden informatie...',
@@ -3075,7 +3075,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.nl = function(n) {
                 if (n === 1) {
                     return 'one';
@@ -3086,7 +3086,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.pl = {
                 uploading: 'Przesyłanie... Proszę czekać.',
                 loadingInfo: 'Loading info...',
@@ -3217,7 +3217,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.pl = function(n) {
                 var _ref;
                 if (n === 1) {
@@ -3232,7 +3232,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.pt = {
                 uploading: 'Fazendo upload... Aguarde.',
                 loadingInfo: 'Carregando informações...',
@@ -3344,7 +3344,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.pt = function(n) {
                 if (n === 1) {
                     return 'one';
@@ -3355,7 +3355,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.ru = {
                 uploading: 'Идет загрузка',
                 loadingInfo: 'Загрузка информации...',
@@ -3487,7 +3487,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.ru = function(n) {
                 if (((n / 10 % 10 | 0) === 1) || (n % 10 === 0) || (n % 10 > 4)) {
                     return 'many';
@@ -3501,7 +3501,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.sv = {
                 uploading: 'Laddar... Var god vänta.',
                 loadingInfo: 'Laddar info...',
@@ -3631,7 +3631,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.sv = function(n) {
                 if (n === 1) {
                     return 'one';
@@ -3642,7 +3642,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.tr = {
                 uploading: 'Yükleniyor... Lütfen bekleyin.',
                 loadingInfo: 'Bilgiler yükleniyor...',
@@ -3770,7 +3770,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.tr = function(n) {
                 return 'other';
             };
@@ -3778,7 +3778,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.zhTW = {
                 uploading: '上傳中...請等待',
                 loadingInfo: '正在讀取資訊...',
@@ -3907,7 +3907,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.zhTW = function(n) {
                 return 'other';
             };
@@ -3915,7 +3915,7 @@
 
     }).call(this);
     (function() {
-        uploadcare.namespace('locale.translations', function(ns) {
+        photolia.namespace('locale.translations', function(ns) {
             return ns.zh = {
                 uploading: '上传中...请等待',
                 loadingInfo: '正在读取信息...',
@@ -4014,7 +4014,7 @@
             };
         });
 
-        uploadcare.namespace('locale.pluralize', function(ns) {
+        photolia.namespace('locale.pluralize', function(ns) {
             return ns.zh = function() {
                 return 'other';
             };
@@ -4024,9 +4024,9 @@
     (function() {
         var $, s, utils;
 
-        utils = uploadcare.utils, s = uploadcare.settings, $ = uploadcare.jQuery;
+        utils = photolia.utils, s = photolia.settings, $ = photolia.jQuery;
 
-        uploadcare.namespace('locale', function(ns) {
+        photolia.namespace('locale', function(ns) {
             var build, defaultLang, defaults, translate, _build;
             defaultLang = 'en';
             defaults = {
@@ -4090,9 +4090,9 @@
     (function() {
         var $, locale, utils;
 
-        locale = uploadcare.locale, utils = uploadcare.utils, $ = uploadcare.jQuery;
+        locale = photolia.locale, utils = photolia.utils, $ = photolia.jQuery;
 
-        uploadcare.namespace('templates', function(ns) {
+        photolia.namespace('templates', function(ns) {
             ns.JST = {};
             return ns.tpl = function(key, ctx) {
                 var fn;
@@ -4104,7 +4104,7 @@
                     return fn($.extend({
                         t: locale.t,
                         utils: utils,
-                        uploadcare: uploadcare
+                        photolia: photolia
                     }, ctx));
                 } else {
                     return '';
@@ -4113,186 +4113,186 @@
         });
 
     }).call(this);
-    uploadcare.templates.JST["circle-text"] = function(obj) {
+    photolia.templates.JST["circle-text"] = function(obj) {
         var __p = [],
             print = function() {
                 __p.push.apply(__p, arguments);
             };
         with(obj || {}) {
-            __p.push('<div class="uploadcare-widget-circle-back">\n  <div class="uploadcare-widget-circle-text"></div>\n</div>\n');
+            __p.push('<div class="photolia-widget-circle-back">\n  <div class="photolia-widget-circle-text"></div>\n</div>\n');
         }
         return __p.join('');
     };
-    uploadcare.templates.JST["dialog"] = function(obj) {
+    photolia.templates.JST["dialog"] = function(obj) {
         var __p = [],
             print = function() {
                 __p.push.apply(__p, arguments);
             };
         with(obj || {}) {
-            __p.push('<div class="uploadcare-dialog uploadcare-responsive-panel"><!--\n--><div class="uploadcare-dialog-inner-wrap">\n    <div class="uploadcare-dialog-close">×</div>\n    <div class="uploadcare-dialog-placeholder"></div>\n  </div>\n</div>\n');
+            __p.push('<div class="photolia-dialog photolia-responsive-panel"><!--\n--><div class="photolia-dialog-inner-wrap">\n    <div class="photolia-dialog-close">×</div>\n    <div class="photolia-dialog-placeholder"></div>\n  </div>\n</div>\n');
         }
         return __p.join('');
     };
-    uploadcare.templates.JST["panel"] = function(obj) {
+    photolia.templates.JST["panel"] = function(obj) {
         var __p = [],
             print = function() {
                 __p.push.apply(__p, arguments);
             };
         with(obj || {}) {
-            __p.push('<div class="uploadcare-dialog-panel">\n  <div class="uploadcare-dialog-tabs"></div>\n\n  <div class="uploadcare-panel-footer uploadcare-panel-footer__summary">\n    <div class="uploadcare-dialog-button uploadcare-dialog-source-base-show-files"\n         tabindex="0" role="button">\n      ', ('' + t('dialog.showFiles')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n      <div class="uploadcare-panel-footer-counter"></div>\n    </div>\n    <div class="uploadcare-dialog-button-success uploadcare-dialog-source-base-done"\n         tabindex="0" role="button">', ('' + t('dialog.done')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n    <div class="uploadcare-panel-footer-text"></div>\n  </div>\n</div>\n<div class="uploadcare-dialog-footer">\n  ', ('' + t('dialog.footer.text')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  <svg width="13" height="13" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"><title>Uploadcare Logo</title><g fill="none" fill-rule="evenodd"><path d="M-1-1h32v32H-1z"/><path d="M15 29.452c7.98 0 14.452-6.47 14.452-14.452C29.452 7.02 22.982.548 15 .548 7.02.548.548 7.018.548 15c0 7.98 6.47 14.452 14.452 14.452zm0-12.846c.887 0 1.606-.72 1.606-1.606 0-.887-.72-1.606-1.606-1.606-.887 0-1.606.72-1.606 1.606 0 .887.72 1.606 1.606 1.606z" fill="#FFD800"/></g></svg>\n  <a href="https://uploadcare.com/?utm_campaign=widget&utm_source=copyright&utm_medium=desktop&utm_content=', ('' + uploadcare.version).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '"\n     target="_blank">', ('' + t('dialog.footer.link')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</a>\n</div>\n');
+            __p.push('<div class="photolia-dialog-panel">\n  <div class="photolia-dialog-tabs"></div>\n\n  <div class="photolia-panel-footer photolia-panel-footer__summary">\n    <div class="photolia-dialog-button photolia-dialog-source-base-show-files"\n         tabindex="0" role="button">\n      ', ('' + t('dialog.showFiles')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n      <div class="photolia-panel-footer-counter"></div>\n    </div>\n    <div class="photolia-dialog-button-success photolia-dialog-source-base-done"\n         tabindex="0" role="button">', ('' + t('dialog.done')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n    <div class="photolia-panel-footer-text"></div>\n  </div>\n</div>\n<div class="photolia-dialog-footer">\n  ', ('' + t('dialog.footer.text')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  <svg width="13" height="13" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"><title>photolia Logo</title><g fill="none" fill-rule="evenodd"><path d="M-1-1h32v32H-1z"/><path d="M15 29.452c7.98 0 14.452-6.47 14.452-14.452C29.452 7.02 22.982.548 15 .548 7.02.548.548 7.018.548 15c0 7.98 6.47 14.452 14.452 14.452zm0-12.846c.887 0 1.606-.72 1.606-1.606 0-.887-.72-1.606-1.606-1.606-.887 0-1.606.72-1.606 1.606 0 .887.72 1.606 1.606 1.606z" fill="#FFD800"/></g></svg>\n  <a href="https://photolia.com/?utm_campaign=widget&utm_source=copyright&utm_medium=desktop&utm_content=', ('' + photolia.version).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '"\n     target="_blank">', ('' + t('dialog.footer.link')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</a>\n</div>\n');
         }
         return __p.join('');
     };
-    uploadcare.templates.JST["styles"] = function(obj) {
+    photolia.templates.JST["styles"] = function(obj) {
         var __p = [],
             print = function() {
                 __p.push.apply(__p, arguments);
             };
         with(obj || {}) {
-            __p.push('\n\n\n\n\n\n\n\n.uploadcare-dialog-tab:before,.uploadcare-dialog-tab:hover:before,.uploadcare-dialog-disabled-tab:hover:before{background-image:url("', settings.scriptBase, '/images/tab-icons.png");background-size:50px}.uploadcare-dialog-tab_current:before,.uploadcare-dialog-tab_current:hover:before{background-image:url("', settings.scriptBase, '/images/tab-icons-active.png");background-size:50px}.uploadcare-dialog-file-sources:before{background-image:url("', settings.scriptBase, '/images/arrow.png")}.uploadcare-remove{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAQAAAAngNWGAAABM0lEQVQoz5VTvW7CMBC2kHivQsjrZGRjaB6lXWCJbWScIT8PYN0GQ7s6FUUKL8CA2suR2C4FlfqkyL77cuf7/B1jbp3GdmIW1VIVKq9ezMI+ncbs92omNeeQgYQ1msQdh5o30x+g82ibCAysr4yDgG1yHjngLhkyXVuXeZcMRSNJMI4mAwinGl2siaiFWncOAW/QgO4vwCGHD/QI2tca27LxEDrAF7QE5fg94ungfrMxM89ZXyqnYAsbtG53RM/lKhmYlJUr6XrUPbQlmHY8SChXTBUhHRsCXfKGdKmCKe2PApQDKmokAJavD5b2zei+hTvNDPQI+HR5PD3C0+MJf4c95vCE79ETEI5POPvzCWf/EwXJbH5XZvNAZqSh6U3hRjc0jqMQmxRHoVRltTSpjcNR+AZwwvykEau0BgAAAABJRU5ErkJggg==)}.uploadcare-file-item__error:before{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAABIklEQVR42q3Vv2rCUBTHcaEQH825TdLl9hl0FsFdV7s5uXSpb+DoEziV6JCgATdR02D9E09/R64KF3NPbQx84BJOvgRyuSktK5VbHHiFDwhhCwl86Xu+nimZbsWeYQIkmMCLLfgELaA7tfSzRlCISVEz6AEV5J2DDszyBtNGg7L5/CSt123BGBwOKqA8WRzT+cqmU+kt3zj4aQ0myTW4WEjBPgcj29B+NLoE98OhFIw4+GMb2vR6l+Cm25WCWw6ubUPftRrR8XiSVKt/CgZADxKJH2XlurQbDBivxY8ibpu02SR98VrcNuLGXitFh/GYDkHAa2ljlznIfKCCfPNwaBeItfOOr84/Yu/m8WVy7zhgPfHE1hxQ0IcQdlqo76m8X8Avwkyxg4iIuCEAAAAASUVORK5CYII=)}.uploadcare-file-icon{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAQAAAAngNWGAAABD0lEQVQoFQXBPa5OARQF0LXPvfKS9wo/hegMQUzEJESiUIpOoxOlRKJDIgqVUZiNqPGdba0AAPLj48Mn/8ApgEcPOAGArx/uPVvrEFVRA04A+PTu+vk1BlSwLuAE4Pubvy+vHGAFxABOgC+v/ryO24oYUVUDGODzi+PtjfuuXBBUxG8XASd8e3rz/o5rY60YwVjXKAj8/HXrblDFIAKCehxOOHcxCggWUTHghJYqIqIigoqCEyCKEcXFgAjghCAWi1EDIlgwABWxoIhYaxUMsIo4BEHBRR1ggMMogoqq4jCAgVo1VhGMgFjACQUjCKIqIigYqKiLILiogFULBkbUWhSDqKpYMFAFwaJGUVUH+A8ToG9OM8KqQQAAAABJRU5ErkJggg==)}.uploadcare-zoomable-icon:after{background-image:url("', settings.scriptBase, '/images/zoom@2x.png")}.uploadcare-dialog-error-tab-illustration{background-image:url("', settings.scriptBase, '/images/error-default.png")}.uploadcare-dialog-camera-holder .uploadcare-dialog-error-tab-illustration,.uploadcare-dialog-error-tab-image .uploadcare-dialog-error-tab-illustration{background-image:url("', settings.scriptBase, '/images/error-image.png")}.uploadcare-dialog{background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQIHWMw/AQAAVcBJCiBozgAAAAASUVORK5CYII=);background:rgba(48,48,48,0.7)}@media(-webkit-min-device-pixel-ratio:1.5),(min-resolution:144dpi){.uploadcare-dialog-tab:before,.uploadcare-dialog-tab:hover:before,.uploadcare-dialog-disabled-tab:hover:before{background-image:url("', settings.scriptBase, '/images/tab-icons@2x.png")}.uploadcare-dialog-tab_current:before,.uploadcare-dialog-tab_current:hover:before{background-image:url("', settings.scriptBase, '/images/tab-icons-active@2x.png")}}html.uploadcare-dialog-opened{overflow:hidden}.uploadcare-dialog{font-family:"Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;position:fixed;top:0;left:0;width:100%;height:100%;z-index:10000;overflow:auto;white-space:nowrap;text-align:center}.uploadcare-dialog:before{display:inline-block;vertical-align:middle;content:\'\';height:100%;position:static;width:0}.uploadcare-dialog *{margin:0;padding:0}.uploadcare-dialog .uploadcare-dialog-panel{border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,0.35)}.uploadcare-dialog{-webkit-transition:opacity .33s cubic-bezier(0.05,0.7,0.25,1);transition:opacity .33s cubic-bezier(0.05,0.7,0.25,1);opacity:0}.uploadcare-dialog .uploadcare-dialog-inner-wrap{-webkit-transition:-webkit-transform .33s cubic-bezier(0.05,0.7,0.25,1);transition:-webkit-transform .33s cubic-bezier(0.05,0.7,0.25,1);transition:transform .33s cubic-bezier(0.05,0.7,0.25,1);transition:transform .33s cubic-bezier(0.05,0.7,0.25,1),-webkit-transform .33s cubic-bezier(0.05,0.7,0.25,1);-webkit-transform:scale(0.8);-ms-transform:scale(0.8);transform:scale(0.8);-webkit-transform-origin:50% 100%;-ms-transform-origin:50% 100%;transform-origin:50% 100%}.uploadcare-dialog.uploadcare-active{opacity:1}.uploadcare-dialog.uploadcare-active .uploadcare-dialog-inner-wrap{-webkit-transform:none;-ms-transform:none;transform:none}.uploadcare-dialog-inner-wrap{display:inline-block;vertical-align:middle;white-space:normal;text-align:left;box-sizing:border-box;position:relative;width:100%;min-width:760px;max-width:944px;padding:0 33px 0 11px}.uploadcare-dialog-close{width:33px;height:33px;line-height:33px;font-size:29.7px;font-weight:bold;color:#fff;cursor:pointer;position:absolute;text-align:center;right:0}.uploadcare-dialog-panel{overflow:hidden;position:relative;background:#efefef;font-weight:normal;padding-left:75px;box-sizing:border-box}.uploadcare-dialog-panel :focus{outline:2px dotted #0094c0}.uploadcare-dialog-panel :active,.uploadcare-dialog-panel .uploadcare-mouse-focused:focus{outline:0}.uploadcare-dialog-panel.uploadcare-panel-hide-tabs{padding-left:0}.uploadcare-dialog-tabs{box-sizing:border-box;width:75px;height:616px;margin-left:-75px;float:left;background:#dee0e1;border-right:1px solid #c5cace}.uploadcare-panel-hide-tabs .uploadcare-dialog-tabs{display:none}.uploadcare-dialog-tab{box-sizing:border-box;height:56px;position:relative;border-bottom:1px solid #c5cace;cursor:pointer}.uploadcare-dialog-tab .uploadcare-dialog-icon,.uploadcare-dialog-tab:before{box-sizing:border-box;position:absolute;top:50%;left:50%;display:inline-block;width:50px;height:50px;margin:-25px;opacity:.66}.uploadcare-dialog-tab:before{content:\'\'}.uploadcare-dialog-tab:hover{background-color:#e5e7e8}.uploadcare-dialog-tab:hover .uploadcare-dialog-icon{opacity:1}.uploadcare-dialog-tab:hover:before{opacity:1}.uploadcare-dialog-tab_current{margin-right:-1px;border-right:1px solid #efefef}.uploadcare-dialog-tab_current,.uploadcare-dialog-tab_current:hover{background-color:#efefef}.uploadcare-dialog-tab_current .uploadcare-dialog-icon{opacity:1}.uploadcare-dialog-tab_current:before{opacity:1}.uploadcare-dialog-tab_hidden{display:none !important}.uploadcare-dialog-disabled-tab{cursor:default}.uploadcare-dialog-disabled-tab:hover{background-color:#dee0e1}.uploadcare-dialog-tab-preview .uploadcare-widget-circle{padding:10px}.uploadcare-dialog-tab-preview .uploadcare-widget-circle--canvas{color:#828689;border-color:#bfbfbf}.uploadcare-dialog-tab-preview.uploadcare-dialog-tab_current .uploadcare-widget-circle--canvas{color:#d0bf26;border-color:#e1e5e7}.uploadcare-dialog-tab-preview:before{display:none}.uploadcare-dialog-tab-file:before{background-position:0 -50px}.uploadcare-dialog-tab-url:before{background-position:0 -100px}.uploadcare-dialog-tab-facebook:before{background-position:0 -150px}.uploadcare-dialog-tab-dropbox:before{background-position:0 -200px}.uploadcare-dialog-tab-gdrive:before{background-position:0 -250px}.uploadcare-dialog-tab-instagram:before{background-position:0 -300px}.uploadcare-dialog-tab-vk:before{background-position:0 -350px}.uploadcare-dialog-tab-evernote:before{background-position:0 -400px}.uploadcare-dialog-tab-box:before{background-position:0 -450px}.uploadcare-dialog-tab-skydrive:before{background-position:0 -500px}.uploadcare-dialog-tab-flickr:before{background-position:0 -550px}.uploadcare-dialog-tab-camera:before{background-position:0 -600px}.uploadcare-dialog-tab-huddle:before{background-position:0 -650px}.uploadcare-dialog-tabs-panel{position:relative;display:none;box-sizing:border-box;height:616px;line-height:22px;font-size:16px;color:#000}.uploadcare-dialog-multiple .uploadcare-dialog-tabs-panel{height:550px}.uploadcare-dialog-tabs-panel .uploadcare-dialog-input{box-sizing:border-box;width:100%;height:44px;margin-bottom:22px;padding:11px 12.5px;font-family:inherit;font-size:16px;border:1px solid #c5cace;background:#fff;color:#000}.uploadcare-dialog-tabs-panel_current{display:block}.uploadcare-pre{white-space:pre;font-family:monospace;margin:22px auto;padding:22px 25px;background-color:#fff;border:1px solid #c5cace;border-radius:3px;text-align:left;font-size:15px;line-height:22px}.uploadcare-dialog-footer{font-size:13px;line-height:1.4em;text-align:center;color:white;margin:15px}.uploadcare-dialog .uploadcare-dialog-footer svg{vertical-align:middle;padding:0 2px}.uploadcare-dialog .uploadcare-dialog-footer a{color:white;text-decoration:none}.uploadcare-dialog .uploadcare-dialog-footer a:hover{text-decoration:underline}.uploadcare-dialog-title{font-size:22px;line-height:1;margin-bottom:22px}.uploadcare-dialog-title.uploadcare-error{color:red}.uploadcare-dialog-title2{font-size:20px;line-height:1;padding-bottom:11px}.uploadcare-dialog-big-title{font-size:40px;font-weight:bold;line-height:1em;margin-bottom:50px}.uploadcare-dialog-label{font-size:15px;line-height:25px;margin-bottom:12.5px;word-wrap:break-word}.uploadcare-dialog-large-text{font-size:20px;font-weight:normal;line-height:1.5em}.uploadcare-dialog-large-text .uploadcare-pre{display:inline-block;font-size:18px}.uploadcare-dialog-section{margin-bottom:22px}.uploadcare-dialog-normal-text{font-size:13px;color:#545454}.uploadcare-dialog-button{display:inline-block;font-size:13px;line-height:30px;padding:0 12.5px;margin-right:.5em;border:solid 1px;border-radius:3px;cursor:pointer;color:#444}.uploadcare-dialog-button,.uploadcare-dialog-button[disabled]:active,.uploadcare-dialog-button.uploadcare-disabled-el:active,.uploadcare-dialog-button[disabled]:hover,.uploadcare-dialog-button.uploadcare-disabled-el:hover{background:#f3f3f3;background:-webkit-linear-gradient(#f5f5f5,#f1f1f1);background:linear-gradient(#f5f5f5,#f1f1f1);box-shadow:none;border-color:#dcdcdc}.uploadcare-dialog-button:hover{background:#f9f9f9;background:-webkit-linear-gradient(#fbfbfb,#f6f6f6);background:linear-gradient(#fbfbfb,#f6f6f6);box-shadow:inset 0 -1px 3px rgba(0,0,0,0.05)}.uploadcare-dialog-button:active{background:#f3f3f3;background:-webkit-linear-gradient(#f5f5f5,#f1f1f1);background:linear-gradient(#f5f5f5,#f1f1f1);box-shadow:inset 0 2px 2px rgba(0,0,0,0.05)}.uploadcare-dialog-button[disabled],.uploadcare-dialog-button.uploadcare-disabled-el{cursor:default;opacity:.6}.uploadcare-dialog-button:active,.uploadcare-dialog-button:hover{border-color:#cbcbcb}.uploadcare-dialog-button-success{display:inline-block;font-size:13px;line-height:30px;padding:0 12.5px;margin-right:.5em;border:solid 1px;border-radius:3px;cursor:pointer;color:#fff}.uploadcare-dialog-button-success,.uploadcare-dialog-button-success[disabled]:active,.uploadcare-dialog-button-success.uploadcare-disabled-el:active,.uploadcare-dialog-button-success[disabled]:hover,.uploadcare-dialog-button-success.uploadcare-disabled-el:hover{background:#3886eb;background:-webkit-linear-gradient(#3b8df7,#347fdf);background:linear-gradient(#3b8df7,#347fdf);box-shadow:none;border-color:#266fcb}.uploadcare-dialog-button-success:hover{background:#337ad6;background:-webkit-linear-gradient(#3986ea,#2c6dc2);background:linear-gradient(#3986ea,#2c6dc2);box-shadow:inset 0 -1px 3px rgba(0,0,0,0.05)}.uploadcare-dialog-button-success:active{background:#3178d3;background:-webkit-linear-gradient(#3680e1,#2c6fc5);background:linear-gradient(#3680e1,#2c6fc5);box-shadow:inset 0 2px 2px rgba(0,0,0,0.05)}.uploadcare-dialog-button-success[disabled],.uploadcare-dialog-button-success.uploadcare-disabled-el{cursor:default;opacity:.6}.uploadcare-dialog-button-success:active,.uploadcare-dialog-button-success:hover{border-color:#266eca #1f62b7 #1753a1}.uploadcare-dialog-button-success:hover{box-shadow:inset 0 -1px 3px rgba(22,82,160,0.5)}.uploadcare-dialog-button-success:active{box-shadow:inset 0 1px 3px rgba(22,82,160,0.4)}.uploadcare-dialog-big-button{border-radius:100px;font-size:20px;font-weight:normal;letter-spacing:1px;color:white;line-height:33px;border:solid 1px #276fcb;text-shadow:0 -1px #2a7ce5;display:inline-block;padding:16.5px 2em;cursor:pointer;box-shadow:inset 0 -2px #1f66c1;background:#458eee;background:-webkit-linear-gradient(#4892f6,#4289e6);background:linear-gradient(#4892f6,#4289e6)}.uploadcare-dialog-big-button:hover{box-shadow:inset 0 -2px #1652a0;background:#337ad7;background:-webkit-linear-gradient(#3986eb,#2c6dc2);background:linear-gradient(#3986eb,#2c6dc2)}.uploadcare-dialog-big-button:active{box-shadow:inset 0 2px #2561b9;background:#2c6ec3;background:-webkit-linear-gradient(#2c6ec3,#2c6ec3);background:linear-gradient(#2c6ec3,#2c6ec3)}.uploadcare-dialog-preview-image-wrap{white-space:nowrap;text-align:center;width:100%;height:462px}.uploadcare-dialog-preview-image-wrap:before{display:inline-block;vertical-align:middle;content:\'\';height:100%;position:static;width:0}.uploadcare-dialog-preview--with-sizes .uploadcare-dialog-preview-image-wrap{position:relative;top:-40px;height:422px}.uploadcare-dialog-preview-image{display:inline-block;vertical-align:middle;white-space:normal;max-width:100%;max-height:100%}.uploadcare-dialog-tabs-panel-preview.uploadcare-dialog-tabs-panel_current ~ .uploadcare-panel-footer{display:none}.uploadcare-panel-footer{box-sizing:border-box;background:#fff3be;border-top:1px solid #efe2a9;height:66px;padding:17px 25px 0}.uploadcare-panel-footer .uploadcare-dialog-button-success{float:right}.uploadcare-panel-footer .uploadcare-dialog-button{float:left}.uploadcare-panel-footer .uploadcare-dialog-button-success,.uploadcare-panel-footer .uploadcare-dialog-button{min-width:100px;text-align:center;margin-right:0}.uploadcare-panel-footer .uploadcare-error{color:red}.uploadcare-panel-footer-text{text-align:center;color:#85732c;font-size:15px;line-height:32px}.uploadcare-dialog-message-center{text-align:center;padding-top:110px}.uploadcare-dialog-preview-center{text-align:center;padding-top:176px}.uploadcare-dialog-preview-circle{width:66px;height:66px;display:inline-block;margin-bottom:22px}.uploadcare-dialog-error-tab-wrap{height:100%;text-align:center;white-space:nowrap}.uploadcare-dialog-error-tab-wrap:before{display:inline-block;vertical-align:middle;content:\'\';height:100%;position:static;width:0}.uploadcare-dialog-error-tab-wrap .uploadcare-dialog-title{margin-bottom:12px}.uploadcare-dialog-error-tab-wrap .uploadcare-dialog-normal-text{margin-bottom:38px}.uploadcare-dialog-error-tab-wrap .uploadcare-dialog-button-success{margin:0}.uploadcare-dialog-error-tab-wrap2{display:inline-block;vertical-align:middle;white-space:normal;margin-top:-22px}.uploadcare-dialog-error-tab-illustration{display:inline-block;width:170px;height:120px;background-position:center;background-repeat:no-repeat;margin-bottom:38px}.uploadcare-if-draganddrop{display:none}.uploadcare-draganddrop .uploadcare-if-no-draganddrop{display:none}.uploadcare-draganddrop .uploadcare-if-draganddrop{display:block}.uploadcare-draganddrop .uploadcare-dialog-file-drop-area{border:dashed 3px #c5cacd;background:rgba(255,255,255,0.64)}.uploadcare-draganddrop .uploadcare-dialog-file-title{color:#dee0e1;text-shadow:0 1px white;margin-top:0}.uploadcare-dialog-file-drop-area{width:100%;height:100%;box-sizing:border-box;border:0;text-align:center;border-radius:3px;padding-top:70px}.uploadcare-dialog-file-drop-area .uploadcare-dialog-big-button{margin-top:11px;margin-bottom:55px}.uploadcare-dialog-file-title{font-size:40px;line-height:1;color:black;font-weight:bold;margin:66px 0}.uploadcare-dialog-file-or{font-size:13px;color:#8f9498;margin-bottom:33px}.uploadcare-dialog-file-sources{position:relative;display:inline-block;padding:0 80px 0 100px;line-height:2em}.uploadcare-dialog-file-sources:before{background-repeat:no-repeat;content:\'\';display:block;position:absolute;width:67px;height:44px;padding:0;top:-30px;left:10px}.uploadcare-dialog-file-source{display:inline;font-size:15px;margin-right:.2em;cursor:pointer;font-weight:300;white-space:nowrap}.uploadcare-dialog-file-source:after{content:\'\\00B7\';color:#b7babc;margin-left:.5em}.uploadcare-dialog-file-source:last-child:after{display:none}.uploadcare-dragging .uploadcare-dialog-file-or,.uploadcare-dragging .uploadcare-dialog-file-sources,.uploadcare-dragging .uploadcare-dialog-file-drop-area .uploadcare-dialog-big-button{display:none}.uploadcare-dragging .uploadcare-dialog-file-drop-area{background-color:#f0f0f0;border-color:#b3b5b6;padding-top:264px}.uploadcare-dragging .uploadcare-dialog-file-title{color:#707478}.uploadcare-dragging.uploadcare-dialog-file-drop-area{background-color:#f2f7fe;border-color:#438ae7}.uploadcare-dragging.uploadcare-dialog-file-drop-area .uploadcare-dialog-file-title{color:#438ae7}.uploadcare-dialog-camera-holder{white-space:nowrap;text-align:center;height:528px}.uploadcare-dialog-camera-holder:before{display:inline-block;vertical-align:middle;content:\'\';height:100%;position:static;width:0}.uploadcare-dialog-camera-holder .uploadcare-dialog-normal-text{margin-bottom:38px}.uploadcare-dialog-multiple .uploadcare-dialog-camera-holder{height:462px}.uploadcare-dialog-camera-video{display:inline-block;vertical-align:middle;white-space:normal;display:none;max-width:100%;max-height:528px;-webkit-transition:-webkit-transform .8s cubic-bezier(0.23,1,0.32,1);transition:-webkit-transform .8s cubic-bezier(0.23,1,0.32,1);transition:transform .8s cubic-bezier(0.23,1,0.32,1);transition:transform .8s cubic-bezier(0.23,1,0.32,1),-webkit-transform .8s cubic-bezier(0.23,1,0.32,1)}.uploadcare-dialog-multiple .uploadcare-dialog-camera-video{max-height:462px}.uploadcare-dialog-camera--mirrored{-webkit-transform:scale(-1,1);-ms-transform:scale(-1,1);transform:scale(-1,1)}.uploadcare-dialog-camera-message{display:inline-block;vertical-align:middle;white-space:normal;display:none;max-width:450px}.uploadcare-dialog-camera-controls{margin-top:17px;text-align:center}.uploadcare-dialog-camera-mirror{position:absolute;margin-right:0;right:25px}.uploadcare-dialog-camera-capture,.uploadcare-dialog-camera-retry,.uploadcare-dialog-camera-mirror{display:none}.uploadcare-dialog-camera-requested .uploadcare-dialog-camera-message{display:inline-block}.uploadcare-dialog-camera-not-found{display:none}.uploadcare-dialog-camera-not-founded .uploadcare-dialog-camera-please-allow{display:none}.uploadcare-dialog-camera-not-founded .uploadcare-dialog-camera-not-found{display:block}.uploadcare-dialog-camera-denied .uploadcare-dialog-camera-retry{display:inline-block}.uploadcare-dialog-camera-ready .uploadcare-dialog-camera-video,.uploadcare-dialog-camera-ready .uploadcare-dialog-camera-capture,.uploadcare-dialog-camera-ready .uploadcare-dialog-camera-mirror{display:inline-block}.uploadcare-file-list{height:550px;overflow:auto;position:relative;margin:0 -25px -22px 0}.uploadcare-dialog-multiple .uploadcare-file-list{height:484px}.uploadcare-file-list_table .uploadcare-file-item{border-top:1px solid #e3e3e3;border-bottom:1px solid #e3e3e3;margin-bottom:-1px;display:table;table-layout:fixed;width:100%;padding:10px 0;min-height:20px}.uploadcare-file-list_table .uploadcare-file-item>*{box-sizing:content-box;display:table-cell;vertical-align:middle;padding-right:20px}.uploadcare-file-list_table .uploadcare-file-item:last-child{margin-bottom:0}.uploadcare-file-list_table .uploadcare-file-item:hover{background:#ececec}.uploadcare-file-list_table .uploadcare-file-item__preview{width:55px;padding-right:10px}.uploadcare-file-list_table .uploadcare-file-item__preview>img{height:55px}.uploadcare-file-list_table .uploadcare-file-item__size{width:3.5em}.uploadcare-file-list_table .uploadcare-file-item__progressbar{width:80px}.uploadcare-file-list_table .uploadcare-zoomable-icon:after{width:55px}.uploadcare-file-list_tiles .uploadcare-file-item{text-align:left;position:relative;display:inline-block;vertical-align:top;width:170px;min-height:170px;padding:0 20px 10px 0}.uploadcare-file-list_tiles .uploadcare-file-item>*{padding-bottom:10px}.uploadcare-file-list_tiles .uploadcare-file-item__name{padding-top:10px}.uploadcare-file-list_tiles .uploadcare-file-item__remove{position:absolute;top:0;right:10px}.uploadcare-file-list_tiles .uploadcare-file-item__preview{white-space:nowrap;width:170px;height:170px;padding-bottom:0}.uploadcare-file-list_tiles .uploadcare-file-item__preview:before{display:inline-block;vertical-align:middle;content:\'\';height:100%;position:static;width:0}.uploadcare-file-list_tiles .uploadcare-file-item__preview img{display:inline-block;vertical-align:middle;white-space:normal}.uploadcare-file-list_tiles .uploadcare-file-item_uploading .uploadcare-file-item__preview,.uploadcare-file-list_tiles .uploadcare-file-item_error .uploadcare-file-item__preview{display:none}.uploadcare-file-list_tiles .uploadcare-file-item_uploaded .uploadcare-file-item__size,.uploadcare-file-list_tiles .uploadcare-file-item_uploaded .uploadcare-file-item__name{display:none}.uploadcare-file-item__error:before,.uploadcare-file-icon{content:\'\';display:inline-block;width:20px;height:20px;margin:-3.5px .7em -3.5px 0}.uploadcare-file-item{font-size:13px;line-height:1.2}.uploadcare-file-item:hover .uploadcare-file-item__remove{visibility:visible}.uploadcare-file-item:hover .uploadcare-zoomable-icon:after{display:block}.uploadcare-file-item_uploading .uploadcare-file-item__error{display:none}.uploadcare-file-item_uploaded .uploadcare-file-item__progressbar,.uploadcare-file-item_uploaded .uploadcare-file-item__error{display:none}.uploadcare-file-item_error .uploadcare-file-item__size,.uploadcare-file-item_error .uploadcare-file-item__progressbar{display:none}.uploadcare-file-item__preview{text-align:center;line-height:0}.uploadcare-file-item__preview>img{display:inline-block;width:auto;height:auto;max-width:100%;max-height:100%}.uploadcare-file-item__name{width:100%;word-wrap:break-word}.uploadcare-file-item__error{width:200px;color:#f5444b}.uploadcare-file-item__remove{visibility:hidden;width:20px;text-align:right;line-height:0}.uploadcare-remove{width:20px;height:20px;cursor:pointer}.uploadcare-zoomable-icon{position:relative;cursor:pointer}.uploadcare-zoomable-icon:after{content:\'\';position:absolute;top:0;left:0;display:none;width:100%;height:100%;background-size:45px 45px;background-repeat:no-repeat;background-position:center}.uploadcare-progressbar{width:100%;height:8px;background:#e0e0e0;border-radius:100px}.uploadcare-progressbar__value{height:100%;background:#d6b849;border-radius:100px}.uploadcare-file-icon{margin:0}.uploadcare-dialog-padding{padding:22px 25px}.uploadcare-dialog-remote-iframe-wrap{overflow:auto;-webkit-overflow-scrolling:touch}.uploadcare-dialog-remote-iframe{display:block;width:100%;height:100%;border:0;opacity:0}.uploadcare-panel-footer__summary{display:none}.uploadcare-dialog-multiple .uploadcare-panel-footer__summary{display:block}.uploadcare-panel-footer-counter{display:none}.uploadcare-hidden{display:none}.uploadcare-if-mobile{display:none}@media screen and (max-width:760px){.uploadcare-dialog-opened{overflow:visible !important;position:static !important;width:auto !important;height:auto !important;min-width:0 !important;background:#efefef !important}body.uploadcare-dialog-opened>.uploadcare-inactive,body.uploadcare-dialog-opened>:not(.uploadcare-dialog){display:none !important}.uploadcare-if-mobile{display:block}.uploadcare-if-no-mobile{display:none}.uploadcare-dialog{position:absolute;overflow:visible;-webkit-text-size-adjust:100%}.uploadcare-dialog:before{display:none}.uploadcare-dialog-inner-wrap{padding:0;min-width:310px;height:100%}.uploadcare-dialog-close{position:fixed;z-index:2;color:#000;width:50px;height:50px;line-height:45px}.uploadcare-dialog-footer{display:none}.uploadcare-responsive-panel .uploadcare-dialog-panel{overflow:visible;height:100%;padding:50px 0 0;border-radius:0;box-shadow:none}.uploadcare-responsive-panel .uploadcare-dialog-panel.uploadcare-panel-hide-tabs{padding-top:0}.uploadcare-responsive-panel .uploadcare-dialog-tabs-panel{height:auto}.uploadcare-responsive-panel .uploadcare-dialog-remote-iframe-wrap{overflow:visible;height:100%}.uploadcare-responsive-panel .uploadcare-dialog-padding{padding:22px 15px}.uploadcare-responsive-panel .uploadcare-dialog-preview-image-wrap{top:auto;height:auto;padding-bottom:50px}.uploadcare-responsive-panel .uploadcare-dialog-preview-image{max-height:450px}.uploadcare-responsive-panel .uploadcare-file-list{height:auto;margin:0 -15px 0 0}.uploadcare-responsive-panel .uploadcare-file-list_table .uploadcare-file-item>*{padding-right:10px}.uploadcare-responsive-panel .uploadcare-file-list_table .uploadcare-file-item__progressbar{width:40px}.uploadcare-responsive-panel .uploadcare-file-list_tiles .uploadcare-file-item{width:140px;min-height:140px;padding-right:10px}.uploadcare-responsive-panel .uploadcare-file-list_tiles .uploadcare-file-item__preview{width:140px;height:140px}.uploadcare-responsive-panel .uploadcare-file-list_tiles .uploadcare-file-item__remove{right:10px}.uploadcare-responsive-panel .uploadcare-file-item__remove{visibility:visible}.uploadcare-responsive-panel .uploadcare-dialog-file-sources,.uploadcare-responsive-panel .uploadcare-dialog-file-or{display:none}.uploadcare-responsive-panel .uploadcare-dialog-file-title{display:none}.uploadcare-responsive-panel .uploadcare-dialog-file-drop-area{padding-top:0;border:0;background:transparent}.uploadcare-responsive-panel .uploadcare-dialog-big-button{margin:110px 0 0}.uploadcare-responsive-panel .uploadcare-clouds-tip{color:#909498;font-size:.75em;line-height:1.4;text-align:left;padding:10px 0 0 50px}.uploadcare-responsive-panel .uploadcare-clouds-tip:before{background-image:url("', settings.scriptBase, '/images/arrow.png");background-repeat:no-repeat;background-size:51px 33px;content:\'\';position:absolute;margin:-20px -36px;display:block;width:28px;height:30px}.uploadcare-responsive-panel .uploadcare-dialog-opened-tabs .uploadcare-dialog-tab.uploadcare-dialog-tab-camera{display:none}.uploadcare-responsive-panel .uploadcare-dialog-camera-holder{height:auto}.uploadcare-responsive-panel .uploadcare-dialog-camera-mirror{right:15px}.uploadcare-responsive-panel .uploadcare-panel-footer{position:fixed;left:0;bottom:0;width:100%;min-width:310px;height:50px;padding:9px 15px 0;background:rgba(255,243,190,0.95)}.uploadcare-responsive-panel .uploadcare-panel-footer-text{display:none}.uploadcare-responsive-panel .uploadcare-panel-footer-counter{display:inline}.uploadcare-responsive-panel .uploadcare-dialog-multiple.uploadcare-dialog-panel{padding-bottom:50px}.uploadcare-responsive-panel .uploadcare-dialog-multiple .uploadcare-dialog-remote-iframe-wrap:after{content:\'\';display:block;height:50px}.uploadcare-responsive-panel .uploadcare-dialog-multiple .uploadcare-dialog-padding{padding-bottom:72px}.uploadcare-responsive-panel .uploadcare-dialog-tabs{position:fixed;top:0;left:0;width:100%;min-width:310px;height:auto;float:none;margin:0;z-index:1;background:transparent}.uploadcare-responsive-panel .uploadcare-dialog-tab{display:none;height:50px;white-space:nowrap;background:#dee0e1}.uploadcare-responsive-panel .uploadcare-dialog-tab .uploadcare-dialog-icon,.uploadcare-responsive-panel .uploadcare-dialog-tab:before{position:static;margin:0 6px;vertical-align:middle;opacity:1}.uploadcare-responsive-panel .uploadcare-dialog-tab_current{display:block;background:rgba(239,239,239,0.95)}.uploadcare-responsive-panel .uploadcare-dialog-tab:after{content:attr(title);font-size:20px;vertical-align:middle}.uploadcare-responsive-panel .uploadcare-dialog-opened-tabs .uploadcare-dialog-tabs-panel_current,.uploadcare-responsive-panel .uploadcare-dialog-opened-tabs .uploadcare-panel-footer{display:none}.uploadcare-responsive-panel .uploadcare-dialog-opened-tabs .uploadcare-dialog-tabs{position:absolute;z-index:3}.uploadcare-responsive-panel .uploadcare-dialog-opened-tabs .uploadcare-dialog-tab{display:block}.uploadcare-responsive-panel .uploadcare-dialog-opened-tabs .uploadcare-dialog-tab_current{background:#efefef}.uploadcare-responsive-panel .uploadcare-dialog-panel:not(.uploadcare-dialog-opened-tabs) .uploadcare-dialog-tab_current{text-align:center}.uploadcare-responsive-panel .uploadcare-dialog-panel:not(.uploadcare-dialog-opened-tabs) .uploadcare-dialog-tab_current:after{content:\'\';position:absolute;top:16px;left:14px;display:block;width:22px;height:18px;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAOCAQAAAD+6Ta3AAAARklEQVR4Ae3SsRFEIQhAwW1IR2s3s6zTGUN+AxdK5tucAIBmOuKSY2pQbHHZVhgiweAnEixW1uC0VdSU41Xo19+te73+9AGOg1FzTMH13gAAAABJRU5ErkJggg==);background-size:22px}.uploadcare-responsive-panel .uploadcare-crop-sizes{top:auto;margin-bottom:15px}.uploadcare-responsive-panel .uploadcare-crop-size{margin:0 10px}}.uploadcare-crop-widget.jcrop-holder{direction:ltr;text-align:left;z-index:0}.uploadcare-crop-widget .jcrop-vline,.uploadcare-crop-widget .jcrop-hline,.uploadcare-crop-widget .jcrop-handle{position:absolute;font-size:0;background-color:white;box-shadow:0 0 0 1px rgba(0,0,0,0.2);z-index:320}.uploadcare-crop-widget .jcrop-vline{height:100%;width:1px !important}.uploadcare-crop-widget .jcrop-hline{height:1px !important;width:100%}.uploadcare-crop-widget .jcrop-vline.right{right:0}.uploadcare-crop-widget .jcrop-hline.bottom{bottom:0}.uploadcare-crop-widget .jcrop-tracker{height:100%;width:100%;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.uploadcare-crop-widget .jcrop-handle{border-radius:50%;width:13px;height:13px;z-index:330}.uploadcare-crop-widget .jcrop-handle:before,.uploadcare-crop-widget .jcrop-handle:after{content:"";position:absolute;display:block;width:1px;height:1px;background:white}.uploadcare-crop-widget .jcrop-handle:before{width:3px;top:6px}.uploadcare-crop-widget .jcrop-handle:after{height:3px;left:6px}.uploadcare-crop-widget .jcrop-handle.ord-nw:before,.uploadcare-crop-widget .jcrop-handle.ord-sw:before{left:12px}.uploadcare-crop-widget .jcrop-handle.ord-ne:before,.uploadcare-crop-widget .jcrop-handle.ord-se:before{left:-2px}.uploadcare-crop-widget .jcrop-handle.ord-nw:after,.uploadcare-crop-widget .jcrop-handle.ord-ne:after{top:12px}.uploadcare-crop-widget .jcrop-handle.ord-sw:after,.uploadcare-crop-widget .jcrop-handle.ord-se:after{top:-2px}.uploadcare-crop-widget .jcrop-handle.ord-nw{left:0;margin-left:-6px;margin-top:-6px;top:0}.uploadcare-crop-widget .jcrop-handle.ord-ne{margin-right:-6px;margin-top:-6px;right:0;top:0}.uploadcare-crop-widget .jcrop-handle.ord-se{bottom:0;margin-bottom:-6px;margin-right:-6px;right:0}.uploadcare-crop-widget .jcrop-handle.ord-sw{bottom:0;left:0;margin-bottom:-6px;margin-left:-6px}.uploadcare-crop-widget.jcrop-holder img,.uploadcare-crop-widget img.jcrop-preview{max-width:none}.uploadcare-crop-widget{display:inline-block;vertical-align:middle;white-space:normal}.uploadcare-crop-widget .jcrop-handle>div{width:35px;height:35px;margin:-11px}.uploadcare-crop-widget>div:first-child{-webkit-transform:translateZ(0);transform:translateZ(0)}.uploadcare-crop-widget>img{-webkit-filter:grayscale(50%);filter:grayscale(50%)}.uploadcare-crop-sizes{display:none;visibility:hidden;position:relative;top:433px;text-align:center}.uploadcare-dialog-preview--with-sizes .uploadcare-crop-sizes{display:block}.uploadcare-dialog-preview--loaded .uploadcare-crop-sizes{visibility:visible}.uploadcare-crop-size{position:relative;display:inline-block;width:40px;height:40px;line-height:40px;margin:0 20px;font-size:.55em;cursor:pointer;color:#444}.uploadcare-crop-size div{box-sizing:border-box;width:40px;height:30px;display:inline-block;vertical-align:middle;border:1px solid #ccc}.uploadcare-crop-size:after{content:attr(data-caption);position:absolute;top:1px;left:0;width:100%;text-align:center;margin:0}.uploadcare-crop-size--current div{background:white}.uploadcare-widget{position:relative;display:inline-block;vertical-align:baseline;line-height:2}.uploadcare-widget :focus{outline:2px dotted #0094c0}.uploadcare-widget :active,.uploadcare-widget .uploadcare-mouse-focused:focus{outline:0}.uploadcare-widget-status-ready .uploadcare-widget-button-open,.uploadcare-widget-status-started .uploadcare-widget-status,.uploadcare-widget-status-started .uploadcare-widget-text,.uploadcare-widget-status-started .uploadcare-widget-button-cancel,.uploadcare-widget-status-loaded .uploadcare-widget-text,.uploadcare-widget-status-error .uploadcare-widget-text,.uploadcare-widget-status-error .uploadcare-widget-button-open{display:inline-block !important}.uploadcare-widget-option-clearable.uploadcare-widget-status-error .uploadcare-widget-button-open{display:none !important}.uploadcare-widget-option-clearable.uploadcare-widget-status-loaded .uploadcare-widget-button-remove,.uploadcare-widget-option-clearable.uploadcare-widget-status-error .uploadcare-widget-button-remove{display:inline-block !important}.uploadcare-widget-status{display:none !important;width:1.8em;height:1.8em;margin:-1em 0;margin-right:1ex;line-height:0;vertical-align:middle}.uploadcare-widget-circle--text .uploadcare-widget-circle-back{width:100%;height:100%;display:table;white-space:normal}.uploadcare-widget-circle--text .uploadcare-widget-circle-text{display:table-cell;vertical-align:middle;text-align:center;font-size:60%;line-height:1}.uploadcare-widget-circle--canvas{color:#d0bf26;border-color:#e1e5e7}.uploadcare-widget-circle--canvas canvas{width:100%;height:100%}.uploadcare-widget-text{display:none !important;margin-right:1ex;white-space:nowrap}.uploadcare-widget-file-name,.uploadcare-widget-file-size{display:inline}.uploadcare-link,.uploadcare-link:link,.uploadcare-link:visited{cursor:pointer;color:#1a85ad;text-decoration:none;border-bottom:1px dotted #1a85ad;border-color:initial}.uploadcare-link:hover{color:#176e8f}.uploadcare-widget-button{display:none !important;color:white;padding:.4em .6em;line-height:1;margin:-1em 0;margin-right:.5ex;border-radius:.25em;background:#c3c3c3;cursor:default;white-space:nowrap}.uploadcare-widget-button:hover{background:#b3b3b3}.uploadcare-widget-button-open{padding:.5em .8em;background:#18a5d0}.uploadcare-widget-button-open:hover{background:#0094c0}.uploadcare-widget-dragndrop-area{box-sizing:content-box;display:none;position:absolute;white-space:nowrap;top:50%;margin-top:-1.3em;left:-1em;padding:0 1em;line-height:2.6;min-width:100%;text-align:center;background-color:#f0f0f0;color:#707478;border:1px dashed #b3b5b6;border-radius:100px}.uploadcare-widget.uploadcare-dragging .uploadcare-widget-dragndrop-area{background-color:#f2f7fe;border-color:#438ae7;color:#438ae7}.uploadcare-dragging .uploadcare-widget-dragndrop-area{display:block}.uploadcare-dialog-opened .uploadcare-widget-dragndrop-area{display:none}\n');
+            __p.push('\n\n\n\n\n\n\n\n.photolia-dialog-tab:before,.photolia-dialog-tab:hover:before,.photolia-dialog-disabled-tab:hover:before{background-image:url("', settings.scriptBase, '/assets/tab-icons.png");background-size:50px}.photolia-dialog-tab_current:before,.photolia-dialog-tab_current:hover:before{background-image:url("', settings.scriptBase, '/assets/tab-icons-active.png");background-size:50px}.photolia-dialog-file-sources:before{background-image:url("', settings.scriptBase, '/assets/arrow.png")}.photolia-remove{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAQAAAAngNWGAAABM0lEQVQoz5VTvW7CMBC2kHivQsjrZGRjaB6lXWCJbWScIT8PYN0GQ7s6FUUKL8CA2suR2C4FlfqkyL77cuf7/B1jbp3GdmIW1VIVKq9ezMI+ncbs92omNeeQgYQ1msQdh5o30x+g82ibCAysr4yDgG1yHjngLhkyXVuXeZcMRSNJMI4mAwinGl2siaiFWncOAW/QgO4vwCGHD/QI2tca27LxEDrAF7QE5fg94ungfrMxM89ZXyqnYAsbtG53RM/lKhmYlJUr6XrUPbQlmHY8SChXTBUhHRsCXfKGdKmCKe2PApQDKmokAJavD5b2zei+hTvNDPQI+HR5PD3C0+MJf4c95vCE79ETEI5POPvzCWf/EwXJbH5XZvNAZqSh6U3hRjc0jqMQmxRHoVRltTSpjcNR+AZwwvykEau0BgAAAABJRU5ErkJggg==)}.photolia-file-item__error:before{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAABIklEQVR42q3Vv2rCUBTHcaEQH825TdLl9hl0FsFdV7s5uXSpb+DoEziV6JCgATdR02D9E09/R64KF3NPbQx84BJOvgRyuSktK5VbHHiFDwhhCwl86Xu+nimZbsWeYQIkmMCLLfgELaA7tfSzRlCISVEz6AEV5J2DDszyBtNGg7L5/CSt123BGBwOKqA8WRzT+cqmU+kt3zj4aQ0myTW4WEjBPgcj29B+NLoE98OhFIw4+GMb2vR6l+Cm25WCWw6ubUPftRrR8XiSVKt/CgZADxKJH2XlurQbDBivxY8ibpu02SR98VrcNuLGXitFh/GYDkHAa2ljlznIfKCCfPNwaBeItfOOr84/Yu/m8WVy7zhgPfHE1hxQ0IcQdlqo76m8X8Avwkyxg4iIuCEAAAAASUVORK5CYII=)}.photolia-file-icon{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAQAAAAngNWGAAABD0lEQVQoFQXBPa5OARQF0LXPvfKS9wo/hegMQUzEJESiUIpOoxOlRKJDIgqVUZiNqPGdba0AAPLj48Mn/8ApgEcPOAGArx/uPVvrEFVRA04A+PTu+vk1BlSwLuAE4Pubvy+vHGAFxABOgC+v/ryO24oYUVUDGODzi+PtjfuuXBBUxG8XASd8e3rz/o5rY60YwVjXKAj8/HXrblDFIAKCehxOOHcxCggWUTHghJYqIqIigoqCEyCKEcXFgAjghCAWi1EDIlgwABWxoIhYaxUMsIo4BEHBRR1ggMMogoqq4jCAgVo1VhGMgFjACQUjCKIqIigYqKiLILiogFULBkbUWhSDqKpYMFAFwaJGUVUH+A8ToG9OM8KqQQAAAABJRU5ErkJggg==)}.photolia-zoomable-icon:after{background-image:url("', settings.scriptBase, '/assets/zoom@2x.png")}.photolia-dialog-error-tab-illustration{background-image:url("', settings.scriptBase, '/assets/error-default.png")}.photolia-dialog-camera-holder .photolia-dialog-error-tab-illustration,.photolia-dialog-error-tab-image .photolia-dialog-error-tab-illustration{background-image:url("', settings.scriptBase, '/assets/error-image.png")}.photolia-dialog{background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQIHWMw/AQAAVcBJCiBozgAAAAASUVORK5CYII=);background:rgba(48,48,48,0.7)}@media(-webkit-min-device-pixel-ratio:1.5),(min-resolution:144dpi){.photolia-dialog-tab:before,.photolia-dialog-tab:hover:before,.photolia-dialog-disabled-tab:hover:before{background-image:url("', settings.scriptBase, '/assets/tab-icons@2x.png")}.photolia-dialog-tab_current:before,.photolia-dialog-tab_current:hover:before{background-image:url("', settings.scriptBase, '/assets/tab-icons-active@2x.png")}}html.photolia-dialog-opened{overflow:hidden}.photolia-dialog{font-family:"Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;position:fixed;top:0;left:0;width:100%;height:100%;z-index:10000;overflow:auto;white-space:nowrap;text-align:center}.photolia-dialog:before{display:inline-block;vertical-align:middle;content:\'\';height:100%;position:static;width:0}.photolia-dialog *{margin:0;padding:0}.photolia-dialog .photolia-dialog-panel{border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,0.35)}.photolia-dialog{-webkit-transition:opacity .33s cubic-bezier(0.05,0.7,0.25,1);transition:opacity .33s cubic-bezier(0.05,0.7,0.25,1);opacity:0}.photolia-dialog .photolia-dialog-inner-wrap{-webkit-transition:-webkit-transform .33s cubic-bezier(0.05,0.7,0.25,1);transition:-webkit-transform .33s cubic-bezier(0.05,0.7,0.25,1);transition:transform .33s cubic-bezier(0.05,0.7,0.25,1);transition:transform .33s cubic-bezier(0.05,0.7,0.25,1),-webkit-transform .33s cubic-bezier(0.05,0.7,0.25,1);-webkit-transform:scale(0.8);-ms-transform:scale(0.8);transform:scale(0.8);-webkit-transform-origin:50% 100%;-ms-transform-origin:50% 100%;transform-origin:50% 100%}.photolia-dialog.photolia-active{opacity:1}.photolia-dialog.photolia-active .photolia-dialog-inner-wrap{-webkit-transform:none;-ms-transform:none;transform:none}.photolia-dialog-inner-wrap{display:inline-block;vertical-align:middle;white-space:normal;text-align:left;box-sizing:border-box;position:relative;width:100%;min-width:760px;max-width:944px;padding:0 33px 0 11px}.photolia-dialog-close{width:33px;height:33px;line-height:33px;font-size:29.7px;font-weight:bold;color:#fff;cursor:pointer;position:absolute;text-align:center;right:0}.photolia-dialog-panel{overflow:hidden;position:relative;background:#efefef;font-weight:normal;padding-left:75px;box-sizing:border-box}.photolia-dialog-panel :focus{outline:2px dotted #0094c0}.photolia-dialog-panel :active,.photolia-dialog-panel .photolia-mouse-focused:focus{outline:0}.photolia-dialog-panel.photolia-panel-hide-tabs{padding-left:0}.photolia-dialog-tabs{box-sizing:border-box;width:75px;height:616px;margin-left:-75px;float:left;background:#dee0e1;border-right:1px solid #c5cace}.photolia-panel-hide-tabs .photolia-dialog-tabs{display:none}.photolia-dialog-tab{box-sizing:border-box;height:56px;position:relative;border-bottom:1px solid #c5cace;cursor:pointer}.photolia-dialog-tab .photolia-dialog-icon,.photolia-dialog-tab:before{box-sizing:border-box;position:absolute;top:50%;left:50%;display:inline-block;width:50px;height:50px;margin:-25px;opacity:.66}.photolia-dialog-tab:before{content:\'\'}.photolia-dialog-tab:hover{background-color:#e5e7e8}.photolia-dialog-tab:hover .photolia-dialog-icon{opacity:1}.photolia-dialog-tab:hover:before{opacity:1}.photolia-dialog-tab_current{margin-right:-1px;border-right:1px solid #efefef}.photolia-dialog-tab_current,.photolia-dialog-tab_current:hover{background-color:#efefef}.photolia-dialog-tab_current .photolia-dialog-icon{opacity:1}.photolia-dialog-tab_current:before{opacity:1}.photolia-dialog-tab_hidden{display:none !important}.photolia-dialog-disabled-tab{cursor:default}.photolia-dialog-disabled-tab:hover{background-color:#dee0e1}.photolia-dialog-tab-preview .photolia-widget-circle{padding:10px}.photolia-dialog-tab-preview .photolia-widget-circle--canvas{color:#828689;border-color:#bfbfbf}.photolia-dialog-tab-preview.photolia-dialog-tab_current .photolia-widget-circle--canvas{color:#d0bf26;border-color:#e1e5e7}.photolia-dialog-tab-preview:before{display:none}.photolia-dialog-tab-file:before{background-position:0 -50px}.photolia-dialog-tab-url:before{background-position:0 -100px}.photolia-dialog-tab-facebook:before{background-position:0 -150px}.photolia-dialog-tab-dropbox:before{background-position:0 -200px}.photolia-dialog-tab-gdrive:before{background-position:0 -250px}.photolia-dialog-tab-instagram:before{background-position:0 -300px}.photolia-dialog-tab-vk:before{background-position:0 -350px}.photolia-dialog-tab-evernote:before{background-position:0 -400px}.photolia-dialog-tab-box:before{background-position:0 -450px}.photolia-dialog-tab-skydrive:before{background-position:0 -500px}.photolia-dialog-tab-flickr:before{background-position:0 -550px}.photolia-dialog-tab-camera:before{background-position:0 -600px}.photolia-dialog-tab-huddle:before{background-position:0 -650px}.photolia-dialog-tabs-panel{position:relative;display:none;box-sizing:border-box;height:616px;line-height:22px;font-size:16px;color:#000}.photolia-dialog-multiple .photolia-dialog-tabs-panel{height:550px}.photolia-dialog-tabs-panel .photolia-dialog-input{box-sizing:border-box;width:100%;height:44px;margin-bottom:22px;padding:11px 12.5px;font-family:inherit;font-size:16px;border:1px solid #c5cace;background:#fff;color:#000}.photolia-dialog-tabs-panel_current{display:block}.photolia-pre{white-space:pre;font-family:monospace;margin:22px auto;padding:22px 25px;background-color:#fff;border:1px solid #c5cace;border-radius:3px;text-align:left;font-size:15px;line-height:22px}.photolia-dialog-footer{font-size:13px;line-height:1.4em;text-align:center;color:white;margin:15px}.photolia-dialog .photolia-dialog-footer svg{vertical-align:middle;padding:0 2px}.photolia-dialog .photolia-dialog-footer a{color:white;text-decoration:none}.photolia-dialog .photolia-dialog-footer a:hover{text-decoration:underline}.photolia-dialog-title{font-size:22px;line-height:1;margin-bottom:22px}.photolia-dialog-title.photolia-error{color:red}.photolia-dialog-title2{font-size:20px;line-height:1;padding-bottom:11px}.photolia-dialog-big-title{font-size:40px;font-weight:bold;line-height:1em;margin-bottom:50px}.photolia-dialog-label{font-size:15px;line-height:25px;margin-bottom:12.5px;word-wrap:break-word}.photolia-dialog-large-text{font-size:20px;font-weight:normal;line-height:1.5em}.photolia-dialog-large-text .photolia-pre{display:inline-block;font-size:18px}.photolia-dialog-section{margin-bottom:22px}.photolia-dialog-normal-text{font-size:13px;color:#545454}.photolia-dialog-button{display:inline-block;font-size:13px;line-height:30px;padding:0 12.5px;margin-right:.5em;border:solid 1px;border-radius:3px;cursor:pointer;color:#444}.photolia-dialog-button,.photolia-dialog-button[disabled]:active,.photolia-dialog-button.photolia-disabled-el:active,.photolia-dialog-button[disabled]:hover,.photolia-dialog-button.photolia-disabled-el:hover{background:#f3f3f3;background:-webkit-linear-gradient(#f5f5f5,#f1f1f1);background:linear-gradient(#f5f5f5,#f1f1f1);box-shadow:none;border-color:#dcdcdc}.photolia-dialog-button:hover{background:#f9f9f9;background:-webkit-linear-gradient(#fbfbfb,#f6f6f6);background:linear-gradient(#fbfbfb,#f6f6f6);box-shadow:inset 0 -1px 3px rgba(0,0,0,0.05)}.photolia-dialog-button:active{background:#f3f3f3;background:-webkit-linear-gradient(#f5f5f5,#f1f1f1);background:linear-gradient(#f5f5f5,#f1f1f1);box-shadow:inset 0 2px 2px rgba(0,0,0,0.05)}.photolia-dialog-button[disabled],.photolia-dialog-button.photolia-disabled-el{cursor:default;opacity:.6}.photolia-dialog-button:active,.photolia-dialog-button:hover{border-color:#cbcbcb}.photolia-dialog-button-success{display:inline-block;font-size:13px;line-height:30px;padding:0 12.5px;margin-right:.5em;border:solid 1px;border-radius:3px;cursor:pointer;color:#fff}.photolia-dialog-button-success,.photolia-dialog-button-success[disabled]:active,.photolia-dialog-button-success.photolia-disabled-el:active,.photolia-dialog-button-success[disabled]:hover,.photolia-dialog-button-success.photolia-disabled-el:hover{background:#3886eb;background:-webkit-linear-gradient(#3b8df7,#347fdf);background:linear-gradient(#3b8df7,#347fdf);box-shadow:none;border-color:#266fcb}.photolia-dialog-button-success:hover{background:#337ad6;background:-webkit-linear-gradient(#3986ea,#2c6dc2);background:linear-gradient(#3986ea,#2c6dc2);box-shadow:inset 0 -1px 3px rgba(0,0,0,0.05)}.photolia-dialog-button-success:active{background:#3178d3;background:-webkit-linear-gradient(#3680e1,#2c6fc5);background:linear-gradient(#3680e1,#2c6fc5);box-shadow:inset 0 2px 2px rgba(0,0,0,0.05)}.photolia-dialog-button-success[disabled],.photolia-dialog-button-success.photolia-disabled-el{cursor:default;opacity:.6}.photolia-dialog-button-success:active,.photolia-dialog-button-success:hover{border-color:#266eca #1f62b7 #1753a1}.photolia-dialog-button-success:hover{box-shadow:inset 0 -1px 3px rgba(22,82,160,0.5)}.photolia-dialog-button-success:active{box-shadow:inset 0 1px 3px rgba(22,82,160,0.4)}.photolia-dialog-big-button{border-radius:100px;font-size:20px;font-weight:normal;letter-spacing:1px;color:white;line-height:33px;border:solid 1px #276fcb;text-shadow:0 -1px #2a7ce5;display:inline-block;padding:16.5px 2em;cursor:pointer;box-shadow:inset 0 -2px #1f66c1;background:#458eee;background:-webkit-linear-gradient(#4892f6,#4289e6);background:linear-gradient(#4892f6,#4289e6)}.photolia-dialog-big-button:hover{box-shadow:inset 0 -2px #1652a0;background:#337ad7;background:-webkit-linear-gradient(#3986eb,#2c6dc2);background:linear-gradient(#3986eb,#2c6dc2)}.photolia-dialog-big-button:active{box-shadow:inset 0 2px #2561b9;background:#2c6ec3;background:-webkit-linear-gradient(#2c6ec3,#2c6ec3);background:linear-gradient(#2c6ec3,#2c6ec3)}.photolia-dialog-preview-image-wrap{white-space:nowrap;text-align:center;width:100%;height:462px}.photolia-dialog-preview-image-wrap:before{display:inline-block;vertical-align:middle;content:\'\';height:100%;position:static;width:0}.photolia-dialog-preview--with-sizes .photolia-dialog-preview-image-wrap{position:relative;top:-40px;height:422px}.photolia-dialog-preview-image{display:inline-block;vertical-align:middle;white-space:normal;max-width:100%;max-height:100%}.photolia-dialog-tabs-panel-preview.photolia-dialog-tabs-panel_current ~ .photolia-panel-footer{display:none}.photolia-panel-footer{box-sizing:border-box;background:#fff3be;border-top:1px solid #efe2a9;height:66px;padding:17px 25px 0}.photolia-panel-footer .photolia-dialog-button-success{float:right}.photolia-panel-footer .photolia-dialog-button{float:left}.photolia-panel-footer .photolia-dialog-button-success,.photolia-panel-footer .photolia-dialog-button{min-width:100px;text-align:center;margin-right:0}.photolia-panel-footer .photolia-error{color:red}.photolia-panel-footer-text{text-align:center;color:#85732c;font-size:15px;line-height:32px}.photolia-dialog-message-center{text-align:center;padding-top:110px}.photolia-dialog-preview-center{text-align:center;padding-top:176px}.photolia-dialog-preview-circle{width:66px;height:66px;display:inline-block;margin-bottom:22px}.photolia-dialog-error-tab-wrap{height:100%;text-align:center;white-space:nowrap}.photolia-dialog-error-tab-wrap:before{display:inline-block;vertical-align:middle;content:\'\';height:100%;position:static;width:0}.photolia-dialog-error-tab-wrap .photolia-dialog-title{margin-bottom:12px}.photolia-dialog-error-tab-wrap .photolia-dialog-normal-text{margin-bottom:38px}.photolia-dialog-error-tab-wrap .photolia-dialog-button-success{margin:0}.photolia-dialog-error-tab-wrap2{display:inline-block;vertical-align:middle;white-space:normal;margin-top:-22px}.photolia-dialog-error-tab-illustration{display:inline-block;width:170px;height:120px;background-position:center;background-repeat:no-repeat;margin-bottom:38px}.photolia-if-draganddrop{display:none}.photolia-draganddrop .photolia-if-no-draganddrop{display:none}.photolia-draganddrop .photolia-if-draganddrop{display:block}.photolia-draganddrop .photolia-dialog-file-drop-area{border:dashed 3px #c5cacd;background:rgba(255,255,255,0.64)}.photolia-draganddrop .photolia-dialog-file-title{color:#dee0e1;text-shadow:0 1px white;margin-top:0}.photolia-dialog-file-drop-area{width:100%;height:100%;box-sizing:border-box;border:0;text-align:center;border-radius:3px;padding-top:70px}.photolia-dialog-file-drop-area .photolia-dialog-big-button{margin-top:11px;margin-bottom:55px}.photolia-dialog-file-title{font-size:40px;line-height:1;color:black;font-weight:bold;margin:66px 0}.photolia-dialog-file-or{font-size:13px;color:#8f9498;margin-bottom:33px}.photolia-dialog-file-sources{position:relative;display:inline-block;padding:0 80px 0 100px;line-height:2em}.photolia-dialog-file-sources:before{background-repeat:no-repeat;content:\'\';display:block;position:absolute;width:67px;height:44px;padding:0;top:-30px;left:10px}.photolia-dialog-file-source{display:inline;font-size:15px;margin-right:.2em;cursor:pointer;font-weight:300;white-space:nowrap}.photolia-dialog-file-source:after{content:\'\\00B7\';color:#b7babc;margin-left:.5em}.photolia-dialog-file-source:last-child:after{display:none}.photolia-dragging .photolia-dialog-file-or,.photolia-dragging .photolia-dialog-file-sources,.photolia-dragging .photolia-dialog-file-drop-area .photolia-dialog-big-button{display:none}.photolia-dragging .photolia-dialog-file-drop-area{background-color:#f0f0f0;border-color:#b3b5b6;padding-top:264px}.photolia-dragging .photolia-dialog-file-title{color:#707478}.photolia-dragging.photolia-dialog-file-drop-area{background-color:#f2f7fe;border-color:#438ae7}.photolia-dragging.photolia-dialog-file-drop-area .photolia-dialog-file-title{color:#438ae7}.photolia-dialog-camera-holder{white-space:nowrap;text-align:center;height:528px}.photolia-dialog-camera-holder:before{display:inline-block;vertical-align:middle;content:\'\';height:100%;position:static;width:0}.photolia-dialog-camera-holder .photolia-dialog-normal-text{margin-bottom:38px}.photolia-dialog-multiple .photolia-dialog-camera-holder{height:462px}.photolia-dialog-camera-video{display:inline-block;vertical-align:middle;white-space:normal;display:none;max-width:100%;max-height:528px;-webkit-transition:-webkit-transform .8s cubic-bezier(0.23,1,0.32,1);transition:-webkit-transform .8s cubic-bezier(0.23,1,0.32,1);transition:transform .8s cubic-bezier(0.23,1,0.32,1);transition:transform .8s cubic-bezier(0.23,1,0.32,1),-webkit-transform .8s cubic-bezier(0.23,1,0.32,1)}.photolia-dialog-multiple .photolia-dialog-camera-video{max-height:462px}.photolia-dialog-camera--mirrored{-webkit-transform:scale(-1,1);-ms-transform:scale(-1,1);transform:scale(-1,1)}.photolia-dialog-camera-message{display:inline-block;vertical-align:middle;white-space:normal;display:none;max-width:450px}.photolia-dialog-camera-controls{margin-top:17px;text-align:center}.photolia-dialog-camera-mirror{position:absolute;margin-right:0;right:25px}.photolia-dialog-camera-capture,.photolia-dialog-camera-retry,.photolia-dialog-camera-mirror{display:none}.photolia-dialog-camera-requested .photolia-dialog-camera-message{display:inline-block}.photolia-dialog-camera-not-found{display:none}.photolia-dialog-camera-not-founded .photolia-dialog-camera-please-allow{display:none}.photolia-dialog-camera-not-founded .photolia-dialog-camera-not-found{display:block}.photolia-dialog-camera-denied .photolia-dialog-camera-retry{display:inline-block}.photolia-dialog-camera-ready .photolia-dialog-camera-video,.photolia-dialog-camera-ready .photolia-dialog-camera-capture,.photolia-dialog-camera-ready .photolia-dialog-camera-mirror{display:inline-block}.photolia-file-list{height:550px;overflow:auto;position:relative;margin:0 -25px -22px 0}.photolia-dialog-multiple .photolia-file-list{height:484px}.photolia-file-list_table .photolia-file-item{border-top:1px solid #e3e3e3;border-bottom:1px solid #e3e3e3;margin-bottom:-1px;display:table;table-layout:fixed;width:100%;padding:10px 0;min-height:20px}.photolia-file-list_table .photolia-file-item>*{box-sizing:content-box;display:table-cell;vertical-align:middle;padding-right:20px}.photolia-file-list_table .photolia-file-item:last-child{margin-bottom:0}.photolia-file-list_table .photolia-file-item:hover{background:#ececec}.photolia-file-list_table .photolia-file-item__preview{width:55px;padding-right:10px}.photolia-file-list_table .photolia-file-item__preview>img{height:55px}.photolia-file-list_table .photolia-file-item__size{width:3.5em}.photolia-file-list_table .photolia-file-item__progressbar{width:80px}.photolia-file-list_table .photolia-zoomable-icon:after{width:55px}.photolia-file-list_tiles .photolia-file-item{text-align:left;position:relative;display:inline-block;vertical-align:top;width:170px;min-height:170px;padding:0 20px 10px 0}.photolia-file-list_tiles .photolia-file-item>*{padding-bottom:10px}.photolia-file-list_tiles .photolia-file-item__name{padding-top:10px}.photolia-file-list_tiles .photolia-file-item__remove{position:absolute;top:0;right:10px}.photolia-file-list_tiles .photolia-file-item__preview{white-space:nowrap;width:170px;height:170px;padding-bottom:0}.photolia-file-list_tiles .photolia-file-item__preview:before{display:inline-block;vertical-align:middle;content:\'\';height:100%;position:static;width:0}.photolia-file-list_tiles .photolia-file-item__preview img{display:inline-block;vertical-align:middle;white-space:normal}.photolia-file-list_tiles .photolia-file-item_uploading .photolia-file-item__preview,.photolia-file-list_tiles .photolia-file-item_error .photolia-file-item__preview{display:none}.photolia-file-list_tiles .photolia-file-item_uploaded .photolia-file-item__size,.photolia-file-list_tiles .photolia-file-item_uploaded .photolia-file-item__name{display:none}.photolia-file-item__error:before,.photolia-file-icon{content:\'\';display:inline-block;width:20px;height:20px;margin:-3.5px .7em -3.5px 0}.photolia-file-item{font-size:13px;line-height:1.2}.photolia-file-item:hover .photolia-file-item__remove{visibility:visible}.photolia-file-item:hover .photolia-zoomable-icon:after{display:block}.photolia-file-item_uploading .photolia-file-item__error{display:none}.photolia-file-item_uploaded .photolia-file-item__progressbar,.photolia-file-item_uploaded .photolia-file-item__error{display:none}.photolia-file-item_error .photolia-file-item__size,.photolia-file-item_error .photolia-file-item__progressbar{display:none}.photolia-file-item__preview{text-align:center;line-height:0}.photolia-file-item__preview>img{display:inline-block;width:auto;height:auto;max-width:100%;max-height:100%}.photolia-file-item__name{width:100%;word-wrap:break-word}.photolia-file-item__error{width:200px;color:#f5444b}.photolia-file-item__remove{visibility:hidden;width:20px;text-align:right;line-height:0}.photolia-remove{width:20px;height:20px;cursor:pointer}.photolia-zoomable-icon{position:relative;cursor:pointer}.photolia-zoomable-icon:after{content:\'\';position:absolute;top:0;left:0;display:none;width:100%;height:100%;background-size:45px 45px;background-repeat:no-repeat;background-position:center}.photolia-progressbar{width:100%;height:8px;background:#e0e0e0;border-radius:100px}.photolia-progressbar__value{height:100%;background:#d6b849;border-radius:100px}.photolia-file-icon{margin:0}.photolia-dialog-padding{padding:22px 25px}.photolia-dialog-remote-iframe-wrap{overflow:auto;-webkit-overflow-scrolling:touch}.photolia-dialog-remote-iframe{display:block;width:100%;height:100%;border:0;opacity:0}.photolia-panel-footer__summary{display:none}.photolia-dialog-multiple .photolia-panel-footer__summary{display:block}.photolia-panel-footer-counter{display:none}.photolia-hidden{display:none}.photolia-if-mobile{display:none}@media screen and (max-width:760px){.photolia-dialog-opened{overflow:visible !important;position:static !important;width:auto !important;height:auto !important;min-width:0 !important;background:#efefef !important}body.photolia-dialog-opened>.photolia-inactive,body.photolia-dialog-opened>:not(.photolia-dialog){display:none !important}.photolia-if-mobile{display:block}.photolia-if-no-mobile{display:none}.photolia-dialog{position:absolute;overflow:visible;-webkit-text-size-adjust:100%}.photolia-dialog:before{display:none}.photolia-dialog-inner-wrap{padding:0;min-width:310px;height:100%}.photolia-dialog-close{position:fixed;z-index:2;color:#000;width:50px;height:50px;line-height:45px}.photolia-dialog-footer{display:none}.photolia-responsive-panel .photolia-dialog-panel{overflow:visible;height:100%;padding:50px 0 0;border-radius:0;box-shadow:none}.photolia-responsive-panel .photolia-dialog-panel.photolia-panel-hide-tabs{padding-top:0}.photolia-responsive-panel .photolia-dialog-tabs-panel{height:auto}.photolia-responsive-panel .photolia-dialog-remote-iframe-wrap{overflow:visible;height:100%}.photolia-responsive-panel .photolia-dialog-padding{padding:22px 15px}.photolia-responsive-panel .photolia-dialog-preview-image-wrap{top:auto;height:auto;padding-bottom:50px}.photolia-responsive-panel .photolia-dialog-preview-image{max-height:450px}.photolia-responsive-panel .photolia-file-list{height:auto;margin:0 -15px 0 0}.photolia-responsive-panel .photolia-file-list_table .photolia-file-item>*{padding-right:10px}.photolia-responsive-panel .photolia-file-list_table .photolia-file-item__progressbar{width:40px}.photolia-responsive-panel .photolia-file-list_tiles .photolia-file-item{width:140px;min-height:140px;padding-right:10px}.photolia-responsive-panel .photolia-file-list_tiles .photolia-file-item__preview{width:140px;height:140px}.photolia-responsive-panel .photolia-file-list_tiles .photolia-file-item__remove{right:10px}.photolia-responsive-panel .photolia-file-item__remove{visibility:visible}.photolia-responsive-panel .photolia-dialog-file-sources,.photolia-responsive-panel .photolia-dialog-file-or{display:none}.photolia-responsive-panel .photolia-dialog-file-title{display:none}.photolia-responsive-panel .photolia-dialog-file-drop-area{padding-top:0;border:0;background:transparent}.photolia-responsive-panel .photolia-dialog-big-button{margin:110px 0 0}.photolia-responsive-panel .photolia-clouds-tip{color:#909498;font-size:.75em;line-height:1.4;text-align:left;padding:10px 0 0 50px}.photolia-responsive-panel .photolia-clouds-tip:before{background-image:url("', settings.scriptBase, '/assets/arrow.png");background-repeat:no-repeat;background-size:51px 33px;content:\'\';position:absolute;margin:-20px -36px;display:block;width:28px;height:30px}.photolia-responsive-panel .photolia-dialog-opened-tabs .photolia-dialog-tab.photolia-dialog-tab-camera{display:none}.photolia-responsive-panel .photolia-dialog-camera-holder{height:auto}.photolia-responsive-panel .photolia-dialog-camera-mirror{right:15px}.photolia-responsive-panel .photolia-panel-footer{position:fixed;left:0;bottom:0;width:100%;min-width:310px;height:50px;padding:9px 15px 0;background:rgba(255,243,190,0.95)}.photolia-responsive-panel .photolia-panel-footer-text{display:none}.photolia-responsive-panel .photolia-panel-footer-counter{display:inline}.photolia-responsive-panel .photolia-dialog-multiple.photolia-dialog-panel{padding-bottom:50px}.photolia-responsive-panel .photolia-dialog-multiple .photolia-dialog-remote-iframe-wrap:after{content:\'\';display:block;height:50px}.photolia-responsive-panel .photolia-dialog-multiple .photolia-dialog-padding{padding-bottom:72px}.photolia-responsive-panel .photolia-dialog-tabs{position:fixed;top:0;left:0;width:100%;min-width:310px;height:auto;float:none;margin:0;z-index:1;background:transparent}.photolia-responsive-panel .photolia-dialog-tab{display:none;height:50px;white-space:nowrap;background:#dee0e1}.photolia-responsive-panel .photolia-dialog-tab .photolia-dialog-icon,.photolia-responsive-panel .photolia-dialog-tab:before{position:static;margin:0 6px;vertical-align:middle;opacity:1}.photolia-responsive-panel .photolia-dialog-tab_current{display:block;background:rgba(239,239,239,0.95)}.photolia-responsive-panel .photolia-dialog-tab:after{content:attr(title);font-size:20px;vertical-align:middle}.photolia-responsive-panel .photolia-dialog-opened-tabs .photolia-dialog-tabs-panel_current,.photolia-responsive-panel .photolia-dialog-opened-tabs .photolia-panel-footer{display:none}.photolia-responsive-panel .photolia-dialog-opened-tabs .photolia-dialog-tabs{position:absolute;z-index:3}.photolia-responsive-panel .photolia-dialog-opened-tabs .photolia-dialog-tab{display:block}.photolia-responsive-panel .photolia-dialog-opened-tabs .photolia-dialog-tab_current{background:#efefef}.photolia-responsive-panel .photolia-dialog-panel:not(.photolia-dialog-opened-tabs) .photolia-dialog-tab_current{text-align:center}.photolia-responsive-panel .photolia-dialog-panel:not(.photolia-dialog-opened-tabs) .photolia-dialog-tab_current:after{content:\'\';position:absolute;top:16px;left:14px;display:block;width:22px;height:18px;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAOCAQAAAD+6Ta3AAAARklEQVR4Ae3SsRFEIQhAwW1IR2s3s6zTGUN+AxdK5tucAIBmOuKSY2pQbHHZVhgiweAnEixW1uC0VdSU41Xo19+te73+9AGOg1FzTMH13gAAAABJRU5ErkJggg==);background-size:22px}.photolia-responsive-panel .photolia-crop-sizes{top:auto;margin-bottom:15px}.photolia-responsive-panel .photolia-crop-size{margin:0 10px}}.photolia-crop-widget.jcrop-holder{direction:ltr;text-align:left;z-index:0}.photolia-crop-widget .jcrop-vline,.photolia-crop-widget .jcrop-hline,.photolia-crop-widget .jcrop-handle{position:absolute;font-size:0;background-color:white;box-shadow:0 0 0 1px rgba(0,0,0,0.2);z-index:320}.photolia-crop-widget .jcrop-vline{height:100%;width:1px !important}.photolia-crop-widget .jcrop-hline{height:1px !important;width:100%}.photolia-crop-widget .jcrop-vline.right{right:0}.photolia-crop-widget .jcrop-hline.bottom{bottom:0}.photolia-crop-widget .jcrop-tracker{height:100%;width:100%;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.photolia-crop-widget .jcrop-handle{border-radius:50%;width:13px;height:13px;z-index:330}.photolia-crop-widget .jcrop-handle:before,.photolia-crop-widget .jcrop-handle:after{content:"";position:absolute;display:block;width:1px;height:1px;background:white}.photolia-crop-widget .jcrop-handle:before{width:3px;top:6px}.photolia-crop-widget .jcrop-handle:after{height:3px;left:6px}.photolia-crop-widget .jcrop-handle.ord-nw:before,.photolia-crop-widget .jcrop-handle.ord-sw:before{left:12px}.photolia-crop-widget .jcrop-handle.ord-ne:before,.photolia-crop-widget .jcrop-handle.ord-se:before{left:-2px}.photolia-crop-widget .jcrop-handle.ord-nw:after,.photolia-crop-widget .jcrop-handle.ord-ne:after{top:12px}.photolia-crop-widget .jcrop-handle.ord-sw:after,.photolia-crop-widget .jcrop-handle.ord-se:after{top:-2px}.photolia-crop-widget .jcrop-handle.ord-nw{left:0;margin-left:-6px;margin-top:-6px;top:0}.photolia-crop-widget .jcrop-handle.ord-ne{margin-right:-6px;margin-top:-6px;right:0;top:0}.photolia-crop-widget .jcrop-handle.ord-se{bottom:0;margin-bottom:-6px;margin-right:-6px;right:0}.photolia-crop-widget .jcrop-handle.ord-sw{bottom:0;left:0;margin-bottom:-6px;margin-left:-6px}.photolia-crop-widget.jcrop-holder img,.photolia-crop-widget img.jcrop-preview{max-width:none}.photolia-crop-widget{display:inline-block;vertical-align:middle;white-space:normal}.photolia-crop-widget .jcrop-handle>div{width:35px;height:35px;margin:-11px}.photolia-crop-widget>div:first-child{-webkit-transform:translateZ(0);transform:translateZ(0)}.photolia-crop-widget>img{-webkit-filter:grayscale(50%);filter:grayscale(50%)}.photolia-crop-sizes{display:none;visibility:hidden;position:relative;top:433px;text-align:center}.photolia-dialog-preview--with-sizes .photolia-crop-sizes{display:block}.photolia-dialog-preview--loaded .photolia-crop-sizes{visibility:visible}.photolia-crop-size{position:relative;display:inline-block;width:40px;height:40px;line-height:40px;margin:0 20px;font-size:.55em;cursor:pointer;color:#444}.photolia-crop-size div{box-sizing:border-box;width:40px;height:30px;display:inline-block;vertical-align:middle;border:1px solid #ccc}.photolia-crop-size:after{content:attr(data-caption);position:absolute;top:1px;left:0;width:100%;text-align:center;margin:0}.photolia-crop-size--current div{background:white}.photolia-widget{position:relative;display:inline-block;vertical-align:baseline;line-height:2}.photolia-widget :focus{outline:2px dotted #0094c0}.photolia-widget :active,.photolia-widget .photolia-mouse-focused:focus{outline:0}.photolia-widget-status-ready .photolia-widget-button-open,.photolia-widget-status-started .photolia-widget-status,.photolia-widget-status-started .photolia-widget-text,.photolia-widget-status-started .photolia-widget-button-cancel,.photolia-widget-status-loaded .photolia-widget-text,.photolia-widget-status-error .photolia-widget-text,.photolia-widget-status-error .photolia-widget-button-open{display:inline-block !important}.photolia-widget-option-clearable.photolia-widget-status-error .photolia-widget-button-open{display:none !important}.photolia-widget-option-clearable.photolia-widget-status-loaded .photolia-widget-button-remove,.photolia-widget-option-clearable.photolia-widget-status-error .photolia-widget-button-remove{display:inline-block !important}.photolia-widget-status{display:none !important;width:1.8em;height:1.8em;margin:-1em 0;margin-right:1ex;line-height:0;vertical-align:middle}.photolia-widget-circle--text .photolia-widget-circle-back{width:100%;height:100%;display:table;white-space:normal}.photolia-widget-circle--text .photolia-widget-circle-text{display:table-cell;vertical-align:middle;text-align:center;font-size:60%;line-height:1}.photolia-widget-circle--canvas{color:#d0bf26;border-color:#e1e5e7}.photolia-widget-circle--canvas canvas{width:100%;height:100%}.photolia-widget-text{display:none !important;margin-right:1ex;white-space:nowrap}.photolia-widget-file-name,.photolia-widget-file-size{display:inline}.photolia-link,.photolia-link:link,.photolia-link:visited{cursor:pointer;color:#1a85ad;text-decoration:none;border-bottom:1px dotted #1a85ad;border-color:initial}.photolia-link:hover{color:#176e8f}.photolia-widget-button{display:none !important;color:white;padding:.4em .6em;line-height:1;margin:-1em 0;margin-right:.5ex;border-radius:.25em;background:#c3c3c3;cursor:default;white-space:nowrap}.photolia-widget-button:hover{background:#b3b3b3}.photolia-widget-button-open{padding:.5em .8em;background:#18a5d0}.photolia-widget-button-open:hover{background:#0094c0}.photolia-widget-dragndrop-area{box-sizing:content-box;display:none;position:absolute;white-space:nowrap;top:50%;margin-top:-1.3em;left:-1em;padding:0 1em;line-height:2.6;min-width:100%;text-align:center;background-color:#f0f0f0;color:#707478;border:1px dashed #b3b5b6;border-radius:100px}.photolia-widget.photolia-dragging .photolia-widget-dragndrop-area{background-color:#f2f7fe;border-color:#438ae7;color:#438ae7}.photolia-dragging .photolia-widget-dragndrop-area{display:block}.photolia-dialog-opened .photolia-widget-dragndrop-area{display:none}\n');
         }
         return __p.join('');
     };
-    uploadcare.templates.JST["tab-camera"] = function(obj) {
+    photolia.templates.JST["tab-camera"] = function(obj) {
         var __p = [],
             print = function() {
                 __p.push.apply(__p, arguments);
             };
         with(obj || {}) {
-            __p.push('<div class="uploadcare-dialog-camera-holder"><!--\n  --><video class="uploadcare-dialog-camera-video uploadcare-dialog-camera--mirrored"></video><!--\n  --><div class="uploadcare-dialog-camera-message">\n    <div class="uploadcare-dialog-error-tab-illustration"></div>\n\n    <div class="uploadcare-dialog-title uploadcare-dialog-camera-please-allow">\n      ', ('' + t('dialog.tabs.camera.pleaseAllow.title')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n    </div>\n    <div class="uploadcare-dialog-normal-text uploadcare-dialog-camera-please-allow">\n      ', ('' + t('dialog.tabs.camera.pleaseAllow.text')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n    </div>\n\n    <div class="uploadcare-dialog-title uploadcare-dialog-camera-not-found">\n      ', ('' + t('dialog.tabs.camera.notFound.title')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n    </div>\n    <div class="uploadcare-dialog-normal-text uploadcare-dialog-camera-not-found">\n      ', ('' + t('dialog.tabs.camera.notFound.text')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n    </div>\n\n    <div class="uploadcare-dialog-camera-retry uploadcare-dialog-button"\n         tabindex="0" role="button">\n      ', ('' + t('dialog.tabs.camera.retry')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n    </div>\n  </div><!--\n--></div>\n<div class="uploadcare-dialog-camera-controls">\n  <div class="uploadcare-dialog-camera-mirror uploadcare-dialog-button"\n       tabindex="0" role="button">\n    ', ('' + t('dialog.tabs.camera.mirror')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n  <div class="uploadcare-dialog-camera-capture uploadcare-dialog-button-success"\n       tabindex="0" role="button">\n    ', ('' + t('dialog.tabs.camera.capture')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n</div>\n');
+            __p.push('<div class="photolia-dialog-camera-holder"><!--\n  --><video class="photolia-dialog-camera-video photolia-dialog-camera--mirrored"></video><!--\n  --><div class="photolia-dialog-camera-message">\n    <div class="photolia-dialog-error-tab-illustration"></div>\n\n    <div class="photolia-dialog-title photolia-dialog-camera-please-allow">\n      ', ('' + t('dialog.tabs.camera.pleaseAllow.title')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n    </div>\n    <div class="photolia-dialog-normal-text photolia-dialog-camera-please-allow">\n      ', ('' + t('dialog.tabs.camera.pleaseAllow.text')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n    </div>\n\n    <div class="photolia-dialog-title photolia-dialog-camera-not-found">\n      ', ('' + t('dialog.tabs.camera.notFound.title')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n    </div>\n    <div class="photolia-dialog-normal-text photolia-dialog-camera-not-found">\n      ', ('' + t('dialog.tabs.camera.notFound.text')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n    </div>\n\n    <div class="photolia-dialog-camera-retry photolia-dialog-button"\n         tabindex="0" role="button">\n      ', ('' + t('dialog.tabs.camera.retry')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n    </div>\n  </div><!--\n--></div>\n<div class="photolia-dialog-camera-controls">\n  <div class="photolia-dialog-camera-mirror photolia-dialog-button"\n       tabindex="0" role="button">\n    ', ('' + t('dialog.tabs.camera.mirror')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n  <div class="photolia-dialog-camera-capture photolia-dialog-button-success"\n       tabindex="0" role="button">\n    ', ('' + t('dialog.tabs.camera.capture')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n</div>\n');
         }
         return __p.join('');
     };
-    uploadcare.templates.JST["tab-file"] = function(obj) {
+    photolia.templates.JST["tab-file"] = function(obj) {
         var __p = [],
             print = function() {
                 __p.push.apply(__p, arguments);
             };
         with(obj || {}) {
-            __p.push('<div class="uploadcare-dialog-file-drop-area">\n  <div class="uploadcare-dialog-file-title uploadcare-if-draganddrop">\n    ', ('' + t('dialog.tabs.file.drag')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n  <div class="uploadcare-dialog-file-title uploadcare-if-no-draganddrop">\n    ', ('' + t('dialog.tabs.file.nodrop')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n  <div class="uploadcare-dialog-file-or uploadcare-if-draganddrop">\n    ', ('' + t('dialog.tabs.file.or')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n  <div class="uploadcare-clouds-tip uploadcare-if-mobile">\n    ', t('dialog.tabs.file.cloudsTip'), '\n  </div>\n  <div class="uploadcare-dialog-big-button needsclick">\n    ', ('' + t('dialog.tabs.file.button')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n  <div class="uploadcare-dialog-file-or uploadcare-dialog-file-source-or">\n    ', ('' + t('dialog.tabs.file.also')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n  <div class="uploadcare-dialog-file-sources">\n  </div>\n</div>\n');
+            __p.push('<div class="photolia-dialog-file-drop-area">\n  <div class="photolia-dialog-file-title photolia-if-draganddrop">\n    ', ('' + t('dialog.tabs.file.drag')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n  <div class="photolia-dialog-file-title photolia-if-no-draganddrop">\n    ', ('' + t('dialog.tabs.file.nodrop')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n  <div class="photolia-dialog-file-or photolia-if-draganddrop">\n    ', ('' + t('dialog.tabs.file.or')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n  <div class="photolia-clouds-tip photolia-if-mobile">\n    ', t('dialog.tabs.file.cloudsTip'), '\n  </div>\n  <div class="photolia-dialog-big-button needsclick">\n    ', ('' + t('dialog.tabs.file.button')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n  <div class="photolia-dialog-file-or photolia-dialog-file-source-or">\n    ', ('' + t('dialog.tabs.file.also')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n  <div class="photolia-dialog-file-sources">\n  </div>\n</div>\n');
         }
         return __p.join('');
     };
-    uploadcare.templates.JST["tab-preview-error"] = function(obj) {
+    photolia.templates.JST["tab-preview-error"] = function(obj) {
         var __p = [],
             print = function() {
                 __p.push.apply(__p, arguments);
             };
         with(obj || {}) {
-            __p.push('<div class="uploadcare-dialog-error-tab-wrap uloadcare-dialog-error-tab-', ('' + error).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '"><!--\n  --><div class="uploadcare-dialog-error-tab-wrap2">\n\n    <div class="uploadcare-dialog-error-tab-illustration"></div>\n\n    <div class="uploadcare-dialog-title">', ('' +
+            __p.push('<div class="photolia-dialog-error-tab-wrap uloadcare-dialog-error-tab-', ('' + error).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '"><!--\n  --><div class="photolia-dialog-error-tab-wrap2">\n\n    <div class="photolia-dialog-error-tab-illustration"></div>\n\n    <div class="photolia-dialog-title">', ('' +
                 t('dialog.tabs.preview.error.' + error + '.title') || t('dialog.tabs.preview.error.default.title')
-            ).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n\n    <div class="uploadcare-dialog-normal-text">', ('' +
+            ).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n\n    <div class="photolia-dialog-normal-text">', ('' +
                 t('dialog.tabs.preview.error.' + error + '.text') || t('dialog.tabs.preview.error.default.text')
-            ).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n\n    <div class="uploadcare-dialog-button-success uploadcare-dialog-preview-back"\n         tabindex="0" role="button"\n            >', ('' + t('dialog.tabs.preview.error.' + error + '.back') || t('dialog.tabs.preview.error.default.back')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n  </div>\n</div>\n');
+            ).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n\n    <div class="photolia-dialog-button-success photolia-dialog-preview-back"\n         tabindex="0" role="button"\n            >', ('' + t('dialog.tabs.preview.error.' + error + '.back') || t('dialog.tabs.preview.error.default.back')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n  </div>\n</div>\n');
         }
         return __p.join('');
     };
-    uploadcare.templates.JST["tab-preview-image"] = function(obj) {
+    photolia.templates.JST["tab-preview-image"] = function(obj) {
         var __p = [],
             print = function() {
                 __p.push.apply(__p, arguments);
             };
         with(obj || {}) {
-            __p.push('<div class="uploadcare-dialog-padding uploadcare-dialog-preview-root">\n  <div class="uploadcare-dialog-title uploadcare-dialog-preview-title">\n    ', ('' + t('dialog.tabs.preview.image.title')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n\n  <div class="uploadcare-crop-sizes uploadcare-dialog-preview-crop-sizes">\n    <div class="uploadcare-crop-size" data-caption="free"><div></div></div>\n  </div>\n\n  <div class="uploadcare-dialog-preview-image-wrap"><!--\n      1162x684 is 1.5 size of conteiner\n    --><img\n      ');
+            __p.push('<div class="photolia-dialog-padding photolia-dialog-preview-root">\n  <div class="photolia-dialog-title photolia-dialog-preview-title">\n    ', ('' + t('dialog.tabs.preview.image.title')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n\n  <div class="photolia-crop-sizes photolia-dialog-preview-crop-sizes">\n    <div class="photolia-crop-size" data-caption="free"><div></div></div>\n  </div>\n\n  <div class="photolia-dialog-preview-image-wrap"><!--\n      1162x684 is 1.5 size of conteiner\n    --><img\n      ');
             if (file) {;
                 console.log(file)
                 __p.push('\n        src="', ('' + file.originalUrl), '"\n        title="', ('' + (file.name || "")).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '"\n        alt="', ('' + (file.name || "")).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '"\n      ');
             } else {;
                 __p.push('\n        src="//:0"\n      ');
             };
-            __p.push('\n      class="uploadcare-dialog-preview-image"\n    />\n  </div>\n</div>\n\n<div class="uploadcare-panel-footer">\n  <div class="uploadcare-dialog-button uploadcare-dialog-preview-back"\n       tabindex="0" role="button"\n          >', ('' + t('dialog.tabs.preview.image.change')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n  <div class="uploadcare-dialog-button-success uploadcare-dialog-preview-done"\n       tabindex="0" role="button"\n          >', ('' + t('dialog.tabs.preview.done')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n</div>\n');
+            __p.push('\n      class="photolia-dialog-preview-image"\n    />\n  </div>\n</div>\n\n<div class="photolia-panel-footer">\n  <div class="photolia-dialog-button photolia-dialog-preview-back"\n       tabindex="0" role="button"\n          >', ('' + t('dialog.tabs.preview.image.change')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n  <div class="photolia-dialog-button-success photolia-dialog-preview-done"\n       tabindex="0" role="button"\n          >', ('' + t('dialog.tabs.preview.done')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n</div>\n');
         }
         return __p.join('');
     };
-    uploadcare.templates.JST["tab-preview-multiple-file"] = function(obj) {
+    photolia.templates.JST["tab-preview-multiple-file"] = function(obj) {
         var __p = [],
             print = function() {
                 __p.push.apply(__p, arguments);
             };
         with(obj || {}) {
-            __p.push('<div class="uploadcare-file-item uploadcare-file-item_uploading">\n  <div class="uploadcare-file-item__preview">\n    <div class="uploadcare-file-icon"></div>\n  </div>\n  <div class="uploadcare-file-item__name">\n    ', ('' + t('dialog.tabs.preview.unknownName')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n  <div class="uploadcare-file-item__progressbar">\n    <div class="uploadcare-progressbar">\n      <div class="uploadcare-progressbar__value"></div>\n    </div>\n  </div>\n  <div class="uploadcare-file-item__size"></div>\n  <div class="uploadcare-file-item__error"></div>\n  <div class="uploadcare-file-item__remove">\n    <div class="uploadcare-remove"></div>\n  </div>\n</div>\n');
+            __p.push('<div class="photolia-file-item photolia-file-item_uploading">\n  <div class="photolia-file-item__preview">\n    <div class="photolia-file-icon"></div>\n  </div>\n  <div class="photolia-file-item__name">\n    ', ('' + t('dialog.tabs.preview.unknownName')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n  <div class="photolia-file-item__progressbar">\n    <div class="photolia-progressbar">\n      <div class="photolia-progressbar__value"></div>\n    </div>\n  </div>\n  <div class="photolia-file-item__size"></div>\n  <div class="photolia-file-item__error"></div>\n  <div class="photolia-file-item__remove">\n    <div class="photolia-remove"></div>\n  </div>\n</div>\n');
         }
         return __p.join('');
     };
-    uploadcare.templates.JST["tab-preview-multiple"] = function(obj) {
+    photolia.templates.JST["tab-preview-multiple"] = function(obj) {
         var __p = [],
             print = function() {
                 __p.push.apply(__p, arguments);
             };
         with(obj || {}) {
-            __p.push('<div class="uploadcare-dialog-padding">\n  <div class="uploadcare-dialog-title uploadcare-if-no-mobile uploadcare-dpm-title"></div>\n  <div class="uploadcare-dialog-title uploadcare-if-mobile uploadcare-dpm-mobile-title"></div>\n\n  <div class="uploadcare-file-list"></div>\n</div>\n\n<div class="uploadcare-panel-footer">\n  <div class="uploadcare-dialog-button uploadcare-dialog-preview-back"\n       tabindex="0" role="button"\n          >', ('' + t('dialog.tabs.preview.multiple.clear')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n  <div class="uploadcare-dialog-button-success uploadcare-dialog-preview-done"\n       tabindex="0" role="button"\n          >', ('' + t('dialog.tabs.preview.multiple.done')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n  <div class="uploadcare-panel-footer-text uploadcare-dpm-footer-text"></div>\n</div>\n');
+            __p.push('<div class="photolia-dialog-padding">\n  <div class="photolia-dialog-title photolia-if-no-mobile photolia-dpm-title"></div>\n  <div class="photolia-dialog-title photolia-if-mobile photolia-dpm-mobile-title"></div>\n\n  <div class="photolia-file-list"></div>\n</div>\n\n<div class="photolia-panel-footer">\n  <div class="photolia-dialog-button photolia-dialog-preview-back"\n       tabindex="0" role="button"\n          >', ('' + t('dialog.tabs.preview.multiple.clear')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n  <div class="photolia-dialog-button-success photolia-dialog-preview-done"\n       tabindex="0" role="button"\n          >', ('' + t('dialog.tabs.preview.multiple.done')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n  <div class="photolia-panel-footer-text photolia-dpm-footer-text"></div>\n</div>\n');
         }
         return __p.join('');
     };
-    uploadcare.templates.JST["tab-preview-regular"] = function(obj) {
+    photolia.templates.JST["tab-preview-regular"] = function(obj) {
         var __p = [],
             print = function() {
                 __p.push.apply(__p, arguments);
             };
         with(obj || {}) {
-            __p.push('<div class="uploadcare-dialog-padding">\n  <div class="uploadcare-dialog-title">', ('' + t('dialog.tabs.preview.regular.title')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n\n  <div class="uploadcare-dialog-label">\n    ', ('' + (file.name || t('dialog.tabs.preview.unknownName'))).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '', ('' +
-                utils.readableFileSize(file.size, '', ', ')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n\n  <div class="uploadcare-dialog-section uploadcare-dialog-normal-text">\n    ', ('' + t('dialog.tabs.preview.regular.line1')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '<br/>\n    ', ('' + t('dialog.tabs.preview.regular.line2')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n\n  <div class="uploadcare-dialog-button-success uploadcare-dialog-preview-done"\n       tabindex="0" role="button"\n          >', ('' + t('dialog.tabs.preview.done')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n  <div class="uploadcare-dialog-button uploadcare-dialog-preview-back"\n       tabindex="0" role="button"\n          >', ('' + t('dialog.tabs.preview.change')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n</div>\n');
+            __p.push('<div class="photolia-dialog-padding">\n  <div class="photolia-dialog-title">', ('' + t('dialog.tabs.preview.regular.title')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n\n  <div class="photolia-dialog-label">\n    ', ('' + (file.name || t('dialog.tabs.preview.unknownName'))).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '', ('' +
+                utils.readableFileSize(file.size, '', ', ')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n\n  <div class="photolia-dialog-section photolia-dialog-normal-text">\n    ', ('' + t('dialog.tabs.preview.regular.line1')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '<br/>\n    ', ('' + t('dialog.tabs.preview.regular.line2')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div>\n\n  <div class="photolia-dialog-button-success photolia-dialog-preview-done"\n       tabindex="0" role="button"\n          >', ('' + t('dialog.tabs.preview.done')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n  <div class="photolia-dialog-button photolia-dialog-preview-back"\n       tabindex="0" role="button"\n          >', ('' + t('dialog.tabs.preview.change')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n</div>\n');
         }
         return __p.join('');
     };
-    uploadcare.templates.JST["tab-preview-unknown"] = function(obj) {
+    photolia.templates.JST["tab-preview-unknown"] = function(obj) {
         var __p = [],
             print = function() {
                 __p.push.apply(__p, arguments);
             };
         with(obj || {}) {
-            __p.push('<div class="uploadcare-dialog-padding">\n\n  <div class="uploadcare-dialog-title">', ('' + t('dialog.tabs.preview.unknown.title')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n\n  <div class="uploadcare-dialog-label uploadcare-dialog-preview-label"></div>\n\n  <div class="uploadcare-dialog-button-success uploadcare-dialog-preview-done"\n       tabindex="0" role="button"\n          >', ('' + t('dialog.tabs.preview.unknown.done')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n</div>\n');
+            __p.push('<div class="photolia-dialog-padding">\n\n  <div class="photolia-dialog-title">', ('' + t('dialog.tabs.preview.unknown.title')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n\n  <div class="photolia-dialog-label photolia-dialog-preview-label"></div>\n\n  <div class="photolia-dialog-button-success photolia-dialog-preview-done"\n       tabindex="0" role="button"\n          >', ('' + t('dialog.tabs.preview.unknown.done')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n</div>\n');
         }
         return __p.join('');
     };
-    uploadcare.templates.JST["tab-url"] = function(obj) {
+    photolia.templates.JST["tab-url"] = function(obj) {
         var __p = [],
             print = function() {
                 __p.push.apply(__p, arguments);
             };
         with(obj || {}) {
-            __p.push('<div class="uploadcare-dialog-title">', ('' + t('dialog.tabs.url.title')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n<div class="uploadcare-dialog-section uploadcare-dialog-normal-text">\n  <div>', ('' + t('dialog.tabs.url.line1')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n  <div>', ('' + t('dialog.tabs.url.line2')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n</div>\n<form class="uploadcare-dialog-url-form">\n  <input type="text" class="uploadcare-dialog-input" placeholder="', ('' + t('dialog.tabs.url.input')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '">\n  <button class="uploadcare-dialog-button uploadcare-dialog-url-submit" type="submit">', ('' + t('dialog.tabs.url.button')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</button>\n</form>\n');
+            __p.push('<div class="photolia-dialog-title">', ('' + t('dialog.tabs.url.title')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n<div class="photolia-dialog-section photolia-dialog-normal-text">\n  <div>', ('' + t('dialog.tabs.url.line1')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n  <div>', ('' + t('dialog.tabs.url.line2')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n</div>\n<form class="photolia-dialog-url-form">\n  <input type="text" class="photolia-dialog-input" placeholder="', ('' + t('dialog.tabs.url.input')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '">\n  <button class="photolia-dialog-button photolia-dialog-url-submit" type="submit">', ('' + t('dialog.tabs.url.button')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</button>\n</form>\n');
         }
         return __p.join('');
     };
-    uploadcare.templates.JST["widget-button"] = function(obj) {
+    photolia.templates.JST["widget-button"] = function(obj) {
         var __p = [],
             print = function() {
                 __p.push.apply(__p, arguments);
             };
         with(obj || {}) {
-            __p.push('<div tabindex="0" role="button"\n     class="uploadcare-widget-button uploadcare-widget-button-', name, '"\n>', ('' + caption).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n');
+            __p.push('<div tabindex="0" role="button"\n     class="photolia-widget-button photolia-widget-button-', name, '"\n>', ('' + caption).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div>\n');
         }
         return __p.join('');
     };
-    uploadcare.templates.JST["widget-file-name"] = function(obj) {
+    photolia.templates.JST["widget-file-name"] = function(obj) {
         var __p = [],
             print = function() {
                 __p.push.apply(__p, arguments);
             };
         with(obj || {}) {
-            __p.push('<div class="uploadcare-widget-file-name uploadcare-link"\n     tabindex="0" role="link">', ('' + utils.fitText(name, 20)).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div><!--\n--><div class="uploadcare-widget-file-size">,\n    ', ('' + utils.readableFileSize(size)).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n</div>\n');
+            __p.push('<div class="photolia-widget-file-name photolia-link"\n     tabindex="0" role="link">', ('' + utils.fitText(name, 20)).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '</div><!--\n--><div class="photolia-widget-file-size">,\n    ', ('' + utils.readableFileSize(size)).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n</div>\n');
         }
         return __p.join('');
     };
-    uploadcare.templates.JST["widget"] = function(obj) {
+    photolia.templates.JST["widget"] = function(obj) {
         var __p = [],
             print = function() {
                 __p.push.apply(__p, arguments);
             };
         with(obj || {}) {
-            __p.push('<div class="uploadcare-widget">\n  <div class="uploadcare-widget-dragndrop-area">\n    ', ('' + t('draghere')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div><div class="uploadcare-widget-status">\n  </div><div class="uploadcare-widget-text">\n</div></div>\n');
+            __p.push('<div class="photolia-widget">\n  <div class="photolia-widget-dragndrop-area">\n    ', ('' + t('draghere')).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;'), '\n  </div><div class="photolia-widget-status">\n  </div><div class="photolia-widget-text">\n</div></div>\n');
         }
         return __p.join('');
     };
     (function() {
         var $, tpl;
 
-        $ = uploadcare.jQuery;
+        $ = photolia.jQuery;
 
-        tpl = uploadcare.templates.tpl;
+        tpl = photolia.templates.tpl;
 
-        uploadcare.settings.waitForSettings.add(function(settings) {
+        photolia.settings.waitForSettings.add(function(settings) {
             var css, style;
             css = tpl('styles', {
                 settings: settings
@@ -5840,13 +5840,13 @@
         };
 
         // }}}
-    }(uploadcare.jQuery));
+    }(photolia.jQuery));
     (function() {
         var $, utils;
 
-        $ = uploadcare.jQuery, utils = uploadcare.utils;
+        $ = photolia.jQuery, utils = photolia.utils;
 
-        uploadcare.namespace('crop', function(ns) {
+        photolia.namespace('crop', function(ns) {
             return ns.CropWidget = (function() {
                 var cropModifierRegExp;
 
@@ -5858,7 +5858,7 @@
                     }
                     this.__api = $.Jcrop(this.element[0], {
                         trueSize: this.originalSize,
-                        addClass: 'uploadcare-crop-widget',
+                        addClass: 'photolia-crop-widget',
                         createHandles: ['nw', 'ne', 'se', 'sw'],
                         bgColor: 'transparent',
                         bgOpacity: .8
@@ -5948,7 +5948,7 @@
             },
             __slice = [].slice;
 
-        namespace = uploadcare.namespace, s = uploadcare.settings, $ = uploadcare.jQuery, utils = uploadcare.utils;
+        namespace = photolia.namespace, s = photolia.settings, $ = photolia.jQuery, utils = photolia.utils;
 
         namespace('files', function(ns) {
             return ns.BaseFile = (function() {
@@ -6184,7 +6184,7 @@
             };
             return utils.valueToFile = function(value, settings) {
                 if (value && !utils.isFile(value)) {
-                    value = uploadcare.fileFrom('uploaded', value, settings);
+                    value = photolia.fileFrom('uploaded', value, settings);
                 }
                 return value || null;
             };
@@ -6194,9 +6194,9 @@
     (function() {
         var $, Blob, FileReader, URL, utils, _ref, _ref1;
 
-        $ = uploadcare.jQuery, utils = uploadcare.utils, (_ref = uploadcare.utils, (_ref1 = _ref.abilities, Blob = _ref1.Blob, FileReader = _ref1.FileReader, URL = _ref1.URL));
+        $ = photolia.jQuery, utils = photolia.utils, (_ref = photolia.utils, (_ref1 = _ref.abilities, Blob = _ref1.Blob, FileReader = _ref1.FileReader, URL = _ref1.URL));
 
-        uploadcare.namespace('utils.image', function(ns) {
+        photolia.namespace('utils.image', function(ns) {
             var DataView, taskRunner;
             DataView = window.DataView;
             taskRunner = utils.taskRunner(1);
@@ -6550,9 +6550,9 @@
                 return child;
             };
 
-        $ = uploadcare.jQuery, utils = uploadcare.utils;
+        $ = photolia.jQuery, utils = photolia.utils;
 
-        uploadcare.namespace('files', function(ns) {
+        photolia.namespace('files', function(ns) {
             return ns.ObjectFile = (function(_super) {
                 var _directRunner;
 
@@ -6649,8 +6649,8 @@
                             return;
                         }
                         formData = new FormData();
-                        formData.append('UPLOADCARE_PUB_KEY', _this.settings.publicKey);
-                        formData.append('UPLOADCARE_STORE', _this.settings.doNotStore ? '' : 'auto');
+                        formData.append('photolia_PUB_KEY', _this.settings.publicKey);
+                        formData.append('photolia_STORE', _this.settings.doNotStore ? '' : 'auto');
                         formData.append('file', _this.__file, _this.fileName);
                         formData.append('file_name', _this.fileName);
                         formData.append('source', _this.sourceInfo.source);
@@ -6716,13 +6716,13 @@
                     var data,
                         _this = this;
                     data = {
-                        UPLOADCARE_PUB_KEY: this.settings.publicKey,
+                        photolia_PUB_KEY: this.settings.publicKey,
                         filename: this.fileName,
                         source: this.sourceInfo.source,
                         size: this.fileSize,
                         content_type: this.fileType,
                         part_size: this.settings.multipartPartSize,
-                        UPLOADCARE_STORE: this.settings.doNotStore ? '' : 'auto'
+                        photolia_STORE: this.settings.doNotStore ? '' : 'auto'
                     };
                     return this.__autoAbort(utils.jsonp("" + this.settings.urlBase + "/multipart/start/?jsonerrors=1", 'POST', data).fail(function(reason) {
                         if (_this.settings.debugUploads) {
@@ -6825,7 +6825,7 @@
                     var data,
                         _this = this;
                     data = {
-                        UPLOADCARE_PUB_KEY: this.settings.publicKey,
+                        photolia_PUB_KEY: this.settings.publicKey,
                         uuid: uuid
                     };
                     return this.__autoAbort(utils.jsonp("" + this.settings.urlBase + "/multipart/complete/?jsonerrors=1", "POST", data).fail(function(reason) {
@@ -6863,9 +6863,9 @@
                 return child;
             };
 
-        $ = uploadcare.jQuery, utils = uploadcare.utils;
+        $ = photolia.jQuery, utils = photolia.utils;
 
-        uploadcare.namespace('files', function(ns) {
+        photolia.namespace('files', function(ns) {
             return ns.InputFile = (function(_super) {
                 __extends(InputFile, _super);
 
@@ -6884,7 +6884,7 @@
                     var df, formParam, iframeId, targetUrl;
                     df = $.Deferred();
                     targetUrl = "" + this.settings.urlBase + "/iframe/";
-                    iframeId = "uploadcare-iframe-" + this.fileId;
+                    iframeId = "photolia-iframe-" + this.fileId;
                     this.__iframe = $('<iframe>').attr({
                         id: iframeId,
                         name: iframeId
@@ -6902,7 +6902,7 @@
                         action: targetUrl,
                         enctype: 'multipart/form-data',
                         target: iframeId
-                    }).append(formParam('UPLOADCARE_PUB_KEY', this.settings.publicKey)).append(formParam('UPLOADCARE_FILE_ID', this.fileId)).append(formParam('UPLOADCARE_STORE', this.settings.doNotStore ? '' : 'auto')).append(formParam('UPLOADCARE_SOURCE', this.sourceInfo.source)).append(this.__input).css('display', 'none').appendTo('body').submit();
+                    }).append(formParam('photolia_PUB_KEY', this.settings.publicKey)).append(formParam('photolia_FILE_ID', this.fileId)).append(formParam('photolia_STORE', this.settings.doNotStore ? '' : 'auto')).append(formParam('photolia_SOURCE', this.sourceInfo.source)).append(this.__input).css('display', 'none').appendTo('body').submit();
                     return df.always(this.__cleanUp);
                 };
 
@@ -6926,7 +6926,7 @@
     }).call(this);
     // changed:
     //   Pusher.dependency_suffix = '.min'; (was '')
-    //   window.WEB_SOCKET_SWF_LOCATION = "https://s3.amazonaws.com/uploadcare-static/WebSocketMainInsecure.swf"
+    //   window.WEB_SOCKET_SWF_LOCATION = "https://s3.amazonaws.com/photolia-static/WebSocketMainInsecure.swf"
 
     /*!
      * Pusher JavaScript Library v1.12.2
@@ -8205,7 +8205,7 @@
                             Pusher.TransportType = 'flash';
 
                             // window.WEB_SOCKET_SWF_LOCATION = root + "/WebSocketMain.swf";
-                            window.WEB_SOCKET_SWF_LOCATION = "https://s3.amazonaws.com/uploadcare-static/WebSocketMainInsecure.swf"
+                            window.WEB_SOCKET_SWF_LOCATION = "https://s3.amazonaws.com/photolia-static/WebSocketMainInsecure.swf"
                             WebSocket.__addTask(function() {
                                 Pusher.ready();
                             })
@@ -8242,7 +8242,7 @@
 
         this.Pusher = Pusher;
 
-    }).call(uploadcare);
+    }).call(photolia);
     (function() {
         var $,
             __hasProp = {}.hasOwnProperty,
@@ -8260,12 +8260,12 @@
                 return child;
             };
 
-        $ = uploadcare.jQuery;
+        $ = photolia.jQuery;
 
-        uploadcare.namespace('utils.pusher', function(ns) {
+        photolia.namespace('utils.pusher', function(ns) {
             var ManagedPusher, pushers, _ref;
             pushers = {};
-            uploadcare.Pusher.prototype.constructor = uploadcare.Pusher;
+            photolia.Pusher.prototype.constructor = photolia.Pusher;
             ManagedPusher = (function(_super) {
                 __extends(ManagedPusher, _super);
 
@@ -8296,7 +8296,7 @@
 
                 return ManagedPusher;
 
-            })(uploadcare.Pusher);
+            })(photolia.Pusher);
             return ns.getPusher = function(key) {
                 if (pushers[key] == null) {
                     pushers[key] = new ManagedPusher(key);
@@ -8329,11 +8329,11 @@
                 return child;
             };
 
-        $ = uploadcare.jQuery, utils = uploadcare.utils;
+        $ = photolia.jQuery, utils = photolia.utils;
 
-        pusher = uploadcare.utils.pusher;
+        pusher = photolia.utils.pusher;
 
-        uploadcare.namespace('files', function(ns) {
+        photolia.namespace('files', function(ns) {
             var PollWatcher, PusherWatcher;
             ns.UrlFile = (function(_super) {
                 __extends(UrlFile, _super);
@@ -8542,9 +8542,9 @@
                 return child;
             };
 
-        $ = uploadcare.jQuery, utils = uploadcare.utils;
+        $ = photolia.jQuery, utils = photolia.utils;
 
-        uploadcare.namespace('files', function(ns) {
+        photolia.namespace('files', function(ns) {
             ns.UploadedFile = (function(_super) {
                 __extends(UploadedFile, _super);
 
@@ -8606,7 +8606,7 @@
                 return child;
             };
 
-        namespace = uploadcare.namespace, $ = uploadcare.jQuery, utils = uploadcare.utils, (_ref = uploadcare.locale, t = _ref.t), s = uploadcare.settings;
+        namespace = photolia.namespace, $ = photolia.jQuery, utils = photolia.utils, (_ref = photolia.locale, t = _ref.t), s = photolia.settings;
 
         namespace('files', function(ns) {
             ns.FileGroup = (function() {
@@ -8786,7 +8786,7 @@
                 function SavedFileGroup(__data, settings) {
                     var files;
                     this.__data = __data;
-                    files = uploadcare.filesFrom('ready', this.__data.files, settings);
+                    files = photolia.filesFrom('ready', this.__data.files, settings);
                     SavedFileGroup.__super__.constructor.call(this, files, settings);
                 }
 
@@ -8818,7 +8818,7 @@
                         }
                     }
                 }
-                return new uploadcare.files.FileGroup(files, settings).api();
+                return new photolia.files.FileGroup(files, settings).api();
             };
             return ns.loadFileGroup = function(groupIdOrUrl, settings) {
                 var df, id,
@@ -8838,7 +8838,7 @@
                         return df.reject();
                     }).done(function(data) {
                         var group;
-                        group = new uploadcare.files.SavedFileGroup(data, settings);
+                        group = new photolia.files.SavedFileGroup(data, settings);
                         return df.resolve(group.api());
                     });
                 } else {
@@ -8865,10 +8865,10 @@
                             }
                             return _results;
                         })();
-                        value = uploadcare.FileGroup(files, settings);
+                        value = photolia.FileGroup(files, settings);
                     } else {
                         if (!utils.isFileGroup(value)) {
-                            return uploadcare.loadFileGroup(value, settings);
+                            return photolia.loadFileGroup(value, settings);
                         }
                     }
                 }
@@ -8901,9 +8901,9 @@
     (function() {
         var $, f, settings, utils;
 
-        utils = uploadcare.utils, $ = uploadcare.jQuery, f = uploadcare.files, settings = uploadcare.settings;
+        utils = photolia.utils, $ = photolia.jQuery, f = photolia.files, settings = photolia.settings;
 
-        uploadcare.namespace('', function(ns) {
+        photolia.namespace('', function(ns) {
             var converters;
             ns.fileFrom = function(type, data, s) {
                 return ns.filesFrom(type, [data], s)[0];
@@ -8936,14 +8936,14 @@
     (function() {
         var $, s, utils;
 
-        utils = uploadcare.utils, s = uploadcare.settings, $ = uploadcare.jQuery;
+        utils = photolia.utils, s = photolia.settings, $ = photolia.jQuery;
 
-        uploadcare.namespace('dragdrop', function(ns) {
+        photolia.namespace('dragdrop', function(ns) {
             ns.support = utils.abilities.fileDragAndDrop;
             ns.uploadDrop = function(el, callback, settings) {
                 settings = s.build(settings);
                 return ns.receiveDrop(el, function(type, data) {
-                    return callback(settings.multiple ? uploadcare.filesFrom(type, data, settings) : uploadcare.fileFrom(type, data[0], settings));
+                    return callback(settings.multiple ? photolia.filesFrom(type, data, settings) : photolia.fileFrom(type, data[0], settings));
                 });
             };
             if (!ns.support) {
@@ -8988,7 +8988,7 @@
                     active = false;
                     changeState = function(newActive) {
                         if (active !== newActive) {
-                            return $(el).toggleClass('uploadcare-dragging', active = newActive);
+                            return $(el).toggleClass('photolia-dragging', active = newActive);
                         }
                     };
                     return $(receiver || el).on({
@@ -9040,9 +9040,9 @@
                 return child;
             };
 
-        files = uploadcare.files, $ = uploadcare.jQuery, (_ref = uploadcare.utils, abilities = _ref.abilities), (_ref1 = uploadcare.templates, tpl = _ref1.tpl);
+        files = photolia.files, $ = photolia.jQuery, (_ref = photolia.utils, abilities = _ref.abilities), (_ref1 = photolia.templates, tpl = _ref1.tpl);
 
-        uploadcare.namespace('ui.progress', function(ns) {
+        photolia.namespace('ui.progress', function(ns) {
             ns.Circle = (function() {
                 function Circle(element) {
                     this.update = __bind(this.update, this);
@@ -9098,8 +9098,8 @@
             ns.BaseRenderer = (function() {
                 function BaseRenderer(el) {
                     this.element = $(el);
-                    this.element.data('uploadcare-progress-renderer', this);
-                    this.element.addClass('uploadcare-widget-circle');
+                    this.element.data('photolia-progress-renderer', this);
+                    this.element.addClass('photolia-widget-circle');
                 }
 
                 BaseRenderer.prototype.update = function() {};
@@ -9112,9 +9112,9 @@
 
                 function TextRenderer() {
                     TextRenderer.__super__.constructor.apply(this, arguments);
-                    this.element.addClass('uploadcare-widget-circle--text');
+                    this.element.addClass('photolia-widget-circle--text');
                     this.element.html(tpl('circle-text'));
-                    this.text = this.element.find('.uploadcare-widget-circle-text');
+                    this.text = this.element.find('.photolia-widget-circle-text');
                 }
 
                 TextRenderer.prototype.setValue = function(val) {
@@ -9131,7 +9131,7 @@
                 function CanvasRenderer() {
                     CanvasRenderer.__super__.constructor.apply(this, arguments);
                     this.canvasEl = $('<canvas>').get(0);
-                    this.element.addClass('uploadcare-widget-circle--canvas');
+                    this.element.addClass('photolia-widget-circle--canvas');
                     this.element.html(this.canvasEl);
                     this.setValue(0, true);
                 }
@@ -9215,18 +9215,18 @@
     (function() {
         var $, progress, t, tpl, utils, _ref, _ref1, _ref2;
 
-        $ = uploadcare.jQuery, utils = uploadcare.utils, (_ref = uploadcare.ui, progress = _ref.progress), (_ref1 = uploadcare.locale, t = _ref1.t), (_ref2 = uploadcare.templates, tpl = _ref2.tpl);
+        $ = photolia.jQuery, utils = photolia.utils, (_ref = photolia.ui, progress = _ref.progress), (_ref1 = photolia.locale, t = _ref1.t), (_ref2 = photolia.templates, tpl = _ref2.tpl);
 
-        uploadcare.namespace('widget', function(ns) {
+        photolia.namespace('widget', function(ns) {
             return ns.Template = (function() {
                 function Template(settings, element) {
                     this.settings = settings;
                     this.element = element;
                     this.content = $(tpl('widget'));
                     this.element.after(this.content);
-                    this.circle = new progress.Circle(this.content.find('.uploadcare-widget-status'));
-                    this.statusText = this.content.find('.uploadcare-widget-text');
-                    this.content.toggleClass('uploadcare-widget-option-clearable', this.settings.clearable);
+                    this.circle = new progress.Circle(this.content.find('.photolia-widget-status'));
+                    this.statusText = this.content.find('.photolia-widget-text');
+                    this.content.toggleClass('photolia-widget-option-clearable', this.settings.clearable);
                 }
 
                 Template.prototype.addButton = function(name, caption) {
@@ -9241,11 +9241,11 @@
 
                 Template.prototype.setStatus = function(status) {
                     var prefix;
-                    prefix = 'uploadcare-widget-status-';
+                    prefix = 'photolia-widget-status-';
                     this.content.removeClass(prefix + this.content.attr('data-status'));
                     this.content.attr('data-status', status);
                     this.content.addClass(prefix + status);
-                    return this.element.trigger("" + status + ".uploadcare");
+                    return this.element.trigger("" + status + ".photolia");
                 };
 
                 Template.prototype.reset = function() {
@@ -9282,7 +9282,7 @@
                 };
 
                 Template.prototype.setFileInfo = function(info) {
-                    return this.statusText.html(tpl('widget-file-name', info)).find('.uploadcare-widget-file-name').toggleClass('needsclick', this.settings.systemDialog);
+                    return this.statusText.html(tpl('widget-file-name', info)).find('.photolia-widget-file-name').toggleClass('needsclick', this.settings.systemDialog);
                 };
 
                 return Template;
@@ -9299,9 +9299,9 @@
                 };
             };
 
-        utils = uploadcare.utils, dragdrop = uploadcare.dragdrop, (_ref = uploadcare.locale, t = _ref.t), $ = uploadcare.jQuery, (_ref1 = uploadcare.templates, tpl = _ref1.tpl);
+        utils = photolia.utils, dragdrop = photolia.dragdrop, (_ref = photolia.locale, t = _ref.t), $ = photolia.jQuery, (_ref1 = photolia.templates, tpl = _ref1.tpl);
 
-        uploadcare.namespace('widget.tabs', function(ns) {
+        photolia.namespace('widget.tabs', function(ns) {
             return ns.FileTab = (function() {
                 function FileTab(container, tabButton, dialogApi, settings, name) {
                     var _this = this;
@@ -9312,8 +9312,8 @@
                     this.name = name;
                     this.__updateTabsList = __bind(this.__updateTabsList, this);
                     this.container.append(tpl('tab-file'));
-                    this.container.addClass('uploadcare-dialog-padding');
-                    this.container.on('click', '.uploadcare-dialog-file-source', function(e) {
+                    this.container.addClass('photolia-dialog-padding');
+                    this.container.on('click', '.photolia-dialog-file-source', function(e) {
                         return _this.dialogApi.switchTab($(e.target).data('tab'));
                     });
                     this.__setupFileButton();
@@ -9325,20 +9325,20 @@
                 FileTab.prototype.__initDragNDrop = function() {
                     var dropArea,
                         _this = this;
-                    dropArea = this.container.find('.uploadcare-dialog-file-drop-area');
+                    dropArea = this.container.find('.photolia-dialog-file-drop-area');
                     if (utils.abilities.fileDragAndDrop) {
                         dragdrop.receiveDrop(dropArea, function(type, data) {
                             _this.dialogApi.addFiles(type, data);
                             return _this.dialogApi.switchTab('preview');
                         });
-                        return this.container.addClass("uploadcare-draganddrop");
+                        return this.container.addClass("photolia-draganddrop");
                     }
                 };
 
                 FileTab.prototype.__setupFileButton = function() {
                     var fileButton,
                         _this = this;
-                    fileButton = this.container.find('.uploadcare-dialog-big-button');
+                    fileButton = this.container.find('.photolia-dialog-big-button');
                     if (utils.abilities.sendFileAPI) {
                         return fileButton.on('click', function() {
                             utils.fileSelectDialog(_this.container, _this.settings, function(input) {
@@ -9357,7 +9357,7 @@
 
                 FileTab.prototype.__updateTabsList = function() {
                     var list, n, tab, _i, _len, _ref2;
-                    list = this.container.find('.uploadcare-dialog-file-sources').empty();
+                    list = this.container.find('.photolia-dialog-file-sources').empty();
                     n = 0;
                     _ref2 = this.settings.tabs;
                     for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
@@ -9371,14 +9371,14 @@
                         n += 1;
                         list.append([
                             $('<div/>', {
-                                "class": "uploadcare-dialog-file-source",
+                                "class": "photolia-dialog-file-source",
                                 'data-tab': tab,
                                 html: t('dialog.tabs.names.' + tab)
                             }), ' '
                         ]);
                     }
-                    list.toggleClass('uploadcare-hidden', n === 0);
-                    return this.container.find('.uploadcare-dialog-file-source-or').toggleClass('uploadcare-hidden', n === 0);
+                    list.toggleClass('photolia-hidden', n === 0);
+                    return this.container.find('.photolia-dialog-file-source-or').toggleClass('photolia-hidden', n === 0);
                 };
 
                 return FileTab;
@@ -9390,11 +9390,11 @@
     (function() {
         var $, t, tpl, _ref;
 
-        $ = uploadcare.jQuery, (_ref = uploadcare.templates, tpl = _ref.tpl);
+        $ = photolia.jQuery, (_ref = photolia.templates, tpl = _ref.tpl);
 
-        t = uploadcare.locale.t;
+        t = photolia.locale.t;
 
-        uploadcare.namespace('widget.tabs', function(ns) {
+        photolia.namespace('widget.tabs', function(ns) {
             return ns.UrlTab = (function() {
                 var fixUrl, urlRegexp;
 
@@ -9418,13 +9418,13 @@
                     this.settings = settings;
                     this.name = name;
                     this.container.append(tpl('tab-url'));
-                    this.container.addClass('uploadcare-dialog-padding');
-                    input = this.container.find('.uploadcare-dialog-input');
+                    this.container.addClass('photolia-dialog-padding');
+                    input = this.container.find('.photolia-dialog-input');
                     input.on('change keyup input', function() {
                         return button.prop('disabled', !$.trim(this.value));
                     });
-                    button = this.container.find('.uploadcare-dialog-url-submit').prop('disabled', true);
-                    this.container.find('.uploadcare-dialog-url-form').on('submit', function() {
+                    button = this.container.find('.photolia-dialog-url-submit').prop('disabled', true);
+                    this.container.find('.photolia-dialog-url-form').on('submit', function() {
                         var url;
                         if (url = fixUrl(input.val())) {
                             _this.dialogApi.addFiles('url', [
@@ -9454,9 +9454,9 @@
                 };
             };
 
-        utils = uploadcare.utils, $ = uploadcare.jQuery, (_ref = uploadcare.templates, tpl = _ref.tpl);
+        utils = photolia.utils, $ = photolia.jQuery, (_ref = photolia.templates, tpl = _ref.tpl);
 
-        uploadcare.namespace('widget.tabs', function(ns) {
+        photolia.namespace('widget.tabs', function(ns) {
             return ns.CameraTab = (function() {
                 function CameraTab(container, tabButton, dialogApi, settings, name) {
                     var _this = this;
@@ -9476,10 +9476,10 @@
                     this.__loaded = false;
                     this.mirrored = true;
                     this.container.append(tpl('tab-camera'));
-                    this.container.addClass('uploadcare-dialog-padding uploadcare-dialog-camera-requested');
-                    this.container.find('.uploadcare-dialog-camera-capture').on('click', this.__capture);
-                    this.container.find('.uploadcare-dialog-camera-mirror').on('click', this.__mirror);
-                    this.container.find('.uploadcare-dialog-camera-retry').on('click', this.__requestCamera);
+                    this.container.addClass('photolia-dialog-padding photolia-dialog-camera-requested');
+                    this.container.find('.photolia-dialog-camera-capture').on('click', this.__capture);
+                    this.container.find('.photolia-dialog-camera-mirror').on('click', this.__mirror);
+                    this.container.find('.photolia-dialog-camera-retry').on('click', this.__requestCamera);
                     this.video = this.container.find('video');
                     this.video.on('loadeddata', function() {
                         return this.play();
@@ -9522,7 +9522,7 @@
                             }]
                         }
                     }, function(stream) {
-                        _this.container.removeClass('uploadcare-dialog-camera-requested').removeClass('uploadcare-dialog-camera-denied').addClass('uploadcare-dialog-camera-ready');
+                        _this.container.removeClass('photolia-dialog-camera-requested').removeClass('photolia-dialog-camera-denied').addClass('photolia-dialog-camera-ready');
                         _this.__stream = stream;
                         if (_this.URL) {
                             _this.video.prop('src', _this.URL.createObjectURL(stream));
@@ -9532,9 +9532,9 @@
                         return _this.video[0].play();
                     }, function(error) {
                         if (error === "NO_DEVICES_FOUND" || error.name === 'DevicesNotFoundError') {
-                            _this.container.addClass('uploadcare-dialog-camera-not-founded');
+                            _this.container.addClass('photolia-dialog-camera-not-founded');
                         } else {
-                            _this.container.addClass('uploadcare-dialog-camera-denied');
+                            _this.container.addClass('photolia-dialog-camera-denied');
                         }
                         return _this.__loaded = false;
                     });
@@ -9543,7 +9543,7 @@
                 CameraTab.prototype.__revoke = function() {
                     var _base;
                     this.__loaded = false;
-                    this.container.removeClass('uploadcare-dialog-camera-denied').removeClass('uploadcare-dialog-camera-ready').addClass('uploadcare-dialog-camera-requested');
+                    this.container.removeClass('photolia-dialog-camera-denied').removeClass('photolia-dialog-camera-ready').addClass('photolia-dialog-camera-requested');
                     if (!this.__stream) {
                         return;
                     }
@@ -9560,7 +9560,7 @@
 
                 CameraTab.prototype.__mirror = function() {
                     this.mirrored = !this.mirrored;
-                    return this.video.toggleClass('uploadcare-dialog-camera--mirrored', this.mirrored);
+                    return this.video.toggleClass('photolia-dialog-camera--mirrored', this.mirrored);
                 };
 
                 CameraTab.prototype.__capture = function() {
@@ -9606,9 +9606,9 @@
                 };
             };
 
-        locale = uploadcare.locale, utils = uploadcare.utils, tabsCss = uploadcare.tabsCss, $ = uploadcare.jQuery, (_ref = uploadcare.locale, t = _ref.t), files = uploadcare.files;
+        locale = photolia.locale, utils = photolia.utils, tabsCss = photolia.tabsCss, $ = photolia.jQuery, (_ref = photolia.locale, t = _ref.t), files = photolia.files;
 
-        uploadcare.namespace('widget.tabs', function(ns) {
+        photolia.namespace('widget.tabs', function(ns) {
             return ns.RemoteTab = (function() {
                 function RemoteTab(container, tabButton, dialogApi, settings, name) {
                     var _this = this;
@@ -9618,7 +9618,7 @@
                     this.settings = settings;
                     this.name = name;
                     this.__createIframe = __bind(this.__createIframe, this);
-                    this.container.addClass('uploadcare-dialog-remote-iframe-wrap');
+                    this.container.addClass('photolia-dialog-remote-iframe-wrap');
                     this.dialogApi.progress(function(name) {
                         if (name === _this.name) {
                             _this.__createIframe();
@@ -9634,7 +9634,7 @@
                     return ("" + this.settings.socialBase + "/window/" + this.name + "?") + $.param({
                         lang: this.settings.locale,
                         public_key: this.settings.publicKey,
-                        widget_version: uploadcare.version,
+                        widget_version: photolia.version,
                         images_only: this.settings.imagesOnly,
                         pass_window_open: this.settings.passWindowOpen
                     });
@@ -9657,7 +9657,7 @@
                         marginwidth: 0,
                         frameborder: 0,
                         allowTransparency: "true"
-                    }).addClass('uploadcare-dialog-remote-iframe').appendTo(this.container).on('load', function() {
+                    }).addClass('photolia-dialog-remote-iframe').appendTo(this.container).on('load', function() {
                         var style, url, _i, _j, _len, _len1, _ref1, _ref2;
                         _this.iframe.css('opacity', '1');
                         _ref1 = tabsCss.urls;
@@ -9753,13 +9753,13 @@
     (function() {
         var $, Circle, _ref, _ref1;
 
-        (_ref = uploadcare.ui, (_ref1 = _ref.progress, Circle = _ref1.Circle)), $ = uploadcare.jQuery;
+        (_ref = photolia.ui, (_ref1 = _ref.progress, Circle = _ref1.Circle)), $ = photolia.jQuery;
 
-        uploadcare.namespace('widget.tabs', function(ns) {
+        photolia.namespace('widget.tabs', function(ns) {
             return ns.BasePreviewTab = (function() {
                 var PREFIX;
 
-                PREFIX = '.uploadcare-dialog-preview-';
+                PREFIX = '.photolia-dialog-preview-';
 
                 function BasePreviewTab(container, tabButton, dialogApi, settings, name) {
                     var notDisabled,
@@ -9770,7 +9770,7 @@
                     this.settings = settings;
                     this.name = name;
                     this.__initTabButtonCircle();
-                    notDisabled = ':not(.uploadcare-disabled-el)';
+                    notDisabled = ':not(.photolia-disabled-el)';
                     this.container.on('click', PREFIX + 'back' + notDisabled, function() {
                         return _this.dialogApi.fileColl.clear();
                     });
@@ -9780,7 +9780,7 @@
                 BasePreviewTab.prototype.__initTabButtonCircle = function() {
                     var circle, circleDf, circleEl, update,
                         _this = this;
-                    circleEl = $('<div class="uploadcare-dialog-icon">').appendTo(this.tabButton);
+                    circleEl = $('<div class="photolia-dialog-icon">').appendTo(this.tabButton);
                     circleDf = $.Deferred();
                     update = function() {
                         var infos, progress, progressInfo, _i, _len;
@@ -9828,9 +9828,9 @@
                 return child;
             };
 
-        utils = uploadcare.utils, (_ref = uploadcare.utils, (_ref1 = _ref.abilities, URL = _ref1.URL)), (_ref2 = uploadcare.ui, progress = _ref2.progress), (_ref3 = uploadcare.templates, tpl = _ref3.tpl), $ = uploadcare.jQuery, (_ref4 = uploadcare.crop, CropWidget = _ref4.CropWidget), (_ref5 = uploadcare.locale, t = _ref5.t);
+        utils = photolia.utils, (_ref = photolia.utils, (_ref1 = _ref.abilities, URL = _ref1.URL)), (_ref2 = photolia.ui, progress = _ref2.progress), (_ref3 = photolia.templates, tpl = _ref3.tpl), $ = photolia.jQuery, (_ref4 = photolia.crop, CropWidget = _ref4.CropWidget), (_ref5 = photolia.locale, t = _ref5.t);
 
-        uploadcare.namespace('widget.tabs', function(ns) {
+        photolia.namespace('widget.tabs', function(ns) {
             return ns.PreviewTab = (function(_super) {
                 __extends(PreviewTab, _super);
 
@@ -9913,7 +9913,7 @@
                 };
 
                 PreviewTab.prototype.element = function(name) {
-                    return this.container.find('.uploadcare-dialog-preview-' + name);
+                    return this.container.find('.photolia-dialog-preview-' + name);
                 };
 
                 PreviewTab.prototype.__setState = function(state, data) {
@@ -9935,7 +9935,7 @@
                     img = this.element('image');
                     done = this.element('done');
                     imgLoader = utils.imageLoader(img.attr('src')).done(function() {
-                        return _this.element('root').addClass('uploadcare-dialog-preview--loaded');
+                        return _this.element('root').addClass('photolia-dialog-preview--loaded');
                     }).fail(function() {
                         _this.file = null;
                         return _this.__setState('error', {
@@ -9943,7 +9943,7 @@
                         });
                     });
                     startCrop = function() {
-                        done.removeClass('uploadcare-disabled-el');
+                        done.removeClass('photolia-disabled-el');
                         _this.widget = new CropWidget(img, imgSize, _this.settings.crop[0]);
                         if (cdnModifiers) {
                             _this.widget.setSelectionFromModifiers(cdnModifiers);
@@ -9957,7 +9957,7 @@
                     };
                     if (this.settings.crop) {
                         this.element('title').text(t('dialog.tabs.preview.crop.title'));
-                        done.addClass('uploadcare-disabled-el');
+                        done.addClass('photolia-disabled-el');
                         done.text(t('dialog.tabs.preview.crop.done'));
                         this.populateCropSizes();
                         return imgLoader.done(function() {
@@ -9972,10 +9972,10 @@
                     if (this.settings.crop.length <= 1) {
                         return;
                     }
-                    this.element('root').addClass('uploadcare-dialog-preview--with-sizes');
+                    this.element('root').addClass('photolia-dialog-preview--with-sizes');
                     control = this.element('crop-sizes');
                     template = control.children();
-                    currentClass = 'uploadcare-crop-size--current';
+                    currentClass = 'photolia-crop-size--current';
                     $.each(this.settings.crop, function(i, crop) {
                         var caption, gcd, item, prefered, size;
                         prefered = crop.preferedSize;
@@ -10071,8 +10071,8 @@
         };
 
 
-        var movableName = 'uploadcareMovable';
-        var sortableName = 'uploadcareSortable';
+        var movableName = 'photoliaMovable';
+        var sortableName = 'photoliaSortable';
         var extend = {};
         extend[movableName] = function(o) {
             o = $.extend({
@@ -10265,7 +10265,7 @@
             return this[movableName](oMovable);
         };
         $.fn.extend(extend);
-    })(uploadcare.jQuery);
+    })(photolia.jQuery);
     (function() {
         var $, progress, t, tpl, utils, _ref, _ref1, _ref2,
             __bind = function(fn, me) {
@@ -10288,9 +10288,9 @@
                 return child;
             };
 
-        utils = uploadcare.utils, (_ref = uploadcare.ui, progress = _ref.progress), (_ref1 = uploadcare.templates, tpl = _ref1.tpl), $ = uploadcare.jQuery, (_ref2 = uploadcare.locale, t = _ref2.t);
+        utils = photolia.utils, (_ref = photolia.ui, progress = _ref.progress), (_ref1 = photolia.templates, tpl = _ref1.tpl), $ = photolia.jQuery, (_ref2 = photolia.locale, t = _ref2.t);
 
-        uploadcare.namespace('widget.tabs', function(ns) {
+        photolia.namespace('widget.tabs', function(ns) {
             return ns.PreviewTabMultiple = (function(_super) {
                 __extends(PreviewTabMultiple, _super);
 
@@ -10306,11 +10306,11 @@
                     PreviewTabMultiple.__super__.constructor.apply(this, arguments);
                     this.container.append(tpl('tab-preview-multiple'));
                     this.__fileTpl = $(tpl('tab-preview-multiple-file'));
-                    this.fileListEl = this.container.find('.uploadcare-file-list');
+                    this.fileListEl = this.container.find('.photolia-file-list');
                     this.titleEl = this.__find('title');
                     this.mobileTitleEl = this.__find('mobile-title');
                     this.footerTextEl = this.__find('footer-text');
-                    this.doneBtnEl = this.container.find('.uploadcare-dialog-preview-done');
+                    this.doneBtnEl = this.container.find('.photolia-dialog-preview-done');
                     $.each(this.dialogApi.fileColl.get(), function(i, file) {
                         return _this.__fileAdded(file);
                     });
@@ -10321,13 +10321,13 @@
                     this.dialogApi.fileColl.onAnyProgress(this.__fileProgress);
                     this.dialogApi.fileColl.onAnyDone(this.__fileDone);
                     this.dialogApi.fileColl.onAnyFail(this.__fileFailed);
-                    this.fileListEl.addClass(this.settings.imagesOnly ? 'uploadcare-file-list_tiles' : 'uploadcare-file-list_table');
+                    this.fileListEl.addClass(this.settings.imagesOnly ? 'photolia-file-list_tiles' : 'photolia-file-list_table');
                     this.__setupSorting();
                 }
 
                 PreviewTabMultiple.prototype.__setupSorting = function() {
                     var _this = this;
-                    return this.fileListEl.uploadcareSortable({
+                    return this.fileListEl.photoliaSortable({
                         touch: false,
                         axis: this.settings.imagesOnly ? 'xy' : 'y',
                         start: function(info) {
@@ -10336,7 +10336,7 @@
                         finish: function(info) {
                             var elements, index;
                             info.dragged.css('visibility', 'visible');
-                            elements = _this.container.find('.uploadcare-file-item');
+                            elements = _this.container.find('.photolia-file-item');
                             index = function(file) {
                                 return elements.index(_this.__fileToEl(file));
                             };
@@ -10351,7 +10351,7 @@
                     if (context == null) {
                         context = this.container;
                     }
-                    return $('.uploadcare-dpm-' + s, context);
+                    return $('.photolia-dpm-' + s, context);
                 };
 
                 PreviewTabMultiple.prototype.__updateContainerView = function() {
@@ -10359,36 +10359,36 @@
                     files = this.dialogApi.fileColl.length();
                     tooManyFiles = this.settings.multipleMax !== 0 && files > this.settings.multipleMax;
                     tooFewFiles = files < this.settings.multipleMin;
-                    this.doneBtnEl.toggleClass('uploadcare-disabled-el', tooManyFiles || tooFewFiles);
+                    this.doneBtnEl.toggleClass('photolia-disabled-el', tooManyFiles || tooFewFiles);
                     title = t('dialog.tabs.preview.multiple.title').replace('%files%', t('file', files));
                     this.titleEl.text(title);
                     footer = tooManyFiles ? t('dialog.tabs.preview.multiple.tooManyFiles').replace('%max%', this.settings.multipleMax) : files && tooFewFiles ? t('dialog.tabs.preview.multiple.tooFewFiles').replace('%min%', this.settings.multipleMin).replace('%files%', t('file', files)) : t('dialog.tabs.preview.multiple.question');
-                    this.footerTextEl.toggleClass('uploadcare-error', tooManyFiles || tooFewFiles).text(footer);
-                    return this.mobileTitleEl.toggleClass('uploadcare-error', tooManyFiles || tooFewFiles).text(tooManyFiles || tooFewFiles ? footer : title);
+                    this.footerTextEl.toggleClass('photolia-error', tooManyFiles || tooFewFiles).text(footer);
+                    return this.mobileTitleEl.toggleClass('photolia-error', tooManyFiles || tooFewFiles).text(tooManyFiles || tooFewFiles ? footer : title);
                 };
 
                 PreviewTabMultiple.prototype.__updateFileInfo = function(fileEl, info) {
-                    fileEl.find('.uploadcare-file-item__name').text(info.name || t('dialog.tabs.preview.unknownName'));
-                    return fileEl.find('.uploadcare-file-item__size').text(utils.readableFileSize(info.size, '–'));
+                    fileEl.find('.photolia-file-item__name').text(info.name || t('dialog.tabs.preview.unknownName'));
+                    return fileEl.find('.photolia-file-item__size').text(utils.readableFileSize(info.size, '–'));
                 };
 
                 PreviewTabMultiple.prototype.__fileProgress = function(file, progressInfo) {
                     var fileEl;
                     fileEl = this.__fileToEl(file);
-                    fileEl.find('.uploadcare-progressbar__value').css('width', Math.round(progressInfo.progress * 100) + '%');
+                    fileEl.find('.photolia-progressbar__value').css('width', Math.round(progressInfo.progress * 100) + '%');
                     return this.__updateFileInfo(fileEl, progressInfo.incompleteFileInfo);
                 };
 
                 PreviewTabMultiple.prototype.__fileDone = function(file, info) {
                     var cdnURL, fileEl,
                         _this = this;
-                    fileEl = this.__fileToEl(file).removeClass('uploadcare-file-item_uploading').addClass('uploadcare-file-item_uploaded');
-                    fileEl.find('.uploadcare-progressbar__value').css('width', '100%');
+                    fileEl = this.__fileToEl(file).removeClass('photolia-file-item_uploading').addClass('photolia-file-item_uploaded');
+                    fileEl.find('.photolia-progressbar__value').css('width', '100%');
                     this.__updateFileInfo(fileEl, info);
                     if (info.isImage) {
                         cdnURL = ("" + info.cdnUrl + "-/quality/lightest/") + (this.settings.imagesOnly ? "-/preview/340x340/" : "-/scale_crop/110x110/center/");
-                        return fileEl.find('.uploadcare-file-item__preview').addClass('uploadcare-zoomable-icon').html($('<img>').attr('src', cdnURL)).on('click', function() {
-                            return uploadcare.openPreviewDialog(file, _this.settings).done(function(newFile) {
+                        return fileEl.find('.photolia-file-item__preview').addClass('photolia-zoomable-icon').html($('<img>').attr('src', cdnURL)).on('click', function() {
+                            return photolia.openPreviewDialog(file, _this.settings).done(function(newFile) {
                                 return _this.dialogApi.fileColl.replace(file, newFile);
                             });
                         });
@@ -10396,7 +10396,7 @@
                 };
 
                 PreviewTabMultiple.prototype.__fileFailed = function(file, error, info) {
-                    return this.__fileToEl(file).removeClass('uploadcare-file-item_uploading').addClass('uploadcare-file-item_error').find('.uploadcare-file-item__error').text(t("errors." + error));
+                    return this.__fileToEl(file).removeClass('photolia-file-item_uploading').addClass('photolia-file-item_error').find('.photolia-file-item__error').text(t("errors." + error));
                 };
 
                 PreviewTabMultiple.prototype.__fileAdded = function(file) {
@@ -10424,7 +10424,7 @@
                 PreviewTabMultiple.prototype.__createFileEl = function(file) {
                     var fileEl,
                         _this = this;
-                    fileEl = this.__fileTpl.clone().on('click', '.uploadcare-remove', function() {
+                    fileEl = this.__fileTpl.clone().on('click', '.photolia-remove', function() {
                         return _this.dialogApi.fileColl.remove(file);
                     });
                     $(file).data('dpm-el', fileEl);
@@ -10445,9 +10445,9 @@
                 };
             };
 
-        utils = uploadcare.utils, (_ref = uploadcare.locale, t = _ref.t), (_ref1 = uploadcare.templates, tpl = _ref1.tpl), files = uploadcare.files, (_ref2 = uploadcare.widget, tabs = _ref2.tabs), s = uploadcare.settings, $ = uploadcare.jQuery;
+        utils = photolia.utils, (_ref = photolia.locale, t = _ref.t), (_ref1 = photolia.templates, tpl = _ref1.tpl), files = photolia.files, (_ref2 = photolia.widget, tabs = _ref2.tabs), s = photolia.settings, $ = photolia.jQuery;
 
-        uploadcare.namespace('', function(ns) {
+        photolia.namespace('', function(ns) {
             var Panel, currentDialogPr, lockScroll, openedClass, registeredTabs,
                 _this = this;
             lockScroll = function(el, toTop) {
@@ -10470,7 +10470,7 @@
                 }
             });
             currentDialogPr = null;
-            openedClass = 'uploadcare-dialog-opened';
+            openedClass = 'photolia-dialog-opened';
             ns.isDialogOpened = function() {
                 return currentDialogPr !== null;
             };
@@ -10486,18 +10486,18 @@
                 var cancelLock, dialog, dialogPr;
                 ns.closeDialog();
                 dialog = $(tpl('dialog')).appendTo('body');
-                dialogPr = ns.openPanel(dialog.find('.uploadcare-dialog-placeholder'), files, tab, settings);
-                dialog.addClass('uploadcare-active');
+                dialogPr = ns.openPanel(dialog.find('.photolia-dialog-placeholder'), files, tab, settings);
+                dialog.addClass('photolia-active');
                 dialogPr.dialogElement = dialog;
                 cancelLock = lockScroll($(window), dialog.css('position') === 'absolute');
                 $('html, body').addClass(openedClass);
-                dialog.on('click', '.uploadcare-dialog-close', dialogPr.reject);
+                dialog.on('click', '.photolia-dialog-close', dialogPr.reject);
                 dialog.on('dblclick', function(e) {
                     var showStoppers;
                     if (!$.contains(document.documentElement, e.target)) {
                         return;
                     }
-                    showStoppers = '.uploadcare-dialog-panel, a';
+                    showStoppers = '.photolia-dialog-panel, a';
                     if ($(e.target).is(showStoppers) || $(e.target).parents(showStoppers).length) {
                         return;
                     }
@@ -10519,12 +10519,12 @@
                     multiple: false,
                     tabs: ''
                 });
-                dialog = uploadcare.openDialog(file, 'preview', settings);
-                oldDialogPr.dialogElement.addClass('uploadcare-inactive');
+                dialog = photolia.openDialog(file, 'preview', settings);
+                oldDialogPr.dialogElement.addClass('photolia-inactive');
                 dialog.always(function() {
                     currentDialogPr = oldDialogPr;
                     $('html, body').addClass(openedClass);
-                    return oldDialogPr.dialogElement.removeClass('uploadcare-inactive');
+                    return oldDialogPr.dialogElement.removeClass('photolia-inactive');
                 });
                 dialog.onTabVisibility(function(tab, shown) {
                     if (tab === 'preview' && !shown) {
@@ -10550,7 +10550,7 @@
                 panel = new Panel(settings, placeholder, files, tab).publicPromise();
                 filter = function(files) {
                     if (settings.multiple) {
-                        return uploadcare.FileGroup(files, settings);
+                        return photolia.FileGroup(files, settings);
                     } else {
                         return files[0];
                     }
@@ -10585,7 +10585,7 @@
             return Panel = (function() {
                 var tabClass;
 
-                tabClass = 'uploadcare-dialog-tab';
+                tabClass = 'photolia-dialog-tab';
 
                 function Panel(settings, placeholder, files, tab) {
                     var sel,
@@ -10602,13 +10602,13 @@
                     this.addFiles = __bind(this.addFiles, this);
                     this.dfd = $.Deferred();
                     this.dfd.always(this.__closePanel);
-                    sel = '.uploadcare-dialog-panel';
+                    sel = '.photolia-dialog-panel';
                     this.content = $(tpl('panel'));
                     this.panel = this.content.find(sel).add(this.content.filter(sel));
                     this.placeholder = $(placeholder);
                     this.placeholder.replaceWith(this.content);
                     if (this.settings.multiple) {
-                        this.panel.addClass('uploadcare-dialog-multiple');
+                        this.panel.addClass('photolia-dialog-multiple');
                     }
                     this.files = new utils.CollectionOfPromises(files);
                     this.files.onRemove.add(function() {
@@ -10693,7 +10693,7 @@
                             return;
                         }
                         info = fileInfo.originalImageInfo;
-                        size = uploadcare.utils.fitSize(_this.settings.crop[0].preferedSize, [info.width, info.height], true);
+                        size = photolia.utils.fitSize(_this.settings.crop[0].preferedSize, [info.width, info.height], true);
                         newFile = utils.applyCropSelectionToFile(file, _this.settings.crop[0], [info.width, info.height], {
                             width: size[0],
                             height: size[1],
@@ -10728,19 +10728,19 @@
                         this.switchTab(tab || this.__firstVisibleTab());
                     }
                     if (this.settings.tabs.length === 0) {
-                        return this.panel.addClass('uploadcare-panel-hide-tabs');
+                        return this.panel.addClass('photolia-panel-hide-tabs');
                     }
                 };
 
                 Panel.prototype.__prepareFooter = function() {
                     var notDisabled,
                         _this = this;
-                    this.footer = this.panel.find('.uploadcare-panel-footer');
-                    notDisabled = ':not(.uploadcare-disabled-el)';
-                    this.footer.on('click', '.uploadcare-dialog-button' + notDisabled, function() {
+                    this.footer = this.panel.find('.photolia-panel-footer');
+                    notDisabled = ':not(.photolia-disabled-el)';
+                    this.footer.on('click', '.photolia-dialog-button' + notDisabled, function() {
                         return _this.switchTab('preview');
                     });
-                    this.footer.on('click', '.uploadcare-dialog-button-success' + notDisabled, this.__resolve);
+                    this.footer.on('click', '.photolia-dialog-button-success' + notDisabled, this.__resolve);
                     this.__updateFooter();
                     this.files.onAdd.add(this.__updateFooter);
                     return this.files.onRemove.add(this.__updateFooter);
@@ -10751,11 +10751,11 @@
                     files = this.files.length();
                     tooManyFiles = this.settings.multipleMax !== 0 && files > this.settings.multipleMax;
                     tooFewFiles = files < this.settings.multipleMin;
-                    this.footer.find('.uploadcare-dialog-button-success').toggleClass('uploadcare-disabled-el', tooManyFiles || tooFewFiles);
-                    this.footer.find('.uploadcare-dialog-button').toggleClass('uploadcare-disabled-el', files === 0);
+                    this.footer.find('.photolia-dialog-button-success').toggleClass('photolia-disabled-el', tooManyFiles || tooFewFiles);
+                    this.footer.find('.photolia-dialog-button').toggleClass('photolia-disabled-el', files === 0);
                     footer = tooManyFiles ? t('dialog.tabs.preview.multiple.tooManyFiles').replace('%max%', this.settings.multipleMax) : files && tooFewFiles ? t('dialog.tabs.preview.multiple.tooFewFiles').replace('%min%', this.settings.multipleMin) : t('dialog.tabs.preview.multiple.title');
-                    this.footer.find('.uploadcare-panel-footer-text').toggleClass('uploadcare-error', tooManyFiles).text(footer.replace('%files%', t('file', files)));
-                    return this.footer.find('.uploadcare-panel-footer-counter').toggleClass('uploadcare-error', tooManyFiles).text(files ? "(" + files + ")" : "");
+                    this.footer.find('.photolia-panel-footer-text').toggleClass('photolia-error', tooManyFiles).text(footer.replace('%files%', t('file', files)));
+                    return this.footer.find('.photolia-panel-footer-counter').toggleClass('photolia-error', tooManyFiles).text(files ? "(" + files + ")" : "");
                 };
 
                 Panel.prototype.__closePanel = function() {
@@ -10779,7 +10779,7 @@
                         tabindex: "0"
                     }).addClass(tabClass).addClass("" + tabClass + "-" + name).attr('title', t("dialog.tabs.names." + name)).appendTo(this.panel.find("." + tabClass + "s")).on('click', function() {
                         if (name === _this.currentTab) {
-                            return _this.panel.toggleClass('uploadcare-dialog-opened-tabs');
+                            return _this.panel.toggleClass('photolia-dialog-opened-tabs');
                         } else {
                             return _this.switchTab(name);
                         }
@@ -10793,7 +10793,7 @@
                         return;
                     }
                     this.currentTab = tab;
-                    this.panel.removeClass('uploadcare-dialog-opened-tabs');
+                    this.panel.removeClass('photolia-dialog-opened-tabs');
                     this.panel.find("." + tabClass).removeClass("" + tabClass + "_current").filter("." + tabClass + "-" + tab).addClass("" + tabClass + "_current");
                     className = "" + tabClass + "s-panel";
                     this.panel.find("." + className).removeClass("" + className + "_current").filter("." + className + "-" + tab).addClass("" + className + "_current");
@@ -10839,7 +10839,7 @@
                 };
 
                 Panel.prototype.__addFakeTab = function(name) {
-                    return $('<div>').addClass("" + tabClass + " " + tabClass + "-" + name).addClass('uploadcare-dialog-disabled-tab').attr('title', t("dialog.tabs.names." + name)).appendTo(this.panel.find("." + tabClass + "s"));
+                    return $('<div>').addClass("" + tabClass + " " + tabClass + "-" + name).addClass('photolia-dialog-disabled-tab').attr('title', t("dialog.tabs.names." + name)).appendTo(this.panel.find("." + tabClass + "s"));
                 };
 
                 return Panel;
@@ -10856,9 +10856,9 @@
                 };
             };
 
-        utils = uploadcare.utils, $ = uploadcare.jQuery, dragdrop = uploadcare.dragdrop, (_ref = uploadcare.locale, t = _ref.t);
+        utils = photolia.utils, $ = photolia.jQuery, dragdrop = photolia.dragdrop, (_ref = photolia.locale, t = _ref.t);
 
-        uploadcare.namespace('widget', function(ns) {
+        photolia.namespace('widget', function(ns) {
             return ns.BaseWidget = (function() {
                 function BaseWidget(element, settings) {
                     var _this = this;
@@ -10877,7 +10877,7 @@
                         }) : void 0;
                     });
                     this.__setupWidget();
-                    this.element.on('change.uploadcare', this.reloadInfo);
+                    this.element.on('change.photolia', this.reloadInfo);
                     this.__hasValue = false;
                     utils.defer(function() {
                         if (!_this.__hasValue) {
@@ -10902,7 +10902,7 @@
                     this.template.addButton('remove', t('buttons.remove')).on('click', function() {
                         return _this.__setObject(null);
                     });
-                    this.template.content.on('click', '.uploadcare-widget-file-name', function() {
+                    this.template.content.on('click', '.photolia-widget-file-name', function() {
                         return _this.openDialog();
                     });
                     dragdrop.receiveDrop(this.template.content, this.__handleDirectSelection);
@@ -11003,7 +11003,7 @@
 
                 BaseWidget.prototype.__openDialog = function(tab) {
                     var dialogApi;
-                    dialogApi = uploadcare.openDialog(this.currentObject, tab, this.settings);
+                    dialogApi = photolia.openDialog(this.currentObject, tab, this.settings);
                     this.__onDialogOpen.fire(dialogApi);
                     return dialogApi.done(this.__setObject);
                 };
@@ -11047,9 +11047,9 @@
                 return child;
             };
 
-        utils = uploadcare.utils, files = uploadcare.files, $ = uploadcare.jQuery;
+        utils = photolia.utils, files = photolia.files, $ = photolia.jQuery;
 
-        uploadcare.namespace('widget', function(ns) {
+        photolia.namespace('widget', function(ns) {
             var _ref;
             return ns.Widget = (function(_super) {
                 __extends(Widget, _super);
@@ -11066,7 +11066,7 @@
 
                 Widget.prototype.__handleDirectSelection = function(type, data) {
                     var file;
-                    file = uploadcare.fileFrom(type, data[0], this.settings);
+                    file = photolia.fileFrom(type, data[0], this.settings);
                     if (this.settings.systemDialog || !this.settings.previewStep) {
                         return this.__setObject(file);
                     } else {
@@ -11102,9 +11102,9 @@
                 return child;
             };
 
-        utils = uploadcare.utils, $ = uploadcare.jQuery, (_ref = uploadcare.locale, t = _ref.t);
+        utils = photolia.utils, $ = photolia.jQuery, (_ref = photolia.locale, t = _ref.t);
 
-        uploadcare.namespace('widget', function(ns) {
+        photolia.namespace('widget', function(ns) {
             var _ref1;
             return ns.MultipleWidget = (function(_super) {
                 __extends(MultipleWidget, _super);
@@ -11151,9 +11151,9 @@
 
                 MultipleWidget.prototype.__handleDirectSelection = function(type, data) {
                     var files;
-                    files = uploadcare.filesFrom(type, data, this.settings);
+                    files = photolia.filesFrom(type, data, this.settings);
                     if (this.settings.systemDialog) {
-                        return this.__setObject(uploadcare.FileGroup(files, this.settings));
+                        return this.__setObject(photolia.FileGroup(files, this.settings));
                     } else {
                         return this.__openDialog('preview').addFiles(files);
                     }
@@ -11168,12 +11168,12 @@
     (function() {
         var $, settings, utils;
 
-        utils = uploadcare.utils, settings = uploadcare.settings, $ = uploadcare.jQuery;
+        utils = photolia.utils, settings = photolia.settings, $ = photolia.jQuery;
 
-        uploadcare.namespace('', function(ns) {
+        photolia.namespace('', function(ns) {
             var cleanup, dataAttr, initialize, initializeWidget, selector;
-            dataAttr = 'uploadcareWidget';
-            selector = '[role~="uploadcare-uploader"]';
+            dataAttr = 'photoliaWidget';
+            selector = '[role~="photolia-uploader"]';
             ns.initialize = function(container) {
                 if (container == null) {
                     container = ':root';
@@ -11221,9 +11221,9 @@
                 return api;
             };
             cleanup = function(input) {
-                return input.off('.uploadcare').each(function() {
+                return input.off('.photolia').each(function() {
                     var widget, widgetElement;
-                    widgetElement = $(this).next('.uploadcare-widget');
+                    widgetElement = $(this).next('.photolia-widget');
                     widget = widgetElement.data(dataAttr);
                     if (widget && widget.inputElement === this) {
                         return widgetElement.remove();
@@ -11241,7 +11241,7 @@
                 return ns.initialize();
             });
             return $(function() {
-                if (!window["UPLOADCARE_MANUAL_START"]) {
+                if (!window["photolia_MANUAL_START"]) {
                     return ns.start();
                 }
             });
@@ -11251,22 +11251,22 @@
     (function() {
         var $, canSubmit, cancelEvents, submitPreventionState, submittedForm, uploadForm;
 
-        $ = uploadcare.jQuery;
+        $ = photolia.jQuery;
 
         canSubmit = function(form) {
             var notSubmittable;
             notSubmittable = '[data-status=started], [data-status=error]';
-            return !form.find('.uploadcare-widget').is(notSubmittable);
+            return !form.find('.photolia-widget').is(notSubmittable);
         };
 
         submitPreventionState = function(form, prevent) {
-            form.attr('data-uploadcare-submitted', prevent);
+            form.attr('data-photolia-submitted', prevent);
             return form.find(':submit').attr('disabled', prevent);
         };
 
-        uploadForm = '[role~="uploadcare-upload-form"]';
+        uploadForm = '[role~="photolia-upload-form"]';
 
-        submittedForm = uploadForm + '[data-uploadcare-submitted]';
+        submittedForm = uploadForm + '[data-photolia-submitted]';
 
         $(document).on('submit', uploadForm, function() {
             var form;
@@ -11279,11 +11279,11 @@
             }
         });
 
-        $(document).on('loaded.uploadcare', submittedForm, function() {
+        $(document).on('loaded.photolia', submittedForm, function() {
             return $(this).submit();
         });
 
-        cancelEvents = 'ready.uploadcare error.uploadcare';
+        cancelEvents = 'ready.photolia error.photolia';
 
         $(document).on(cancelEvents, submittedForm, function() {
             var form;
@@ -11297,11 +11297,11 @@
     (function() {
         var $, fakeButtons, mouseFocusedClass, utils;
 
-        utils = uploadcare.utils, $ = uploadcare.jQuery;
+        utils = photolia.utils, $ = photolia.jQuery;
 
-        fakeButtons = ['div.uploadcare-link', 'div.uploadcare-widget-button', 'div.uploadcare-dialog-tab', 'div.uploadcare-dialog-button', 'div.uploadcare-dialog-button-success'].join(', ');
+        fakeButtons = ['div.photolia-link', 'div.photolia-widget-button', 'div.photolia-dialog-tab', 'div.photolia-dialog-button', 'div.photolia-dialog-button-success'].join(', ');
 
-        mouseFocusedClass = 'uploadcare-mouse-focused';
+        mouseFocusedClass = 'photolia-mouse-focused';
 
         $(document.documentElement).on('mousedown', fakeButtons, function(e) {
             return utils.defer(function() {
@@ -11326,9 +11326,9 @@
         var expose, key,
             __hasProp = {}.hasOwnProperty;
 
-        expose = uploadcare.expose;
+        expose = photolia.expose;
 
-        expose('globals', uploadcare.settings.common);
+        expose('globals', photolia.settings.common);
 
         expose('start');
 
@@ -11344,7 +11344,7 @@
 
         expose('locales', (function() {
             var _ref, _results;
-            _ref = uploadcare.locale.translations;
+            _ref = photolia.locale.translations;
             _results = [];
             for (key in _ref) {
                 if (!__hasProp.call(_ref, key)) continue;
@@ -11361,7 +11361,7 @@
 
         expose('registerTab');
 
-        expose('Circle', uploadcare.ui.progress.Circle);
+        expose('Circle', photolia.ui.progress.Circle);
 
         expose('SingleWidget');
 
@@ -11378,4 +11378,4 @@
         expose('dragdrop.uploadDrop');
 
     }).call(this);
-}({}, '//img.jobi.dev/widget/2.6.0/uploadcare/'));
+}({}, '//img.jobi.dev/widget/2.6.0/photolia/'));

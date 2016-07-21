@@ -60,6 +60,14 @@ exports.register = function (server, options, next) {
       tags: ['get']
     }
   },
+  {
+    method: ['GET'],
+    path: '/{id}/crop/{w}x{h}/{x},{y}',
+    handler: handlers.crop,
+    config: {
+      tags: ['get']
+    }
+  },
     {
     method: ['DELETE'],
     path: '/{id}',
