@@ -31,13 +31,15 @@ const manifest = {
     port: process.env.PHOTOLIA_PORT,
     labels: ['api']
   }],
-  registrations: [
-  {
+  registrations: [{
     plugin: 'inert'
   },{
+  //   plugin: './lib/orm'
+  // },{
+  //   plugin: './api/model'
+  // },{
     plugin: './api/auth'
-  },
-  {
+  },{
     plugin: './api/router'
   }]
 }

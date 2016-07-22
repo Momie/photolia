@@ -6,14 +6,12 @@ var handlers = require('./handler')
 exports.register = function (server, options, next) {
   server.route([{
     method: ['GET'],
-    path: '/',
-    handler: handlers.test,
+    path: '/{id}/version/{version*}',
+    handler: handlers.version,
     config: {
-      tags: ['test'],
-      // auth: 'default'
+      tags: ['get']
     }
-  },
-  {
+  },{
     method: ['GET'],
     path: '/from_url/',
     handler: handlers.fromUrl,
@@ -21,8 +19,7 @@ exports.register = function (server, options, next) {
       tags: ['test'],
       // auth: 'default'
     }
-  },
-  {
+  },{
     method: ['GET'],
     path: '/from_url/status/',
     handler: handlers.status,
@@ -30,8 +27,7 @@ exports.register = function (server, options, next) {
       tags: ['test'],
       // auth: 'default'
     }
-  },
-  {
+  },{
     method: ['POST'],
     path: '/upload',
     handler: handlers.upload,
@@ -43,16 +39,14 @@ exports.register = function (server, options, next) {
       },
       tags: ['upload']
     }
-  },
-  {
+  },{
     method: ['GET'],
     path: '/info/',
     handler: handlers.info,
     config: {
       tags: ['upload']
     }
-  },
-  {
+  },{
     method: ['GET'],
     path: '/{id}',
     handler: handlers.origin,
@@ -81,8 +75,7 @@ exports.register = function (server, options, next) {
     config: {
       tags: ['delete']
     }
-  },
-    {
+  },{
     method: ['GET'],
     path: '/assets/{path*}',
     handler: {

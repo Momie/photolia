@@ -655,22 +655,23 @@
                     _this = this;
                 w = coords.width, h = coords.height;
                 prefered = crop.preferedSize;
-                modifiers = '';
+                modifiers = '/version';
                 wholeImage = w === size[0] && h === size[1];
+                console.log(prefered)
                 if (!wholeImage) {
-                    modifiers += "-/crop/" + w + "x" + h + "/" + coords.left + "," + coords.top + "/";
+                    modifiers += "/crop/" + w + "x" + h + "/" + coords.left + "-" + coords.top + "/";
                 }
                 downscale = crop.downscale && (w > prefered[0] || h > prefered[1]);
                 upscale = crop.upscale && (w < prefered[0] || h < prefered[1]);
                 if (downscale || upscale) {
                     coords.sw = prefered[0], coords.sh = prefered[1];
-                    modifiers += "-/resize/" + (prefered.join('x')) + "/";
+                    modifiers += "/resize/" + (prefered.join('x')) + "/";
                 } else if (!wholeImage) {
-                    modifiers += "-/preview/";
+                    // modifiers += "-/preview/";
                 }
                 return file.then(function(info) {
                     info.cdnUrlModifiers = modifiers;
-                    info.cdnUrl = "" + info.originalUrl // + (modifiers || '');
+                    info.cdnUrl = "" + info.originalUrl + (modifiers || '');
                     info.crop = coords;
                     return info;
                 });

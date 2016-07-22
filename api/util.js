@@ -1,9 +1,5 @@
 'use strict'
-
-// var readChunk = require('read-chunk'); // npm install read-chunk 
-// var imageType = require('image-type');
-// var buffer = readChunk.sync('unicorn.png', 0, 12);
-
+//('/path/to/file.txt');         // => 'text/plain'
 //imageType(buffer);
 
 const fs = require('fs')
@@ -17,31 +13,41 @@ function s4() {
         .toString(16)
         .substring(1)
 }
-exports.crop = function(img, options) {
+exports.generateFile = function(img , options){
+  return new Promise(function(resolve, reject) { 
+      let dir = path.join(__dirname, '/../uploads/' + img + '_dir')
+      let version = path.join(dir, '/' + options)
+      if (fs.existsSync(version)) {
+          resolve({file: path.join(version, '/' + img) , isExist: true})
+      }else{
+        fs.mkdirSync(version)
+        let newVer = path.join(version, '/' + img)
+        let file = fs.createReadStream(path.join(dir, '/' + img))
+        file.pipe(fs.createWriteStream(newVer))
+        file.on('error', function(err) {
+          reject({err: err})
+        })
+        file.on('end', function(err) {
+          resolve({file: newVer , isExist: false})
+        }) 
+      }
+  }) 
+}
+
+exports.crop = function(filein, fileout, options) {
     return new Promise(function(resolve, reject) {
-      let dir = path.join(__dirname, '/../uploads/' + img)
-      let name = options.w + 'x' + options.h + ':' + options.x + 'x' + options.y
-      if (!fs.existsSync(dir)) {
-          fs.mkdirSync(dir)
-      }
-      if (fs.existsSync(dir + '/' + name)) {
-          return resolve(dir + '/' + name + '/' + img)
-      } else {
-          fs.mkdirSync(dir + '/' + name)
-      }
-      let newPath = dir + '/' + name + '/' + img
-      let origin = dir + '/' + img;
       try {
+        console.log('---->',options)
         return im.convert([
-            origin,
+            filein,
             "-crop",
             options.w + 'x' + options.h + '+' + options.x + '+' + options.y,
-            newPath
+            fileout
         ], function(err) {
             if (err) {
                 return reject(err)
             }
-            return resolve(newPath)
+            return resolve({file: fileout , isExist: false})
         })
       } catch (e) {
         return reject(e)
@@ -49,74 +55,80 @@ exports.crop = function(img, options) {
     })
 }
 
-exports.upload = function(img) {
+exports.resize = function(filein, fileout, options) {
+    return new Promise(function(resolve, reject) {
+      try {
+        return im.convert([
+            filein,
+            "-resize",
+            options.w + 'x' + options.h,
+            fileout
+        ], function(err) {
+            if (err) {
+                return reject(err);
+            }
+            return resolve({file: fileout , isExist: false})
+        })
+      } catch (e) {
+        return reject(e);
+      }
+    })
+}
+
+
+
+
+exports.upload = function(file , options) {
   return new Promise(function(resolve, reject) {
     const name = uuid()
-    let dir = path.join(__dirname, '/../uploads/' + name)
+    let dir = path.join(__dirname, '/../uploads/' + name + '_dir')
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir)
     }
-    var file = fs.createWriteStream(dir + '/' + name) // img.hapi.filename)
-    img.pipe(file)
-    img.on('error', function(err) {
+    var img = fs.createWriteStream(dir + '/' + name) // file.hapi.filename)
+    file.pipe(img)
+    file.on('error', function(err) {
       reject(err)
     })
-    img.on('end', function(err) {
-      resolve({
-            "file": name
-        })
+    file.on('end', function(err) {
+      creatinfo(dir, name , options).then((f)=>{
+          resolve({
+                "file": name
+            })
+      }).catch((e)=> reject(e))
     }) 
   })  
-
 }
 
 exports.load = function(url , options) {
   return new Promise(function(resolve, reject) {
     let name = uuid() 
     let r = request(url)
+    let dir = path.join(__dirname, '/../uploads/' + name + '_dir')
+    let type = ''
     r.on('response',  function (res) {
-      let dir = path.join(__dirname, '/../uploads/' + name)
+      type = res.headers["content-type"]
       if (!fs.existsSync(dir)) {
           fs.mkdirSync(dir)
       }
       res.pipe(fs.createWriteStream(dir + '/' + name ))
     });
     r.on( 'end', function(){
-        resolve({"token": name })
+      let options = {
+        hapi : {
+          filename: path.basename(url),
+          headers: {
+            "content-type" : type
+          }
+        }
+      }
+      creatinfo(dir, name , options).then((f)=>{
+          resolve({
+                "token": name
+            })
+      }).catch((e)=> reject(e))
     })
   })
-}
-
-exports.resize = function(img, options) {
-    return new Promise(function(resolve, reject) {
-      let dir = path.join(__dirname, '/../uploads/' + img)
-      let name = options.w + 'x' + options.h
-      if (!fs.existsSync(dir)) {
-          fs.mkdirSync(dir);
-      }
-      if (fs.existsSync(dir + '/' + name)) {
-          return resolve(dir + '/' + name + '/' + img)
-      } else {
-          fs.mkdirSync(dir + '/' + name)
-      }
-      let newPath = dir + '/' + name + '/' + img
-      let origin = dir + '/' + img;
-      try {
-        return im.convert([
-            origin,
-            "-resize",
-            options.w + 'x' + options.h,
-            newPath
-        ], function(err) {
-            if (err) {
-                return reject(err);
-            }
-            return resolve(newPath)
-        })
-      } catch (e) {
-        return reject(e);
-      }
-    })
 }
 
 exports.delete = function(img) {
@@ -126,6 +138,61 @@ exports.delete = function(img) {
 exports.checkType = function(type, img) {
 
 }
+
+const creatinfo = function(dir, file, options){
+  return new Promise(function(resolve, reject) {
+      im.identify(dir + '/' + file, function(erre, features){
+        if (erre) throw erre
+        let info = {
+                      "is_stored": true,
+                      "done": features.filesize,
+                      "file_id": file,
+                      "total": features.filesize,
+                      "size": features.filesize,
+                      "uuid": file,
+                      "is_image": (['JPEG','PNG'].indexOf(features.format) >= 0),
+                      "filename": options.hapi.filename,
+                      "is_ready": true,
+                      "original_filename": options.hapi.filename,
+                      "image_info": {
+                          "orientation": null,
+                          "format": features.format,
+                          "height": features.height,
+                          "width": features.width,
+                          "geo_location": null,
+                          "datetime_original": null,
+                          "dpi": features.resolution
+                      },
+                      "mime_type": options.hapi.headers["content-type"]
+                      }
+        fs.writeFile(dir + '/info.json', JSON.stringify(info), function(err) {
+          if(err) {
+            console.log(err);
+          }
+          resolve(info)
+        })
+        // { format: 'JPEG', width: 3904, height: 2622, depth: 8 }
+      })
+  })
+}
+
+exports.creatinfo = creatinfo
+
+const getInfo = function(file){
+  return new Promise(function(resolve, reject) {
+      let dir = path.join(__dirname, '/../uploads/' + file + '_dir')
+      if (!fs.existsSync(dir)) {
+          reject('not exist')
+      }else{
+        let obj = JSON.parse(fs.readFileSync(dir + '/info.json', 'utf8'))
+        resolve(obj)
+      }
+  })
+}
+
+exports.getInfo = getInfo
+
+
 const uuid = function() {
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
         s4() + '-' + s4() + s4() + s4();
