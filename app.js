@@ -6,6 +6,7 @@ require('dotenv').config({
 var eslint = require('eslint')
 var linter = new eslint.CLIEngine({})
 var formatter = require('eslint-friendly-formatter')
+const fs = require('fs')
 // const AuthBearer = require('hapi-auth-bearer-token')
 // var report = linter.executeOnFiles(['server/'])
 const Pack = require('./package')
@@ -20,6 +21,9 @@ const Swagger = {
       'version': Pack.version
     }
   }
+}
+if (!fs.existsSync(__dirname + '/../uploads')) {
+    fs.mkdirSync(__dirname + '/../uploads')
 }
 const Tv = {
   register: require('tv'),

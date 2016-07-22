@@ -6,9 +6,7 @@ const util = require('./util')
 // var multer = require('multer')
 const fs = require('fs')
 // Include ImageMagick
-const im = require('imagemagick')
 
-const request = require('request')
 // var upload = multer({
 //     dest: 'tmp/'
 // })
@@ -46,7 +44,10 @@ exports.test = function (req, resp) {
 exports.upload = function (req, resp) {
 	// console.log(req.payload)
 	const img = req.payload["file"]
-    resp(util.upload(img))
+    util.upload(img).then((res)=>{
+        resp(res)
+    }).catch((e) => resp(e))
+    
  //    const name = util.uuid()
 
  //    console.log('tmp/' + name)
@@ -126,9 +127,8 @@ exports.delete = function (req, resp) {
 }
 
 exports.origin = function (req, resp) {
-	console.log(req.params.id)
 	//resp(encodeURIComponent(req.params.id))
-    resp.file('./tmp/' + req.params.id)
+    resp.file('./uploads/' + req.params.id + '/' + req.params.id)
     // file = req.params.file
     // try {
     //     stats = fs.lstatSync(__dirname + "/uploads/fullsize/" + file);
@@ -142,28 +142,6 @@ exports.origin = function (req, resp) {
     // }
 }
 
-exports.crop = function (req, resp) {
-    console.log(req.params)
-
-    resp.file(util.crop(req.params.id,req.params))
-
-
-    // resp.file('./tmp/' + req.params.id)
-    // resp(encodeURIComponent(req.params))
-
-    //resp.file('./tmp/' + req.params)
-    // file = req.params.file
-    // try {
-    //     stats = fs.lstatSync(__dirname + "/uploads/fullsize/" + file);
-    //     var img = fs.readFileSync(__dirname + "/uploads/fullsize/" + file);
-    //     res.writeHead(200, {
-    //         'Content-Type': 'image/jpg'
-    //     });
-    //     res.end(img, 'binary');
-    // } catch (e) {
-    //     res.send('Not Found');
-    // }
-}
 
 exports.info = function (req, resp) {
     console.log(req.query.file_id)
@@ -204,18 +182,21 @@ exports.info = function (req, resp) {
 }
 
 exports.fromUrl = function(req, resp){
-    // console.log(req.query.source_url)
-    // var url2 = 'http://l4.yimg.com/nn/fp/rsz/112113/images/smush/aaroncarter_635x250_1385060042.jpg';
-    const name = util.uuid() 
-    var r = request(req.query.source_url);
+    util.load(req.query.source_url).then((res)=>{
+        resp(res)
+    }).catch((e) => resp(e))
+}
 
-    r.on('response',  function (res) {
-      res.pipe(fs.createWriteStream('tmp/' + name ));
+exports.resize = function (req, resp) {
+    util.resize(req.params.id,req.params).then((file)=> {
+        resp.file(file)
+    }).catch((e)=> resp(e))
+}
 
-    });
-    r.on( 'end', function(){
-        resp({"token": name })
-    });
+exports.crop = function (req, resp) {
+    util.crop(req.params.id,req.params).then((file)=> {
+        resp.file(file)
+    }).catch((e)=> resp(e))
 }
 
 exports.status = function(req, resp){

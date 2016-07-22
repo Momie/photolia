@@ -59,10 +59,16 @@ exports.register = function (server, options, next) {
     config: {
       tags: ['get']
     }
-  },
-  {
+  },{
     method: ['GET'],
-    path: '/{id}/crop/{w}x{h}/{x},{y}',
+    path: '/{id}/resize/{w}x{h}',
+    handler: handlers.resize,
+    config: {
+      tags: ['get']
+    }
+  },{
+    method: ['GET'],
+    path: '/{id}/crop/{w}x{h}/{x}-{y}',
     handler: handlers.crop,
     config: {
       tags: ['get']
