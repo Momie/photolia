@@ -80,7 +80,7 @@ exports.register = function (server, options, next) {
     path: '/assets/{path*}',
     handler: {
         directory: {
-            path: path.join(__dirname, '/assets/')
+            path: path.join(__dirname, '/../assets/')
         }
     },
     config: {
