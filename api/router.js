@@ -1,6 +1,6 @@
 
 'use strict'
-
+const path = require('path')
 var handlers = require('./handler')
 // var v = require('./validation')
 exports.register = function (server, options, next) {
@@ -80,7 +80,7 @@ exports.register = function (server, options, next) {
     path: '/assets/{path*}',
     handler: {
         directory: {
-            path: './assets/'
+            path: path.join(__dirname, '/assets/')
         }
     },
     config: {
