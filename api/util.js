@@ -6,7 +6,7 @@ const fs = require('fs')
 const im = require('imagemagick')
 const path = require('path')
 const request = require('request')
-
+const gm = require('gm').subClass({imageMagick: true});
 
 function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
@@ -37,18 +37,27 @@ exports.generateFile = function(img , options){
 exports.crop = function(filein, fileout, options) {
     return new Promise(function(resolve, reject) {
       try {
-        console.log('---->',options)
-        return im.convert([
-            filein,
-            "-crop",
-            options.w + 'x' + options.h + '+' + options.x + '+' + options.y,
-            fileout
-        ], function(err) {
-            if (err) {
-                return reject(err)
-            }
+        gm(filein)
+        .crop(options.w, options.h , options.x, options.y)
+        .write(fileout, function (err) {
+          if (!err) {
+            console.log('crazytown has arrived');
             return resolve({file: fileout , isExist: false})
+          } else reject(err);
         })
+
+        // return im.convert([
+        //     filein,
+        //     "-crop",
+        //     options.w + 'x' + options.h + '+' + options.x + '+' + options.y,
+        //     fileout
+        // ], function(err) {
+        //     if (err) {
+        //         return reject(err)
+        //     }
+        //     return resolve({file: fileout , isExist: false})
+        // })
+
       } catch (e) {
         return reject(e)
       }
@@ -57,18 +66,30 @@ exports.crop = function(filein, fileout, options) {
 
 exports.resize = function(filein, fileout, options) {
     return new Promise(function(resolve, reject) {
+
       try {
-        return im.convert([
-            filein,
-            "-resize",
-            options.w + 'x' + options.h,
-            fileout
-        ], function(err) {
-            if (err) {
-                return reject(err);
-            }
+
+        gm(filein)
+        .resize(options.w, options.h)
+        .write(fileout, function (err) {
+          if (!err) {
+            console.log('crazytown has arrived');
             return resolve({file: fileout , isExist: false})
+          } else reject(err);
         })
+
+
+        // return im.convert([
+        //     filein,
+        //     "-resize",
+        //     options.w + 'x' + options.h,
+        //     fileout
+        // ], function(err) {
+        //     if (err) {
+        //         return reject(err);
+        //     }
+        //     return resolve({file: fileout , isExist: false})
+        // })
       } catch (e) {
         return reject(e);
       }
@@ -149,6 +170,40 @@ exports.checkType = function(type, img) {
 
 const creatinfo = function(dir, file, options){
   return new Promise(function(resolve, reject) {
+    // gm(dir + '/' + file).identify('%m', function(erre, features){
+    //   if (erre) throw erre
+    //   let info = {
+    //                 "is_stored": true,
+    //                 "done": features.filesize,
+    //                 "file_id": file,
+    //                 "total": features.filesize,
+    //                 "size": features.filesize,
+    //                 "uuid": file,
+    //                 "is_image": (['JPEG','PNG'].indexOf(features.format) >= 0),
+    //                 "filename": options.hapi.filename,
+    //                 "is_ready": true,
+    //                 "original_filename": options.hapi.filename,
+    //                 "image_info": {
+    //                     "orientation": null,
+    //                     "format": features.format,
+    //                     "height": features.height,
+    //                     "width": features.width,
+    //                     "geo_location": null,
+    //                     "datetime_original": null,
+    //                     "dpi": features.resolution
+    //                 },
+    //                 "mime_type": options.hapi.headers["content-type"],
+    //                 "status": "success"
+    //                 }
+    //   fs.writeFile(dir + '/info.json', JSON.stringify(info), function(err) {
+    //     if(err) {
+    //       console.log(err);
+    //     }
+    //     resolve(info)
+    //   })
+    //   // { format: 'JPEG', width: 3904, height: 2622, depth: 8 }
+    // })
+
       im.identify(dir + '/' + file, function(erre, features){
         if (erre) throw erre
         let info = {
