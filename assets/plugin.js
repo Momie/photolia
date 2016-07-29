@@ -5,6 +5,7 @@
  */
 ;
 (function(photolia, SCRIPT_BASE) {
+    // ----------------------------------------------- utils
     (function() {
         window.photolia = {};
 
@@ -854,6 +855,7 @@
         });
 
     }).call(this);
+    // ----------------------------------------------- setting
     (function() {
         var $, expose, utils,
             __indexOf = [].indexOf || function(item) {
@@ -884,12 +886,12 @@
                 multipleMaxStrict: false,
                 imageShrink: false,
                 pathValue: true,
-                tabs: 'file camera url facebook gdrive dropbox instagram evernote flickr skydrive',
+                tabs: 'file url',//'file camera url facebook gdrive dropbox instagram evernote flickr skydrive',
                 preferredTypes: '',
                 inputAcceptTypes: '',
                 doNotStore: false,
                 publicKey: null,
-                pusherKey: '79ae88bd931ea68464d9',
+                pusherKey: '2ae8e7eeae99728b3ffc',
                 cdnBase: 'http://img.jobi.dev',
                 urlBase: 'http://img.jobi.dev',
                 socialBase: 'http://img.jobi.dev',
@@ -902,7 +904,7 @@
                 parallelDirectUploads: 10,
                 passWindowOpen: false,
                 scriptBase: 'http://img.jobi.dev', //typeof SCRIPT_BASE !== "undefined" && SCRIPT_BASE !== null ? SCRIPT_BASE : '',
-                debugUploads: false
+                debugUploads: true
             };
             presets = {
                 tabs: {
@@ -1092,6 +1094,7 @@
         });
 
     }).call(this);
+   // '------------------------------------------> langue'
     (function() {
         photolia.namespace('locale.translations', function(ns) {
             return ns.ar = {
@@ -4022,6 +4025,10 @@
         });
 
     }).call(this);
+
+    // '-------------------- tamplate---------------------------------->'
+
+
     (function() {
         var $, s, utils;
 
@@ -4309,9 +4316,11 @@
         });
 
     }).call(this);
+
+
     /**
      * jquery.Jcrop.js v0.9.10
-     * jQuery Image Cropping Plugin - released under MIT License 
+     * jQuery Image Cropping Plugin - released under MIT License
      * Author: Kelly Hallman <khallman@gmail.com>
      * http://github.com/tapmodo/Jcrop
      * Copyright (c) 2008-2012 Tapmodo Interactive LLC {{{
@@ -4585,7 +4594,7 @@
                     $origimg.width($origimg[0].width);
                     $origimg.height($origimg[0].height);
                 } else {
-                    // Obtain dimensions from temporary image in case the original is not loaded yet (e.g. IE 7.0). 
+                    // Obtain dimensions from temporary image in case the original is not loaded yet (e.g. IE 7.0).
                     var tempImage = new Image();
                     tempImage.src = $origimg[0].src;
                     $origimg.width(tempImage.width);
@@ -4666,7 +4675,7 @@
             // }}}
             // }}}
             // Internal Modules {{{
-            // Touch Module {{{ 
+            // Touch Module {{{
             var Touch = (function() {
                 // Touch support detection function adapted (under MIT License)
                 // from code by Jeffrey Sambells - http://github.com/iamamused/
@@ -6035,9 +6044,9 @@
                     this.imageInfo = data.image_info;
                     this.isStored = data.is_stored;
                     this.s3Bucket = data.s3_bucket;
-                    if (data.default_effects) {
-                        this.cdnUrlModifiers = "-/" + data.default_effects;
-                    }
+                    // if (data.default_effects) {
+                    //     this.cdnUrlModifiers = "-/" + data.default_effects;
+                    // }
                     if (this.s3Bucket && this.cdnUrlModifiers) {
                         this.__rejectApi('baddata');
                     }
@@ -8375,7 +8384,7 @@
                     var data, df, pollWatcher, pusherWatcher,
                         _this = this;
                     df = $.Deferred();
-                    pusherWatcher = new PusherWatcher(this.settings);
+                    pusherWatcher = new PollWatcher(this.settings);
                     pollWatcher = new PollWatcher(this.settings);
                     data = {
                         pub_key: this.settings.publicKey,
@@ -8441,6 +8450,7 @@
                         $(e.target).trigger('progress', data);
                         _this.fileId = data.uuid;
                         _this.__handleFileData(data);
+                        console.log(df.resolve, df)
                         return df.resolve();
                     }).on('error fail', df.reject);
                 };
@@ -8526,6 +8536,11 @@
         });
 
     }).call(this);
+
+    // ----------------------------------------------> end pusher
+
+
+
     (function() {
         var $, utils,
             __hasProp = {}.hasOwnProperty,
@@ -8589,6 +8604,10 @@
         });
 
     }).call(this);
+
+
+
+
     (function() {
         var $, namespace, s, t, utils, _ref,
             __slice = [].slice,
@@ -8934,6 +8953,12 @@
         });
 
     }).call(this);
+
+
+   // ---------------------------> files
+
+
+
     (function() {
         var $, s, utils;
 
@@ -9019,6 +9044,8 @@
         });
 
     }).call(this);
+
+
     (function() {
         var $, abilities, files, tpl, _ref, _ref1,
             __bind = function(fn, me) {

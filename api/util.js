@@ -14,7 +14,7 @@ function s4() {
         .substring(1)
 }
 exports.generateFile = function(img , options){
-  return new Promise(function(resolve, reject) { 
+  return new Promise(function(resolve, reject) {
       let dir = path.join(__dirname, '/../uploads/' + img + '_dir')
       let version = path.join(dir, '/' + options)
       if (fs.existsSync(version)) {
@@ -29,9 +29,9 @@ exports.generateFile = function(img , options){
         })
         file.on('end', function(err) {
           resolve({file: newVer , isExist: false})
-        }) 
+        })
       }
-  }) 
+  })
 }
 
 exports.crop = function(filein, fileout, options) {
@@ -96,22 +96,27 @@ exports.upload = function(file , options) {
                 "file": name
             })
       }).catch((e)=> reject(e))
-    }) 
-  })  
+    })
+  })
 }
 
 exports.load = function(url , options) {
   return new Promise(function(resolve, reject) {
-    let name = uuid() 
+    let name = uuid()
     let r = request(url)
     let dir = path.join(__dirname, '/../uploads/' + name + '_dir')
     let type = ''
     r.on('response',  function (res) {
-      type = res.headers["content-type"]
-      if (!fs.existsSync(dir)) {
-          fs.mkdirSync(dir)
+      try {
+          console.log(res.statusCode)
+          type = res.headers["content-type"]
+          if (!fs.existsSync(dir)) {
+              fs.mkdirSync(dir)
+          }
+          res.pipe(fs.createWriteStream(dir + '/' + name ))
+      }catch(err) {
+          console.log(err)
       }
-      res.pipe(fs.createWriteStream(dir + '/' + name ))
     });
     r.on( 'end', function(){
       let options = {
@@ -127,6 +132,9 @@ exports.load = function(url , options) {
                 "token": name
             })
       }).catch((e)=> reject(e))
+    })
+    r.on('error', function(e){
+      reject(e)
     })
   })
 }
@@ -163,7 +171,8 @@ const creatinfo = function(dir, file, options){
                           "datetime_original": null,
                           "dpi": features.resolution
                       },
-                      "mime_type": options.hapi.headers["content-type"]
+                      "mime_type": options.hapi.headers["content-type"],
+                      "status": "success"
                       }
         fs.writeFile(dir + '/info.json', JSON.stringify(info), function(err) {
           if(err) {

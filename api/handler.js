@@ -72,6 +72,8 @@ exports.info = function (req, resp) {
 }
 
 exports.fromUrl = function(req, resp){
+		// console.log(req.query.source_url)
+		// resp({token:'234234-432434-4323-432'})
     util.load(req.query.source_url).then((res)=>{
         resp(res)
     }).catch((e) => {

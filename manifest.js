@@ -4,32 +4,25 @@ const Confidence = require('confidence')
 const criteria = {
   env: process.env.NODE_ENV
 }
-
-
 const manifest = {
   $meta: 'This file defines the config server.',
-  // projectName: 'Photolia',
-  // port: {
-  //     api: {
-  //         $filter: 'env',
-  //         test: 9090,
-  //         $default: process.env.PHOTOLIA_PORT
-  //     }
-  // },
   server: {
     debug: {
       request: ['error']
     },
     connections: {
       routes: {
-        security: true
-        // cors: true
+        security: false,
+        cors: true
       }
     }
   },
   connections: [{
     port: process.env.PHOTOLIA_PORT,
-    labels: ['api']
+    labels: ['api'],
+    routes: {
+        cors: true
+    }
   }],
   registrations: [{
     plugin: 'inert'
