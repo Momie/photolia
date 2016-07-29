@@ -24,7 +24,7 @@ exports.delete = function (req, resp) {
 }
 
 exports.origin = function (req, resp) {
-    resp.file('./uploads/' + req.params.id + '_dir/' + req.params.id)
+    resp.file(process.env.DIR_PATH + req.params.id + '_dir/' + req.params.id)
 }
 
 exports.version = function (req, resp) {

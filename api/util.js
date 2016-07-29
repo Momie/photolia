@@ -15,7 +15,7 @@ function s4() {
 }
 exports.generateFile = function(img , options){
   return new Promise(function(resolve, reject) {
-      let dir = path.join(__dirname, '/../uploads/' + img + '_dir')
+      let dir = process.env.DIR_PATH  + img + '_dir' //path.join(__dirname, '/../uploads/' + img + '_dir')
       let version = path.join(dir, '/' + options)
       if (fs.existsSync(version)) {
           resolve({file: path.join(version, '/' + img) , isExist: true})
@@ -102,7 +102,7 @@ exports.resize = function(filein, fileout, options) {
 exports.upload = function(file , options) {
   return new Promise(function(resolve, reject) {
     const name = uuid()
-    let dir = path.join(__dirname, '/../uploads/' + name + '_dir')
+    let dir = process.env.DIR_PATH  + name + '_dir'
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir)
     }
@@ -125,7 +125,7 @@ exports.load = function(url , options) {
   return new Promise(function(resolve, reject) {
     let name = uuid()
     let r = request(url)
-    let dir = path.join(__dirname, '/../uploads/' + name + '_dir')
+    let dir = process.env.DIR_PATH  + name + '_dir'
     let type = ''
     r.on('response',  function (res) {
       try {
@@ -244,7 +244,7 @@ exports.creatinfo = creatinfo
 
 const getInfo = function(file){
   return new Promise(function(resolve, reject) {
-      let dir = path.join(__dirname, '/../uploads/' + file + '_dir')
+      let dir = process.env.DIR_PATH  + file + '_dir'
       if (!fs.existsSync(dir)) {
           reject('not exist')
       }else{

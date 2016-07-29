@@ -890,7 +890,7 @@
                 inputAcceptTypes: '',
                 doNotStore: false,
                 publicKey: null,
-                pusherKey: '79ae88bd931ea68464d9',
+                pusherKey: '2ae8e7eeae99728b3ffc',
                 cdnBase: 'http://photolia.jobi.tn',
                 urlBase: 'http://photolia.jobi.tn',
                 socialBase: 'http://photolia.jobi.tn',
