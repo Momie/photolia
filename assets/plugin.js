@@ -671,6 +671,7 @@
                     // modifiers += "-/preview/";
                 }
                 return file.then(function(info) {
+                    if (modifiers == '/version') modifiers = '';
                     info.cdnUrlModifiers = modifiers;
                     info.cdnUrl = "" + info.originalUrl + (modifiers || '');
                     info.crop = coords;

@@ -670,6 +670,7 @@
                     // modifiers += "-/preview/";
                 }
                 return file.then(function(info) {
+                    if (modifiers == '/version') modifiers = '';
                     info.cdnUrlModifiers = modifiers;
                     info.cdnUrl = "" + info.originalUrl + (modifiers || '');
                     info.crop = coords;
@@ -4311,7 +4312,7 @@
     }).call(this);
     /**
      * jquery.Jcrop.js v0.9.10
-     * jQuery Image Cropping Plugin - released under MIT License 
+     * jQuery Image Cropping Plugin - released under MIT License
      * Author: Kelly Hallman <khallman@gmail.com>
      * http://github.com/tapmodo/Jcrop
      * Copyright (c) 2008-2012 Tapmodo Interactive LLC {{{
@@ -4585,7 +4586,7 @@
                     $origimg.width($origimg[0].width);
                     $origimg.height($origimg[0].height);
                 } else {
-                    // Obtain dimensions from temporary image in case the original is not loaded yet (e.g. IE 7.0). 
+                    // Obtain dimensions from temporary image in case the original is not loaded yet (e.g. IE 7.0).
                     var tempImage = new Image();
                     tempImage.src = $origimg[0].src;
                     $origimg.width(tempImage.width);
@@ -4666,7 +4667,7 @@
             // }}}
             // }}}
             // Internal Modules {{{
-            // Touch Module {{{ 
+            // Touch Module {{{
             var Touch = (function() {
                 // Touch support detection function adapted (under MIT License)
                 // from code by Jeffrey Sambells - http://github.com/iamamused/
