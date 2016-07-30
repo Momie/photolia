@@ -24,7 +24,7 @@ exports.delete = function (req, resp) {
 }
 
 exports.origin = function (req, resp) {
-    resp.file(process.env.DIR_PATH + req.params.id + '_dir/' + req.params.id)
+    resp.file(process.env.DIR_PATH + req.params.id + '_dir/' + req.params.id,  {confine: false})
 }
 
 exports.version = function (req, resp) {
@@ -58,7 +58,7 @@ exports.version = function (req, resp) {
             return util.resize(file , file , option)
         } else return res
     }).then((res)=>{
-        resp.file(res.file)
+        resp.file(res.file , {confine: false})
     }).catch((er) => resp(encodeURIComponent(dir)))
 }
 
@@ -84,13 +84,13 @@ exports.fromUrl = function(req, resp){
 
 exports.resize = function (req, resp) {
     util.resize(req.params.id,req.params).then((file)=> {
-        resp.file(file)
+        resp.file(file,  {confine: false})
     }).catch((e)=> resp(e))
 }
 
 exports.crop = function (req, resp) {
     util.crop(req.params.id,req.params).then((file)=> {
-        resp.file(file)
+        resp.file(file,  {confine: false})
     }).catch((e)=> resp(e))
 }
 
